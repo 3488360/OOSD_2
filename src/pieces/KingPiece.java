@@ -1,24 +1,36 @@
 package pieces;
 
 
-import model.Cell;
-import interfaces.Piece;
+import model.Coordinate;
 
-public class KingPiece extends Piece{
+import java.util.List;
 
-	public KingPiece(){
-		super(); 
-	};
-	
+public class KingPiece extends AbstractPiece {
 	@Override
-	public int getCost() {
-		// TODO Auto-generated method stub
+	public List<Coordinate> getMoves() {
+		return null;
+	}
+
+	@Override
+	public List<Coordinate> getAttackRange() {
+		return null;
+	}
+
+	@Override
+	public int getMaxHealth() {
+		return 100;
+	}
+
+	@Override
+	public int getStrength() {
 		return 0;
 	}
 
-
-
-//	Does the piece contain the instructions on how to draw 	
+	@Override
+	public int getCost() {
+		return 0;
+	}
+	//	Does the piece contain the instructions on how to draw
 	
 
 }
