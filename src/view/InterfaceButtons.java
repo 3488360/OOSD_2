@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.Main;
+
 public class InterfaceButtons extends JPanel {
 	private static final long serialVersionUID = 5295137264520068029L;
 	
@@ -38,6 +40,7 @@ public class InterfaceButtons extends JPanel {
 		
 		if (result == JOptionPane.YES_OPTION) {
 			System.out.println("Game is restarting!");
+			Main.restartGame();
 		}
 	}
 	

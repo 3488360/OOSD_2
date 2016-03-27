@@ -16,6 +16,7 @@ public class GameController {
 	
 	
 	public void update() {
+		System.out.println("Updating the board");
 		userInterface.updateBoard();
 		
 	}

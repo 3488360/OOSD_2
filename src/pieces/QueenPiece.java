@@ -1,25 +1,26 @@
 package pieces;
 
-import model.Coordinate;
-import model.Player;
-import interfaces.Piece;
 import javax.swing.ImageIcon;
 
-public class KingPiece extends Piece{
+import interfaces.Piece;
+import model.Coordinate;
+import model.Player;
 
-	public KingPiece(Player player) {
-		super(player); 
-		cost = 100;
-		name = "King";
-		icon = resizeIcon(new ImageIcon("King.png", "King"));
-		health = 500;
-		attack = 50;
-		moveCount = 8;
+public class QueenPiece extends Piece {
+	
+	public QueenPiece (Player player) {
+		super(player);
+		name = "Queen";
+		cost = 80;
+		icon = new ImageIcon("Queen.png", "Queen");
+		icon = resizeIcon(icon);
+		health = 400;
+		attack = 200;
 	}
 
 	@Override
 	public Coordinate[] getMoves(Coordinate co) {
-		Coordinate[] fish = new Coordinate[moveCount];
+		Coordinate[] fish = new Coordinate[8];
 		
 		fish[0] = new Coordinate(co.x - 1, co.y - 1);
 		fish[1] = new Coordinate(co.x, co.y - 1);
