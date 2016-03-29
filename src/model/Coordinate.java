@@ -9,6 +9,9 @@ public class Coordinate {
 		x = row; 
 		y = col; 
 	}
+	
+	public int getx(){return x;}
+	public int gety(){return y;} 
 	 
 	
 }

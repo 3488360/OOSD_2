@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Observer;
+
 import controller.GameController;
 import interfaces.*;
 import view.MainUserInterface;
@@ -11,23 +14,23 @@ public class Game {
 	private MainUserInterface userInterface;
 	
 	private GameController gameController; 
-	 
+	private ArrayList<Observer> observer = new ArrayList<Observer>();  
 	public Game(String p1, String p2) {
 		player1 = new Player(p1);
 		player2 = new Player(p2);
 		board = new Board();
 		userInterface = new MainUserInterface(board, player1, player2);
-		
 		gameController = new GameController(userInterface, this);
 		userInterface.addGameController(gameController); 
+		addObserver(userInterface);
+		
 	}
 
+	public void addObserver(MainUserInterface mu){
+		observer.add(mu);		
+	}
+	
 	public void startGame(){
-		Cell[][] cell = board.getAllCells();
-		
-		cell[7][7].setVisible(false);
-		
-		gameController.update();
 		
 	}
 	
@@ -40,16 +43,17 @@ public class Game {
 	public void addController(GameController gc){
 		gameController = gc; 
 	}
+	
+	
 	Coordinate currentlySelectedCoordinates = null;
 	Coordinate destinationSelectedCoordinates = null;
 	public void passCoordinates(Coordinate coor) {
 		// TODO Auto-generated method stub
 		Coordinate receivedCoordinates = coor;
-		
 		if(currentlySelectedCoordinates == null){
 			currentlySelectedCoordinates = receivedCoordinates; 
 		}
-		else if(sameCoordinates(currentlySelectedCoordinates, destinationSelectedCoordinates)){
+		else if(sameCoordinates(currentlySelectedCoordinates, receivedCoordinates)){
 			currentlySelectedCoordinates = null; 
 			destinationSelectedCoordinates = null; 
 		}
@@ -57,26 +61,20 @@ public class Game {
 			destinationSelectedCoordinates = receivedCoordinates; 
 			calculateMove(); 
 		}
-	
-		
-
 	}
 	private boolean sameCoordinates(Coordinate cur, Coordinate dest){
-		if(dest!=null){
-			if(cur.x == dest.x && cur.y == dest.y)  
+			if(cur.x == dest.x && cur.y == dest.y){  
 				return true;
-		}
+			}	
 		return false; 
 	}
 	private void calculateMove() {
 		// TODO Auto-generated method stub
-		System.out.println(currentlySelectedCoordinates.x + "," + currentlySelectedCoordinates.y +"-"+ destinationSelectedCoordinates.x+","+destinationSelectedCoordinates.y);
+		Cell cells[][] = board.getAllCells(); 	
+		cells[destinationSelectedCoordinates.getx()][destinationSelectedCoordinates.gety()].setVisible(false);
+		for(int i = 0; i < observer.size(); i++){	
+			observer.get(i).update(null, cells);
+		}
 		
-	}
-
-	
-	
-	
-	
-	
+	}	
 }

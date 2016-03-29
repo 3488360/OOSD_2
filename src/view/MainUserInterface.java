@@ -2,6 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -10,9 +12,10 @@ import javax.swing.JPanel;
 
 import controller.GameController;
 import model.Board;
+import model.Coordinate;
 import model.Player;
 
-public class MainUserInterface extends JFrame {
+public class MainUserInterface extends JFrame implements Observer {
 	private static final long serialVersionUID = 4121790745247284131L;
 	
 	private DrawBoard board;
@@ -20,7 +23,7 @@ public class MainUserInterface extends JFrame {
 	private JPanel title;
 	private InterfaceTimer timer;
 	private InterfaceButtons buttons;
-	private GameController gameController; 
+	 
 	public MainUserInterface(Board b, Player player1, Player player2) {
 		//The properties of the main window/frame
 		setTitle("OO Game");
@@ -44,8 +47,8 @@ public class MainUserInterface extends JFrame {
 		setVisible(true);
 	}
 	
-	public void updateBoard() {
-		board.updateBoard();
+	public void updateBoard(Object arg1) {
+		board.updateBoard(arg1);
 //		board.repaint();
 	}
 	
@@ -84,7 +87,12 @@ public class MainUserInterface extends JFrame {
 	}
 
 	public void addGameController(GameController gameController) {
-		this.gameController = gameController; 
 		board.addGameController(gameController);
 	}
+
+	public void update(Observable arg0, Object arg1) {
+		board.updateBoard(arg1);
+	}
+	
+	
 }

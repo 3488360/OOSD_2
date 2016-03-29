@@ -1,7 +1,6 @@
 package interfaces;
 
 import model.Coordinate;
-
 import java.util.List;
 
 public interface Piece {
@@ -14,7 +13,6 @@ public interface Piece {
 	public int getMaxHealth();
 	public int getStrength();
 	public int getCost();
-
 
 }
 	

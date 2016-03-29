@@ -12,28 +12,11 @@ public class GameController {
 		this.userInterface = userInterface; 
 		this.game = game; 
 	}
-	
-	
-	
-	public void update() {
-		userInterface.updateBoard();
-		
-	}
-
-
 
 	public void passCoordinates(Coordinate coordinate) {
 		game.passCoordinates(coordinate);
 		
 	}
-	
-
-	
-	
-	
-	
-	
-	
 	
 	
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.GameController;
 import model.Board;
+import model.Cell;
 import model.Coordinate;
 
 import java.awt.*;
@@ -34,9 +35,7 @@ public class DrawBoard extends JPanel {
 				grid[i][a].addActionListener(gridButton);
 			}
 		}
-		
 		setLayout(new GridLayout(15, 15));
-		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
@@ -50,8 +49,24 @@ public class DrawBoard extends JPanel {
 			}
 		}
 	}
+	public void addGameController(GameController gameController){
+		this.gameController = gameController; 
+	}
+	
+	public void updateBoard(Object arg1) {
+		matchCellsFromInerfaceCelltoGame(arg1);
+		draw(); 
+	}
 	/*********************************----------------------------------*/
-	public void draw(){
+	private void matchCellsFromInerfaceCelltoGame(Object arg1){
+		Cell cellsfromGame[][] = (Cell[][]) arg1;
+		for (int i = 0; i < board.getWidth(); i++) {
+			for (int a = 0; a < board.getHeight(); a++) {
+				grid[i][a].setVisible(cellsfromGame[i][a].getVisible());
+			}
+		}
+	}	
+	private void removeGameBoardContents(){
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
@@ -59,12 +74,15 @@ public class DrawBoard extends JPanel {
 					grid[i][a].setForeground(Color.BLACK);
 					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
 					remove(grid[i][a]);
-				}else {
-					add(new JLabel(""));
 				}
 			}
-		}
-		
+		}		
+		removeAll(); 
+	}
+	public void draw(){
+		removeGameBoardContents();
+//		redraw the game board 		
+		revalidate();
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
@@ -77,14 +95,6 @@ public class DrawBoard extends JPanel {
 				}
 			}
 		}
-	}
-	
-	public void updateBoard() {
-		draw(); 
-	}
-	
-	public void addGameController(GameController gameController){
-		this.gameController = gameController; 
 	}
 	
 	private void buttonPressed(ActionEvent e) {

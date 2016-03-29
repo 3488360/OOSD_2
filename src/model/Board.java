@@ -36,18 +36,6 @@ public class Board {
 	}
 	
 	
-	/********************NEW**********************/
-	public void placePiece(Coordinate coordinate, Piece playerPiece){}
-		 
-	/*public Piece getPiece(Coordinate coordinate){ 
-		Piece piece; 
-		
-		piece = cell[coordinate.getx()][coordinate.gety()].getPiece(); 
-		
-		
-		
-		
-		return null; 
-	}	*/
+
 		
 }
