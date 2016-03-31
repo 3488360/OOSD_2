@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DrawBoard extends JPanel {
+public class InterfaceBoard extends JPanel {
 	private static final long serialVersionUID = 8695643799420470531L;
 	
 	private final int CELLWIDTH = 40;
@@ -19,7 +19,7 @@ public class DrawBoard extends JPanel {
 	private InterfaceCell grid[][];
 	private GameController gameController; 
 	
-	public DrawBoard(Board b) {
+	public InterfaceBoard(Board b) {
 		board = b;
 		grid = new InterfaceCell[board.getHeight()][board.getWidth()];
 		
@@ -51,32 +51,13 @@ public class DrawBoard extends JPanel {
 				}
 			}
 		}
-	
-
-	/*public void draw(){
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
-					grid[i][a].setBackground(Color.ORANGE);
-					grid[i][a].setForeground(Color.BLACK);
-					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
-					remove(grid[i][a]);
-				}else {
-					add(new JLabel(""));
-				} 
-			}
-		}*/
-	}
-	
-	public void updateBoard() {
-		updateCells(board);
 	}
 	
 	public void addGameController(GameController gameController){
 		this.gameController = gameController; 
 	}
 	
-	private void updateCells (Board current) {
+	public void updateBoard () {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){

@@ -36,7 +36,6 @@ public class Cell {
 		pieceOnSquare = piece;  
 	}
 	
-	/////////////////////////////////----------------------
 	public void setVisible(boolean vis){
 		isVisible = vis;
 	}	

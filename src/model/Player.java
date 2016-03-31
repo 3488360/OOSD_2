@@ -3,10 +3,11 @@ package model;
 public class Player {
 	String name;
 	int points;
+	int numPieces;
 	
 	public Player(String p1) {
 		name = p1;
-		points = 0;
+		points = 500;
 	}
 	
 	public void setPoints(int p) {
@@ -27,5 +28,13 @@ public class Player {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getNumPieces() {
+		return numPieces;
+	}
+	
+	public void setNumPieces(int i) {
+		numPieces = i;
 	}
 }
