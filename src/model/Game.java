@@ -4,7 +4,7 @@ import controller.GameController;
 import interfaces.*;
 import pieces.KingPiece;
 import pieces.QueenPiece;
-import pieces.Sparrow;
+import pieces.TestPiece;
 import view.MainUserInterface;
 
 public class Game {
@@ -64,7 +64,6 @@ public class Game {
 			
 			done = false;
 		}
-		
 	}
 	
 	private boolean selectAndPlace(Player p) {
@@ -99,14 +98,14 @@ public class Game {
 						break;
 				
 					case "Default Layout" : 
-						board.setPiece(new Coordinate(7, 14), new Sparrow(player1));
+						board.setPiece(new Coordinate(7, 14), new TestPiece(player1));
 						board.setPiece(new Coordinate(6, 14), new KingPiece(player1));
 						board.setPiece(new Coordinate(5, 14), new KingPiece(player1));
 						board.setPiece(new Coordinate(8, 14), new KingPiece(player1));
 						board.setPiece(new Coordinate(9, 14), new KingPiece(player1));
 						board.setPiece(new Coordinate(9, 0), new KingPiece(player2));
 						board.setPiece(new Coordinate(8, 0), new KingPiece(player2));
-						board.setPiece(new Coordinate(7, 0), new Sparrow(player2));
+						board.setPiece(new Coordinate(7, 0), new TestPiece(player2));
 						board.setPiece(new Coordinate(6, 0), new KingPiece(player2));
 						board.setPiece(new Coordinate(5, 0), new KingPiece(player2));
 						player1.takePoints(500);
@@ -198,7 +197,7 @@ public class Game {
 				//If it's an attacking move
 				System.out.println("Attacking!");
 				if (board.getPiece(destinationSelected).getPlayer().equals(turn)) {
-					userInterface.message("You are trying to attack your own piece doofus!");
+					userInterface.message("You are trying to attack your own piece!");
 				} else {
 					int attack;
 					int health;

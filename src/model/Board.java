@@ -49,7 +49,7 @@ public class Board {
 		
 		if (p.equals("King")) {
 			c = 8;
-		} else if (p.equals("Sparrow")) {
+		} else if (p.equals("TestPiece")) {
 			c = 125;
 		}
 		

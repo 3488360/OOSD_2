@@ -13,7 +13,7 @@ import model.Player;
 public class MainUserInterface extends JFrame {
 	private static final long serialVersionUID = 4121790745247284131L;
 	
-	private DrawBoard board;
+	private InterfaceBoard board;
 	private JPanel players;
 	private JPanel title;
 	private InterfaceTimer timer;
@@ -38,7 +38,7 @@ public class MainUserInterface extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		board = new DrawBoard(b);
+		board = new InterfaceBoard(b);
 		players = new JPanel();
 		title = new JPanel();
 		timer = new InterfaceTimer(0);

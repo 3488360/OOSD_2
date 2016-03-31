@@ -6,13 +6,13 @@ import interfaces.Piece;
 import model.Coordinate;
 import model.Player;
 
-public class Sparrow extends Piece {
+public class TestPiece extends Piece {
 
-	public Sparrow(Player player) {
+	public TestPiece(Player player) {
 		super(player); 
 		cost = 0;
-		name = "Sparrow";
-		icon = resizeIcon(new ImageIcon("Sparrow.jpg", "Sparrow"));
+		name = "TestPiece";
+		icon = resizeIcon(new ImageIcon("K.png", "Test Piece"));
 		health = 10000;
 		attack = 10000;
 		moveCount = 225;
