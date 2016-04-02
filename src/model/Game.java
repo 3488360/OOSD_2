@@ -7,6 +7,8 @@ import pieces.QueenPiece;
 import pieces.TestPiece;
 import view.MainUserInterface;
 
+import java.util.List;
+
 public class Game {
 	private Player player1;
 	private Player player2;
@@ -190,7 +192,7 @@ public class Game {
 	}
 	
 	private void calculateMove() {
-		Coordinate[] moves;
+		List<Coordinate> moves;
 		
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(destinationSelected) != null) {
@@ -201,11 +203,11 @@ public class Game {
 				} else {
 					int attack;
 					int health;
-					attack = board.getPiece(currentlySelected).getAttack();
-					health = board.getPiece(destinationSelected).getHealth();
+					attack = board.getPiece(currentlySelected).getStrength();
+					health = board.getPiece(destinationSelected).getCurrentHealth();
 					
 					if (health > attack) {
-						board.getPiece(destinationSelected).setHealth(health-attack);
+						board.getPiece(destinationSelected).takeDamage(attack);
 					} else {
 						turn.addPoints((board.getPiece(destinationSelected).getCost()/4)*3);
 						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
@@ -224,8 +226,8 @@ public class Game {
 				if (turn.equals(board.getPlayer(currentlySelected))) {
 					System.out.println("Moving!");
 					moves = board.getMovement(board.getPiece(currentlySelected), currentlySelected);
-					for (int i = 0; i < board.getPiece(currentlySelected).getMoveCount(); i++) {
-						if (destinationSelected.x == moves[i].x && destinationSelected.y == moves[i].y) {
+					for (Coordinate coordinate : moves) {
+						if (destinationSelected.x == coordinate.x && destinationSelected.y == coordinate.y) {
 							board.setPiece(destinationSelected, board.getPiece(currentlySelected));
 							board.setPiece(currentlySelected, null);
 							System.out.println("Successful move!");

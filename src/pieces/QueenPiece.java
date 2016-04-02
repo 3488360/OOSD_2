@@ -6,31 +6,39 @@ import interfaces.Piece;
 import model.Coordinate;
 import model.Player;
 
-public class QueenPiece extends Piece {
+import java.util.ArrayList;
+import java.util.List;
+
+public class QueenPiece extends AbstractPiece {
 	
 	public QueenPiece (Player player) {
 		super(player);
 		name = "Queen";
 		cost = 80;
-		icon = new ImageIcon("Queen.png", "Queen");
-		icon = resizeIcon(icon);
-		health = 400;
-		attack = 200;
+		icon = resizeIcon(new ImageIcon("Queen.png", "Queen"));
+		maxHealth = 400;
+		strength = 200;
 	}
 
 	@Override
-	public Coordinate[] getMoves(Coordinate co) {
+	public List<Coordinate> getMoves(Coordinate co) {
 		Coordinate[] fish = new Coordinate[8];
+		List<Coordinate> moves = new ArrayList<Coordinate>();
 		
-		fish[0] = new Coordinate(co.x - 1, co.y - 1);
-		fish[1] = new Coordinate(co.x, co.y - 1);
-		fish[2] = new Coordinate(co.x + 1, co.y - 1);
-		fish[3] = new Coordinate(co.x - 1, co.y);
-		fish[4] = new Coordinate(co.x + 1, co.y);
-		fish[5] = new Coordinate(co.x - 1, co.y + 1);
-		fish[6] = new Coordinate(co.x, co.y + 1);
-		fish[7] = new Coordinate(co.x + 1, co.y + 1);
+		moves.add(new Coordinate(co.x - 1, co.y - 1));
+		moves.add(new Coordinate(co.x, co.y - 1));
+		moves.add(new Coordinate(co.x + 1, co.y - 1));
+		moves.add(new Coordinate(co.x - 1, co.y));
+		moves.add(new Coordinate(co.x + 1, co.y));
+		moves.add(new Coordinate(co.x - 1, co.y + 1));
+		moves.add(new Coordinate(co.x, co.y + 1));
+		moves.add(new Coordinate(co.x + 1, co.y + 1));
 		
-		return fish;
+		return moves;
+	}
+
+	@Override
+	public List<Coordinate> getAttackRange() {
+		return null;
 	}
 }

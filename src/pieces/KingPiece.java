@@ -2,12 +2,20 @@ package pieces;
 
 
 import model.Coordinate;
+import model.Player;
 
 import java.util.List;
 
 public class KingPiece extends AbstractPiece {
+	public KingPiece(Player player) {
+		super(player);
+		maxHealth = 100;
+		strength = 0;
+		cost = 0;
+	}
+
 	@Override
-	public List<Coordinate> getMoves() {
+	public List<Coordinate> getMoves(Coordinate coordinate) {
 		return null;
 	}
 
@@ -15,22 +23,5 @@ public class KingPiece extends AbstractPiece {
 	public List<Coordinate> getAttackRange() {
 		return null;
 	}
-
-	@Override
-	public int getMaxHealth() {
-		return 100;
-	}
-
-	@Override
-	public int getStrength() {
-		return 0;
-	}
-
-	@Override
-	public int getCost() {
-		return 0;
-	}
-	//	Does the piece contain the instructions on how to draw
-	
 
 }
