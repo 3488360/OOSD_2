@@ -5,8 +5,9 @@ import interfaces.Piece;
 public class Cell {
 	protected int row;
 	protected int col;
+	protected boolean isVisible;
+	
 	private Piece pieceOnSquare = null; 
-	protected boolean isVisible;	
 	
 	public Cell (int i, int j, boolean visible) {
 		row = i;

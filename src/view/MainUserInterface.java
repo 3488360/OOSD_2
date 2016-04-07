@@ -59,7 +59,9 @@ public class MainUserInterface extends JFrame {
 	
 	private void initTitle() {
 		JLabel gameTitle = new JLabel("OO Game");
+		
 		gameTitle.setFont(new Font("Sans-Serif", Font.BOLD, 22));
+		
 		title.add(gameTitle, BorderLayout.CENTER);
 		add(title, BorderLayout.NORTH);
 	}
@@ -127,7 +129,4 @@ public class MainUserInterface extends JFrame {
 	public void message(String m) {
 		JOptionPane.showMessageDialog(null, m);
 	}
-	
-	
-	
 }
