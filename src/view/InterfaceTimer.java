@@ -21,7 +21,7 @@ public class InterfaceTimer extends JPanel {
 		selectedPiece = new JLabel();
 		add(box);
 	}
-	
+
 	public void setInterfaceTimer(int time) {
 		timer.setText("Time: " + time);
 	}
@@ -33,7 +33,11 @@ public class InterfaceTimer extends JPanel {
 	}
 
 	public void hideSelected() {
-		selectedPiece.setVisible(false);
-		
+		selectedPiece.setVisible(false);		
 	}
+	public void timerView(Object arg1){
+		selectedPiece.setVisible((boolean) arg1);
+	}
+	
+	
 }

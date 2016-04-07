@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import controller.GameController;
 import interfaces.*;
 import pieces.KingPiece;
@@ -9,7 +12,8 @@ import view.MainUserInterface;
 
 import java.util.List;
 
-public class Game {
+public class Game implements Observer {
+
 	private Player player1;
 	private Player player2;
 	private Board board;
@@ -31,39 +35,31 @@ public class Game {
 		board = new Board();
 		turn = player1;
 		userInterface = new MainUserInterface(board, player1, player2);
-		
 		gameController = new GameController(userInterface, this);
 		userInterface.addGameController(gameController); 
 	}
 
 	public void startGame(){
 		boolean gameRunning = true;
-		
+//		Before the game begins the players must place their respective pieces 
 		if (selectAndPlace(player1)) {
 			selectAndPlace(player2);
 		}
-		
-		userInterface.hideSelected();
-		userInterface.updateBoard();
-		
-		while (gameRunning) {
+		gameController.hideSelected();
+		gameController.updateBoard();
+		while(gameRunning) {
 			userInterface.updateTurn(turn);
-			
 			while(!done) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
+				try {Thread.sleep(500);}
+				catch (InterruptedException e) {
 					System.out.println("Can't put main thread to sleep");
 					e.printStackTrace();
 				}
 			}
-			
-			if (turn == player1) {
+			if (turn == player1)
 				turn = player2;
-			} else {
+			else 
 				turn = player1;
-			}
-			
 			done = false;
 		}
 	}
@@ -76,10 +72,8 @@ public class Game {
 		
 		while (!isReady) {
 			selectedPiece = userInterface.askPiece(p.getName());
-			
 			if (selectedPiece != null) {
 				userInterface.updateSelectedPiece(selectedPiece);
-				
 				switch (selectedPiece) {
 					case "King": piece = new KingPiece(p);
 						break;
@@ -112,7 +106,7 @@ public class Game {
 						board.setPiece(new Coordinate(5, 0), new KingPiece(player2));
 						player1.takePoints(500);
 						player2.takePoints(500);
-						userInterface.updatePoints();
+						gameController.updatePoints();
 						return false;
 				}
 				
@@ -131,7 +125,7 @@ public class Game {
 				
 				if (piece != null) {
 					p.takePoints(piece.getCost());
-					userInterface.updatePoints();
+					gameController.updatePoints();
 					
 					System.out.println("Placing " + piece.getName() + " at " + currentlySelected.x + "-" + currentlySelected.y);
 					board.setPiece(currentlySelected, piece);
@@ -148,38 +142,28 @@ public class Game {
 		return true;
 	}
 	
-	public void movePiece(Piece piece, Coordinate a){
-//	make this boolean in case it is a invalid move?
-//	or have validation beforehand and if valid than call this method	
-	}
-	
-	public void addController(GameController gc){
-		gameController = gc; 
-	}
-	
 	public void passCoordinates(Coordinate coor) {
-		
+//		determine if the coordinates selected are valid or not 
 		if(currentlySelected == null){
 			currentlySelected = coor; 
-			if (board.getPiece(currentlySelected) != null) {
+			if (board.getPiece(currentlySelected)!= null) {
 				System.out.println("Selected piece belongs to " + board.getPiece(currentlySelected).getName());
-				userInterface.updateSelectedPiece(board.getPiece(currentlySelected).getName());
-			} else {
+				gameController.updateSelectedPiece(board.getPiece(currentlySelected).getName());
+//			display all the places the piece can possibly move to			
+			} else 
 				System.out.println("There is no piece located here");
-			}
-			
 		}
 		else if(sameCoordinates(currentlySelected, coor)){
 			currentlySelected = null; 
 			destinationSelected = null; 
-			userInterface.hideSelected();
+			gameController.hideSelected();
 		}
 		else{
 			destinationSelected = coor; 
 			calculateMove(); 
 			currentlySelected = null;
 			destinationSelected = null;
-			userInterface.hideSelected();
+			gameController.hideSelected();
 		}
 	}
 	
@@ -195,12 +179,13 @@ public class Game {
 		List<Coordinate> moves;
 		
 		if (board.getPiece(currentlySelected) != null) {
-			if (board.getPiece(destinationSelected) != null) {
+			if(board.getPiece(destinationSelected) != null){
 				//If it's an attacking move
 				System.out.println("Attacking!");
-				if (board.getPiece(destinationSelected).getPlayer().equals(turn)) {
-					userInterface.message("You are trying to attack your own piece!");
-				} else {
+				if (board.getPiece(destinationSelected).getPlayer().equals(turn))
+					gameController.message("You are trying to attack your own piece!");
+				else 
+				{
 					int attack;
 					int health;
 					attack = board.getPiece(currentlySelected).getStrength();
@@ -213,34 +198,34 @@ public class Game {
 						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
 						board.setPiece(currentlySelected, null);
 						System.out.println("Successful move!");
-						userInterface.updateBoard();
-						userInterface.updatePoints();
+						gameController.updateBoard();
+						gameController.updatePoints();
 						currentlySelected = null;
 						destinationSelected = null;
 						done = true;
 					}
 				}
-				
-			} else {
+			}else{
 				//If it's moving the piece
-				if (turn.equals(board.getPlayer(currentlySelected))) {
+				if (turn.equals(board.getPlayer(currentlySelected))) 
+				{
 					System.out.println("Moving!");
 					moves = board.getMovement(board.getPiece(currentlySelected), currentlySelected);
 					for (Coordinate coordinate : moves) {
 						if (destinationSelected.x == coordinate.x && destinationSelected.y == coordinate.y) {
+
 							board.setPiece(destinationSelected, board.getPiece(currentlySelected));
 							board.setPiece(currentlySelected, null);
 							System.out.println("Successful move!");
-							userInterface.updateBoard();
+							gameController.updateBoard();
 							currentlySelected = null;
 							destinationSelected = null;
 							done = true;
 							break;
 						} 
 					}
-				} else {
-					System.out.println("That is not " + turn.getName() + "'s piece!");
-				}
+				} 
+				else{System.out.println("That is not " + turn.getName() + "'s piece!");}
 			}
 		} else {
 			//If no piece is under first selection
@@ -250,9 +235,11 @@ public class Game {
 		}
 	}
 	
-	public void close() {
-		userInterface.getContentPane().removeAll();
-		userInterface.setVisible(false);
-		userInterface = null;
+//	userInterface.close(); 
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }

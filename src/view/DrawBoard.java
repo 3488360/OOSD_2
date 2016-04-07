@@ -51,21 +51,6 @@ public class DrawBoard extends JPanel {
 				}
 			}
 		}
-	
-
-	/*public void draw(){
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
-					grid[i][a].setBackground(Color.ORANGE);
-					grid[i][a].setForeground(Color.BLACK);
-					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
-					remove(grid[i][a]);
-				}else {
-					add(new JLabel(""));
-				} 
-			}
-		}*/
 	}
 	
 	public void updateBoard() {
