@@ -148,39 +148,52 @@ public class Game {
 		return true;
 	}
 	
-	public void movePiece(Piece piece, Coordinate a){
-//	make this boolean in case it is a invalid move?
-//	or have validation beforehand and if valid than call this method	
-	}
+
 	
 	public void addController(GameController gc){
 		gameController = gc; 
 	}
 	
-	public void passCoordinates(Coordinate coor) {
-		
+	public void passCoordinates(Coordinate coor){
+//		determine if the coordinates selected are valid or not 
 		if(currentlySelected == null){
 			currentlySelected = coor; 
-			if (board.getPiece(currentlySelected) != null) {
+			if (board.getPiece(currentlySelected)!= null && turn == board.getPiece(currentlySelected).getPlayer()){
 				System.out.println("Selected piece belongs to " + board.getPiece(currentlySelected).getName());
-				userInterface.updateSelectedPiece(board.getPiece(currentlySelected).getName());
-			} else {
+				gameController.updateSelectedPiece(board.getPiece(currentlySelected).getName());
+//			display all the places the piece can possibly move to
+				List<Coordinate> co = board.getPiece(currentlySelected).getMoves(currentlySelected);
+				Cell[][] cell = board.getAllCells(); 
+				for(int i = 0; i < co.size(); i++){
+					if(co.get(i).x < board.getWidth() && co.get(i).x >= 0 && co.get(i).y < board.getHeight() && co.get(i).y>= 0){
+						if(board.getAllCells()[co.get(i).x][co.get(i).y].getVisible() == true){
+							cell[co.get(i).x][co.get(i).y].setCanMoveTo(true);
+						}
+					}
+				}
+				gameController.updateBoard();
+			}else 
 				System.out.println("There is no piece located here");
-			}
+			
 			
 		}
 		else if(sameCoordinates(currentlySelected, coor)){
 			currentlySelected = null; 
 			destinationSelected = null; 
-			userInterface.hideSelected();
+			gameController.hideSelected();
+			turnAllMoveableSquaresOff();
 		}
 		else{
 			destinationSelected = coor; 
 			calculateMove(); 
 			currentlySelected = null;
 			destinationSelected = null;
-			userInterface.hideSelected();
+			gameController.hideSelected();
+			turnAllMoveableSquaresOff();
+
 		}
+		
+		gameController.updateBoard();
 	}
 	
 	private boolean sameCoordinates(Coordinate cur, Coordinate dest){
@@ -190,7 +203,14 @@ public class Game {
 			return false; 
 		}
 	}
-	
+	private void turnAllMoveableSquaresOff(){
+		for(int i = 0; i < board.getHeight(); i++){
+			for(int j = 0; j < board.getWidth(); j++){
+				board.getAllCells()[i][j].setCanMoveTo(false);
+			}
+		}
+	}	
+
 	private void calculateMove() {
 		List<Coordinate> moves;
 		
@@ -225,32 +245,39 @@ public class Game {
 				//If it's moving the piece
 				if (turn.equals(board.getPlayer(currentlySelected))) {
 					System.out.println("Moving!");
-					moves = board.getMovement(board.getPiece(currentlySelected), currentlySelected);
-					for (Coordinate coordinate : moves) {
-						if (destinationSelected.x == coordinate.x && destinationSelected.y == coordinate.y) {
-							board.setPiece(destinationSelected, board.getPiece(currentlySelected));
-							board.setPiece(currentlySelected, null);
-							System.out.println("Successful move!");
-							userInterface.updateBoard();
-							currentlySelected = null;
-							destinationSelected = null;
-							done = true;
-							break;
-						} 
+//					moves = board.getMovement(board.getPiece(currentlySelected), currentlySelected);
+					if(board.getAllCells()[destinationSelected.x][destinationSelected.y].canMoveTo == true){
+						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
+						board.setPiece(currentlySelected, null);
+						userInterface.updateBoard();
+						currentlySelected = null;
+						destinationSelected = null;
+						done = true;
 					}
-				} else {
+//					for (Coordinate coordinate : moves){
+//						if (destinationSelected.x == coordinate.x && destinationSelected.y == coordinate.y) {
+//							board.setPiece(destinationSelected, board.getPiece(currentlySelected));
+//							board.setPiece(currentlySelected, null);
+//							System.out.println("Successful move!");
+//							userInterface.updateBoard();
+//							currentlySelected = null;
+//							destinationSelected = null;
+//							done = true;
+//							break;
+//						} 
+//					}
+				}else
 					System.out.println("That is not " + turn.getName() + "'s piece!");
-				}
 			}
 		} else {
 			//If no piece is under first selection
 			currentlySelected = null;
 			destinationSelected = null;
-			System.out.println("Cannot make move");
+			System.exit(0);
 		}
 	}
 	
-	public void close() {
+	public void close(){
 		userInterface.getContentPane().removeAll();
 		userInterface.setVisible(false);
 		userInterface = null;

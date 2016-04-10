@@ -11,6 +11,8 @@ public class InterfaceCell extends JButton {
 	private int col;
 	private Piece piece;
 	boolean isVisible;
+	protected boolean canMoveTo = false;
+	
 	
 	public InterfaceCell (int r, int c, boolean v, Piece p) {
 		row = r;
@@ -37,5 +39,12 @@ public class InterfaceCell extends JButton {
 	
 	public void setPiece(Piece p) {
 		piece = p;
+	}
+	
+	public boolean getCanMoveTo(){
+		return canMoveTo; 
+	}
+	public void setCanMoveTo(boolean canMove){
+		canMoveTo = canMove; 
 	}
 }

@@ -60,6 +60,15 @@ public class InterfaceBoard extends JPanel {
 	public void updateBoard () {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
+				grid[i][a].setCanMoveTo(board.getAllCells()[i][a].getCanMoveTo());
+			}
+		}	
+		
+		
+		
+		
+		for (int i = 0; i < board.getWidth(); i++) {
+			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
 					if (board.getPiece(new Coordinate(i, a)) != null) {
 						grid[i][a].setBackground(Color.BLUE);
@@ -67,6 +76,9 @@ public class InterfaceBoard extends JPanel {
 					} else {
 						grid[i][a].setBackground(Color.ORANGE);
 						grid[i][a].setIcon(null);
+					}
+					if(grid[i][a].canMoveTo == true){
+						grid[i][a].setBackground(Color.GREEN);
 					}
 				}
 			}
@@ -78,9 +90,9 @@ public class InterfaceBoard extends JPanel {
 		System.out.println("Cell " + button.getCol() + " " + button.getRow() + " has been selected!");
 		gameController.passCoordinates(new Coordinate(button.getCol(), button.getRow())); 
 		
-		if (button.getBackground() == Color.RED)
-			button.setBackground(Color.ORANGE);
-		else
-			button.setBackground(Color.RED);
+//		if (button.getBackground() == Color.RED)
+//			button.setBackground(Color.ORANGE);
+//		else
+//			button.setBackground(Color.RED);
 	}
 }

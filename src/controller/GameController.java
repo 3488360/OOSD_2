@@ -13,28 +13,23 @@ public class GameController {
 		this.game = game; 
 	}
 	
-	
-	
 	public void update() {
-		System.out.println("Updating the board");
 		userInterface.updateBoard();
-		
 	}
-
-
 
 	public void passCoordinates(Coordinate coordinate) {
 		game.passCoordinates(coordinate);
+	}
+
+	public void updateSelectedPiece(String name) {
+		userInterface.updateSelectedPiece(name);
+	}
+
+	public void updateBoard() {
+		userInterface.updateBoard();
 		
 	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
+	public void hideSelected() {
+		userInterface.hideSelected();
+	}
 }

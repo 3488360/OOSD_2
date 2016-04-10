@@ -8,6 +8,10 @@ public class Cell {
 	protected boolean isVisible;
 	
 	private Piece pieceOnSquare = null; 
+	protected boolean canMoveTo = false;
+	
+	
+
 	
 	public Cell (int i, int j, boolean visible) {
 		row = i;
@@ -39,4 +43,12 @@ public class Cell {
 	public void setVisible(boolean vis){
 		isVisible = vis;
 	}	
+	
+	public void setCanMoveTo(boolean canMove){
+		canMoveTo = canMove; 
+	}
+	
+	public boolean getCanMoveTo(){
+		return canMoveTo; 
+	}
 }
