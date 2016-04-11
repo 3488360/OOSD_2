@@ -4,6 +4,7 @@ package pieces;
 import model.Coordinate;
 import model.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WizardPiece extends AbstractPiece{
@@ -21,8 +22,11 @@ public class WizardPiece extends AbstractPiece{
     }
 
     @Override
-    public List<Coordinate> getMoves(Coordinate coordinate) {
-        return null;
+    public List<Coordinate> getMoves(Coordinate currentCoordinate) {
+       ArrayList<Coordinate> movesList = new ArrayList<Coordinate>();
+       movesList.add(new Coordinate(currentCoordinate.x+1,currentCoordinate.y+1));
+//       movesList.add()
+    	return null;
     }
 
     @Override

@@ -3,7 +3,6 @@ package pieces;
 
 import interfaces.Piece;
 import model.Player;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

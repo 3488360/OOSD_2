@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.Box;
@@ -19,6 +21,7 @@ public class InterfaceTimer extends JPanel {
 		box = Box.createVerticalBox();
 		box.add(timer);
 		selectedPiece = new JLabel();
+		setPreferredSize(new Dimension(120,120));
 		add(box);
 	}
 	
