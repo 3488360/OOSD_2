@@ -1,0 +1,46 @@
+2
+Default Layout
+10
+player1
+9,14:Archer
+player1
+8,14:Soldier
+player1
+7,14:King
+player1
+6,14:God
+player1
+5,14:Archer
+player2
+9,0:Wizard
+player2
+8,0:Healer
+player2
+7,0:King
+player2
+6,0:Tank
+player2
+5,0:Wizard
+Test Layout
+10
+player1
+9,14:Archer
+player1
+8,14:Soldier
+player1
+7,14:Test
+player1
+6,14:King
+player1
+5,14:God
+player2
+9,0:Healer
+player2
+8,0:King
+player2
+7,0:Test
+player2
+6,0:Tank
+player2
+5,0:Wizard
+Test Layout

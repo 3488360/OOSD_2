@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface Piece {
 
+
 	public List<Coordinate> getMoves(Coordinate coordinate);
-	public List<Coordinate> getAttackRange();
+	public List<Coordinate> getAttackRange(Coordinate coordinate);
 
 	public int getCurrentHealth();
 	public int takeDamage(int amount);

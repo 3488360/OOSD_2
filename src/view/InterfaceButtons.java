@@ -12,12 +12,10 @@ import controller.Main;
 public class InterfaceButtons extends JPanel {
 	private static final long serialVersionUID = 5295137264520068029L;
 	
-	private JButton restart;
-	private JButton exit;
-	
 	public InterfaceButtons() {
-		restart = new JButton("Restart");
-		exit = new JButton("Exit");
+		JButton restart = new JButton("Restart");
+		JButton exit = new JButton("Exit");
+		
 		
 		restart.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
@@ -50,6 +48,5 @@ public class InterfaceButtons extends JPanel {
 		if (result == JOptionPane.YES_OPTION) {
 			System.exit(0);	
 		}
-
 	}
 }

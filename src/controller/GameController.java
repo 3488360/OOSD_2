@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.List;
-
 import model.Coordinate;
 import model.Game;
 import view.MainUserInterface;
@@ -23,8 +21,8 @@ public class GameController {
 		game.passCoordinates(coordinate);
 	}
 
-	public void updateSelectedPiece(String name, List<Coordinate> list) {
-		userInterface.updateSelectedPiece(name, list);
+	public void updateSelectedPiece(String name) {
+		userInterface.updateSelectedPiece(name);
 	}
 
 	public void updateBoard() {
@@ -33,5 +31,10 @@ public class GameController {
 	}
 	public void hideSelected() {
 		userInterface.hideSelected();
+	}
+
+	public void updateTimer(int sec) {
+		userInterface.updateTimer(sec);
+		
 	}
 }

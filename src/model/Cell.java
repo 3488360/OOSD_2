@@ -6,13 +6,9 @@ public class Cell {
 	protected int row;
 	protected int col;
 	protected boolean isVisible;
-	
 	private Piece pieceOnSquare = null; 
 	protected boolean canMoveTo = false;
-	
-	
 
-	
 	public Cell (int i, int j, boolean visible) {
 		row = i;
 		col = j;

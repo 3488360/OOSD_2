@@ -37,4 +37,8 @@ public class Player {
 	public void setNumPieces(int i) {
 		numPieces = i;
 	}
+	
+	public void setName (String name) {
+		this.name = name;
+	}
 }

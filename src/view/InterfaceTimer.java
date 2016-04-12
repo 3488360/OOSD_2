@@ -1,29 +1,27 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class InterfaceTimer extends JPanel {
-	private static final long serialVersionUID = -2178376943831400894L;
-	
-	private JLabel timer;
-	private JLabel selectedPiece;
-	private Box box;
-	
-	public InterfaceTimer(int time) {
-		timer = new JLabel("Time: " + time);
-		timer.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
+    private static final long serialVersionUID = -2178376943831400894L;
+    private JLabel timer;
+    private Box box;
+    private JLabel selectedPiece;
+    
+    public InterfaceTimer() {
+    	timer = new JLabel("Time: 00");
+    	timer.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
+    	timer.setBorder(new EmptyBorder(0, 0, 0, 60));
 		box = Box.createVerticalBox();
 		box.add(timer);
 		selectedPiece = new JLabel();
-		setPreferredSize(new Dimension(120,120));
 		add(box);
-	}
+    }
 	
 	public void setInterfaceTimer(int time) {
 		timer.setText("Time: " + time);
@@ -37,6 +35,8 @@ public class InterfaceTimer extends JPanel {
 
 	public void hideSelected() {
 		selectedPiece.setVisible(false);
-		
 	}
 }
+
+
+	

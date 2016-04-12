@@ -13,7 +13,6 @@ public class InterfaceCell extends JButton {
 	boolean isVisible;
 	protected boolean canMoveTo = false;
 	
-	
 	public InterfaceCell (int r, int c, boolean v, Piece p) {
 		row = r;
 		col = c;
