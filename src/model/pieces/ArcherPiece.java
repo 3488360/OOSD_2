@@ -23,17 +23,12 @@ public class ArcherPiece extends AbstractPiece {
     @Override
     public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
-		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
-		
-		return moves;
+        for(int i=-4; i <= 4; i++) {
+             for(int j=-2; j <= 2; j++) {
+                 moves.add(new Coordinate(co.x + i, co.y + j));
+             }
+        }
+        return moves;
     }
 
     @Override

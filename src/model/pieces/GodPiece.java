@@ -29,15 +29,12 @@ public class GodPiece extends AbstractPiece {
     @Override
     public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
-		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
+
+        for(int i=-3; i <= 3; i+=2) {
+            for(int j=-3; j <= 3; j+=2) {
+                moves.add(new Coordinate(co.x + i, co.y + j));
+            }
+        }
 		
 		return moves;
     }
