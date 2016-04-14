@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import controller.GameController;
 import controller.PlayerController;
 import model.Board;
+import model.Coordinate;
 
 /**
  * The main user interface JFrame for the game. Contains a title, 
@@ -120,6 +122,11 @@ public class ViewMain extends JFrame {
 
 	public void updateSelectedPiece(String name, String currentHealth, String currentStrength) {
 		timer.addSelectedPiece(name, currentHealth, currentStrength);
+	}
+	
+	public void updateMoves(List<Coordinate> list) {
+		if(list != null)
+			board.updateCells(list);
 	}
 
 	/**

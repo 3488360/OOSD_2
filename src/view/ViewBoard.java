@@ -9,6 +9,7 @@ import model.Coordinate;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ViewBoard extends JPanel {
 	private static final long serialVersionUID = 8695643799420470531L;
@@ -93,5 +94,18 @@ public class ViewBoard extends JPanel {
 			button.setBackground(Color.ORANGE);
 
 		gameController.passCoordinates(new Coordinate(button.getCol(), button.getRow())); 
+	}
+
+	public void updateCells(List<Coordinate> list) {
+		// turns all the cells the piece can move to green
+		for (Coordinate moveableCoordinates : list) {
+			if (moveableCoordinates.x < board.getWidth()
+					&& moveableCoordinates.x >= 0
+					&& moveableCoordinates.y < board.getHeight()
+					&& moveableCoordinates.y >= 0) {
+				grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
+				grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
+			}
+		}
 	}
 }

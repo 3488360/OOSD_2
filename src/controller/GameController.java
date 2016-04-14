@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import model.Coordinate;
 import model.Game;
 import model.Player;
@@ -21,10 +23,6 @@ public class GameController {
 
 	public void passCoordinates(Coordinate coordinate) {
 		game.passCoordinates(coordinate);
-	}
-
-	public void updateSelectedPiece(Piece p) {
-		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
 	}
 
 	public void updateBoard() {
@@ -58,5 +56,13 @@ public class GameController {
 
 	public void addPiece(String pieceName) {
 		game.addPiece(pieceName);		
+	}
+
+	public void updateSelectedPiece(Piece p) {
+		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
+	}
+	
+	public void updateMoves(List<Coordinate> moves) {
+		userInterface.updateMoves(moves);
 	}
 }
