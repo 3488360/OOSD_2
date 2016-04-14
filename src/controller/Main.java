@@ -5,13 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import interfaces.Piece;
-import model.BoardLayout;
-import model.Coordinate;
-import model.Game;
-import model.Player;
+import model.*;
 import model.pieces.*;
-import view.StartScreen;
+import view.ViewStart;
 
 public class Main {
 	private static Game game;
@@ -22,29 +18,9 @@ public class Main {
 	private static int timer;
 	private static BoardLayout[] boardLayouts;
 	
-	public static void restartGame() {
-		game.close();
-		game = null;
-		System.gc();
-		new StartScreen(getBoardLayouts());
-		waiting = true;
-		
-		while (waiting) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				System.out.println("Cannot put main thread to sleep");
-				e.printStackTrace();
-			}
-		}
-		
-		game = new Game(player1, player2, boardLayout, timer, boardLayouts);
-		game.startGame();
-	}
-	
 	public static void main(String[] args) {
 		boardLayouts = getBoardLayouts();
-		new StartScreen(boardLayouts);
+		new ViewStart(boardLayouts);
 		waiting = true;
 		
 		while (waiting) {
@@ -56,13 +32,13 @@ public class Main {
 			}
 		}
 		
-		game = new Game(player1, player2, boardLayout, timer, boardLayouts);
-		game.startGame();
+		game = Game.getInstance();
+		game.startGame(player1, player2, boardLayout, timer, boardLayouts);
 	}
 
 	public static void startGame(String player1Name, String player2Name, String boardLayoutName, int timerNum) {
-		player1.setName(player1Name);
-		player2.setName(player2Name);
+		player1.setPlayerName(player1Name);
+		player2.setPlayerName(player2Name);
 		boardLayout = boardLayoutName;
 		timer = timerNum;
 		waiting = false;
@@ -95,6 +71,11 @@ public class Main {
 					layouts[i] = new BoardLayout(currentLine);
 					currentLine = reader.readLine();
 					amount = Integer.parseInt(currentLine);
+					
+					currentLine = reader.readLine();
+					player1.setPoints(Integer.parseInt(currentLine));
+					currentLine = reader.readLine();
+					player2.setPoints(Integer.parseInt(currentLine));
 					
 					for (int a = 0; a < amount; a++) {
 						currentLine = reader.readLine();

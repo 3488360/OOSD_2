@@ -1,4 +1,4 @@
-package interfaces;
+package model.pieces;
 
 import model.Coordinate;
 import model.Player;

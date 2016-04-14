@@ -13,29 +13,22 @@ public class SoldierPiece extends AbstractPiece {
     public SoldierPiece(Player player) {
         super(player);
         name = "Soldier";
-        icon = resizeIcon(new ImageIcon("Soldier2.png", "Soldier"));
+        icon = resizeIcon(new ImageIcon("images/Soldier2.png", "Soldier"));
         maxHealth = 200;
         strength = 120;
         cost = 30;
-    }
-
-    @Override
-    public int getCost() {
-        return cost;
+        currentHealth = maxHealth;
     }
 
     @Override
     public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
 		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
+		for(int i=-2; i <= 2; i++) {
+			for(int j=-2; j <= 2; j++) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
 		
 		return moves;
     }

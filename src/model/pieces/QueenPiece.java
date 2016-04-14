@@ -14,9 +14,10 @@ public class QueenPiece extends AbstractPiece {
 		super(player);
 		name = "Queen";
 		cost = 80;
-		icon = resizeIcon(new ImageIcon("Queen.png", "Queen"));
+		icon = resizeIcon(new ImageIcon("images/Queen.png", "Queen"));
 		maxHealth = 400;
 		strength = 200;
+		currentHealth = maxHealth;
 	}
 
 	@Override

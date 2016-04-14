@@ -1,9 +1,9 @@
 package model;
 
-import interfaces.Piece;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import model.pieces.Piece;
 
 public class Board {
 	private final int WIDTH = 15;

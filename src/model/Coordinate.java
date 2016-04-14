@@ -10,6 +10,7 @@ public class Coordinate {
 		y = col; 
 	}
 	
+	//Needs to be overridden so hashmap works in BoardLayout
 	@Override
 	public int hashCode() {
 		if (y < 10) 
@@ -18,9 +19,9 @@ public class Coordinate {
 			return x*100+y;
 	}
 	
+	//Needs to be overridden so hashmap works in BoardLayout
 	@Override
 	public boolean equals(Object o) {
-		
 		Coordinate co = (Coordinate)o;
 		if (co.x == x && co.y == y)
 			return true;

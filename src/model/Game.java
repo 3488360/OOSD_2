@@ -1,71 +1,74 @@
 package model;
 
 import controller.GameController;
-import view.MainUserInterface;
+import controller.PlayerController;
 
 import java.util.List;
 
 public class Game {
-	private Player player1;
-	private Player player2;
+	private static Game instance = null;
 	private Board board;
-	private MainUserInterface userInterface;
 	private Coordinate currentlySelected = null;
 	private Coordinate destinationSelected = null;
 	private boolean done = false;
 	private Player turn;
-	private int timerInt;
-	private BoardLayout[] boardLayouts;
-	private String layoutName;
 	private GameController gameController; 
-	 
-	public Game(Player player1, Player player2, String layoutName, int timerInt, BoardLayout[] boardLayouts) {
-		this.timerInt = timerInt;
-		this.boardLayouts = boardLayouts;
-		this.layoutName = layoutName;
-		this.player1 = player1;
-		this.player2 = player2;
-		board = new Board();
-		turn = player1;
-		userInterface = new MainUserInterface(board, player1, player2);
+	
+	//Singleton pattern. Make sure there is only one game object
+	public static Game getInstance() {
+		if (instance == null) {
+			instance = new Game();
+		}
 		
-		gameController = new GameController(userInterface, this);
-		userInterface.addGameController(gameController); 
+		return instance;
+	}
+	 
+	private Game() {
+		board = new Board();
 	}
 
-	public void startGame(){
+	public void startGame(Player player1, Player player2, String layoutName, int timerInt, BoardLayout[] boardLayouts) {
 		boolean gameRunning = true;
+		int sec;
+		gameController = new GameController(this, new PlayerController(player1, player2));
 		GameTimer timer = new GameTimer(gameController, timerInt);
-
-		/*if (selectAndPlace(player1)) {
-			selectAndPlace(player2);
-		}*/
 		
-		setupBoard();
+		setupBoard(boardLayouts, layoutName);
+		turn = player1;
 		
-		userInterface.hideSelected();
-		userInterface.updateBoard();
+		gameController.updateBoard();
 		
 		while (gameRunning) {
-			userInterface.updateTurn(turn);
+			gameController.updateTurn(turn);
 			timer.start();
 			
 			while(!done) {
 				try {
 					Thread.sleep(500);
+					sec = timer.checkTime();
+					if (sec == 0) {
+						done = true;
+					} else {
+						gameController.updateTimer(sec);
+					}
 				} catch (InterruptedException e) {
 					System.out.println("Can't put main thread to sleep");
 					e.printStackTrace();
 				}
 			}
 			
-			timer.stop();
-			
 			if (turn == player1) {
 				turn = player2;
 			} else {
 				turn = player1;
 			}
+			
+			if (timer.checkTime() == 0) {
+				System.out.println("Timer ran out");
+				gameController.message("Timer ran out!\n" + turn.getPlayerName() + "'s turn.");
+			}
+			
+			timer.stop();
 			
 			done = false;
 			
@@ -75,7 +78,7 @@ public class Game {
 		}
 	}
 	
-	private void setupBoard() {
+	private void setupBoard(BoardLayout[] boardLayouts, String layoutName) {
 		int b;
 		Coordinate co;
 		
@@ -96,102 +99,8 @@ public class Game {
 	}
 
 	private boolean checkWinning() {
+		// TODO Implement this to check for winning conditions
 		return false;
-	}
-
-	
-	//Leave this here for now
-	
-	/*private boolean selectAndPlace(Player p) {
-		boolean isReady = false;
-		boolean buttonPressed = false;
-		Piece piece = null;
-		String selectedPiece;
-		
-		while (!isReady) {
-			selectedPiece = userInterface.askPiece(p.getName());
-			
-			if (selectedPiece != null) {
-				userInterface.updateSelectedPiece(selectedPiece);
-				
-				switch (selectedPiece) {
-					case "King": piece = new KingPiece(p);
-						break;
-				
-					case "Queen": piece = new QueenPiece(p);
-						break;
-				
-					case "Archer": piece = new ArcherPiece(p);
-						break;
-						
-					case "God": piece = new GodPiece(p);
-						break;
-						
-					case "Healer": piece = new HealerPiece(p);
-						break;
-						
-					case "Soldier": piece = new SoldierPiece(p);
-						break;
-						
-					case "Tank": piece = new TankPiece(p);
-						break;
-						
-					case "Wizard": piece = new WizardPiece(p);
-						break;
-				
-					case "Default Layout" : 
-						board.setPiece(new Coordinate(7, 14), new TestPiece(player1));
-						board.setPiece(new Coordinate(6, 14), new KingPiece(player1));
-						board.setPiece(new Coordinate(5, 14), new ArcherPiece(player1));
-						board.setPiece(new Coordinate(8, 14), new SoldierPiece(player1));
-						board.setPiece(new Coordinate(9, 14), new KingPiece(player1));
-						board.setPiece(new Coordinate(9, 0), new KingPiece(player2));
-						board.setPiece(new Coordinate(8, 0), new QueenPiece(player2));
-						board.setPiece(new Coordinate(7, 0), new TestPiece(player2));
-						board.setPiece(new Coordinate(6, 0), new KingPiece(player2));
-						board.setPiece(new Coordinate(5, 0), new KingPiece(player2));
-						player1.takePoints(500);
-						player2.takePoints(500);
-						userInterface.updatePoints();
-						return false;
-				}
-				
-				while (!buttonPressed) {
-					if (currentlySelected != null) {
-						buttonPressed = true;
-					}
-					
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						System.out.print("Could not put thread to sleep!");
-						e.printStackTrace();
-					}
-				}
-				
-				if (piece != null) {
-					p.takePoints(piece.getCost());
-					userInterface.updatePoints();
-					
-					System.out.println("Placing " + piece.getName() + " at " + currentlySelected.x + "-" + currentlySelected.y);
-					board.setPiece(currentlySelected, piece);
-				}
-				
-				if (p.getPoints() < 30) {
-					isReady = true;
-				}
-				
-				currentlySelected = null;
-				buttonPressed = false;
-			}
-		}
-		return true;
-	}*/
-	
-
-	
-	public void addController(GameController gc){
-		gameController = gc; 
 	}
 	
 	public void passCoordinates(Coordinate coor){
@@ -199,7 +108,7 @@ public class Game {
 		if(currentlySelected == null){ 
 			if (board.getPiece(coor)!= null && turn == board.getPiece(coor).getPlayer()){
 				currentlySelected = coor;
-				gameController.updateSelectedPiece(board.getPiece(currentlySelected).getName());
+				gameController.updateSelectedPiece(board.getPiece(currentlySelected));
 //			display all the places the piece can possibly move to
 				List<Coordinate> co = board.getPiece(currentlySelected).getMoves(currentlySelected);
 				Cell[][] cell = board.getAllCells(); 
@@ -214,9 +123,8 @@ public class Game {
 			} else {
 				System.out.println("There is no piece located here or this piece is not yours");
 			}
-			
-			
 		}
+		
 		else if(sameCoordinates(currentlySelected, coor)){
 			currentlySelected = null; 
 			destinationSelected = null; 
@@ -252,33 +160,33 @@ public class Game {
 	}	
 
 	private void calculateMove() {
-		//List<Coordinate> moves;
+		int attack;
+		int health;
 		
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(destinationSelected) != null) {
 				//If it's an attacking move
 				System.out.println("Attacking!");
 				if (board.getPiece(destinationSelected).getPlayer().equals(turn)) {
-					userInterface.message("You are trying to attack your own piece!");
+					gameController.message("You are trying to attack your own piece!");
 				} else {
-					int attack;
-					int health;
 					attack = board.getPiece(currentlySelected).getStrength();
 					health = board.getPiece(destinationSelected).getCurrentHealth();
 					
 					if (health > attack) {
 						board.getPiece(destinationSelected).takeDamage(attack);
 					} else {
-						turn.addPoints((board.getPiece(destinationSelected).getCost()/4)*3);
+						turn.setPoints(turn.getPoints() + (board.getPiece(destinationSelected).getCost()/4)*3);
 						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
 						board.setPiece(currentlySelected, null);
 						System.out.println("Successful move!");
-						userInterface.updateBoard();
-						userInterface.updatePoints();
-						currentlySelected = null;
-						destinationSelected = null;
-						done = true;
+						gameController.updateBoard();
+						gameController.updatePoints();
 					}
+					System.out.println("Successful attack!");
+					currentlySelected = null;
+					destinationSelected = null;
+					done = true;
 				}
 				
 			} else {
@@ -289,13 +197,12 @@ public class Game {
 					if(board.getAllCells()[destinationSelected.x][destinationSelected.y].canMoveTo == true){
 						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
 						board.setPiece(currentlySelected, null);
-						userInterface.updateBoard();
+						gameController.updateBoard();
 						currentlySelected = null;
 						destinationSelected = null;
 						done = true;
 					}
-				} else
-					System.out.println("That is not " + turn.getName() + "'s piece!");
+				} else System.out.println("That is not " + turn.getPlayerName() + "'s piece!");
 			}
 		} else {
 			//If no piece is under first selection
@@ -305,8 +212,15 @@ public class Game {
 	}
 	
 	public void close(){
-		userInterface.getContentPane().removeAll();
-		userInterface.setVisible(false);
-		userInterface = null;
+		gameController.close();
+		gameController = null;
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void addPiece(String pieceName) {
+		// TODO Implement this so as to allow the user to add new pieces and the cost of points.
 	}
 }

@@ -2,14 +2,16 @@ package controller;
 
 import model.Coordinate;
 import model.Game;
-import view.MainUserInterface;
+import model.Player;
+import model.pieces.Piece;
+import view.ViewMain;
 
 public class GameController {
-	MainUserInterface userInterface;
+	ViewMain userInterface;
 	Game game;
 	
-	public GameController(MainUserInterface userInterface, Game game){
-		this.userInterface = userInterface; 
+	public GameController(Game game, PlayerController playerController){
+		userInterface = new ViewMain(this, game.getBoard(), playerController); 
 		this.game = game; 
 	}
 	
@@ -21,8 +23,8 @@ public class GameController {
 		game.passCoordinates(coordinate);
 	}
 
-	public void updateSelectedPiece(String name) {
-		userInterface.updateSelectedPiece(name);
+	public void updateSelectedPiece(Piece p) {
+		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
 	}
 
 	public void updateBoard() {
@@ -35,6 +37,26 @@ public class GameController {
 
 	public void updateTimer(int sec) {
 		userInterface.updateTimer(sec);
-		
+	}
+	
+	public void message(String m) {
+		userInterface.message(m);
+	}
+
+	public void updateTurn(Player p) {
+		userInterface.updateTurn(p.getPlayerName());
+	}
+
+	public void updatePoints() {
+		userInterface.updatePoints();
+	}
+	
+	public void close() {
+		userInterface.getContentPane().removeAll();
+		userInterface.setVisible(false);
+	}
+
+	public void addPiece(String pieceName) {
+		game.addPiece(pieceName);		
 	}
 }

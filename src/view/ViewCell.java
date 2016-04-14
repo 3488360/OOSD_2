@@ -2,9 +2,10 @@ package view;
 
 import javax.swing.JButton;
 
-import interfaces.Piece;
+import model.pieces.Piece;
 
-public class InterfaceCell extends JButton {
+//Ask if view should have it's own pieces.
+public class ViewCell extends JButton {
 	private static final long serialVersionUID = -7155500879732378953L;
 	
 	private int row;
@@ -13,7 +14,7 @@ public class InterfaceCell extends JButton {
 	boolean isVisible;
 	protected boolean canMoveTo = false;
 	
-	public InterfaceCell (int r, int c, boolean v, Piece p) {
+	public ViewCell (int r, int c, boolean v, Piece p) {
 		row = r;
 		col = c;
 		isVisible = v;
@@ -43,6 +44,7 @@ public class InterfaceCell extends JButton {
 	public boolean getCanMoveTo(){
 		return canMoveTo; 
 	}
+	
 	public void setCanMoveTo(boolean canMove){
 		canMoveTo = canMove; 
 	}

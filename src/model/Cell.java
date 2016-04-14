@@ -1,6 +1,6 @@
 package model;
 
-import interfaces.Piece;
+import model.pieces.Piece;
 
 public class Cell {
 	protected int row;

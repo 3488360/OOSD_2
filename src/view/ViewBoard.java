@@ -10,18 +10,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InterfaceBoard extends JPanel {
+public class ViewBoard extends JPanel {
 	private static final long serialVersionUID = 8695643799420470531L;
 	
 	private final int CELLWIDTH = 40;
 	private final int CELLHEIGHT = 40;
 	private Board board;
-	private InterfaceCell grid[][];
+	private ViewCell grid[][];
 	private GameController gameController; 
 	
-	public InterfaceBoard(Board b) {
+	public ViewBoard(GameController gameController, Board b) {
+		this.gameController = gameController;
 		board = b;
-		grid = new InterfaceCell[board.getHeight()][board.getWidth()];
+		grid = new ViewCell[board.getHeight()][board.getWidth()];
 		
 		ActionListener gridButton = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -31,7 +32,7 @@ public class InterfaceBoard extends JPanel {
 		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new InterfaceCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible(), /*board.getAllCells()[i][a].getPiece()*/null);
+				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible(), /*board.getAllCells()[i][a].getPiece()*/null);
 				grid[i][a].addActionListener(gridButton);
 			}
 		}
@@ -53,11 +54,9 @@ public class InterfaceBoard extends JPanel {
 		}
 	}
 	
-	public void addGameController(GameController gameController){
-		this.gameController = gameController; 
-	}
-	
 	public void updateBoard () {
+		Coordinate co;
+		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				grid[i][a].setCanMoveTo(board.getAllCells()[i][a].getCanMoveTo());
@@ -67,12 +66,13 @@ public class InterfaceBoard extends JPanel {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
-					if (board.getPiece(new Coordinate(i, a)) != null) {
-						if (board.getPiece(new Coordinate(i, a)).getPlayer().getName().equals("Player1"))
+					co = new Coordinate(i, a);
+					if (board.getPiece(co) != null) {
+						if (board.getPiece(co).getPlayer().getName().equals("player1"))
 							grid[i][a].setBackground(Color.YELLOW);
 						else
 							grid[i][a].setBackground(Color.GRAY);
-						grid[i][a].setIcon(board.getPiece(new Coordinate(i, a)).getIcon());
+						grid[i][a].setIcon(board.getPiece(co).getIcon());
 					} else {
 						grid[i][a].setBackground(Color.ORANGE);
 						grid[i][a].setIcon(null);
@@ -86,7 +86,7 @@ public class InterfaceBoard extends JPanel {
 	}
 	
 	private void buttonPressed(ActionEvent e) {
-		InterfaceCell button = (InterfaceCell)e.getSource();
+		ViewCell button = (ViewCell)e.getSource();
 		if (button.getBackground() != Color.WHITE)
 			button.setBackground(Color.WHITE);
 		else

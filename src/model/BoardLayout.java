@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
-import interfaces.Piece;
+import model.pieces.Piece;
 
 public class BoardLayout {
 	private String name;
@@ -31,17 +29,7 @@ public class BoardLayout {
 		return name;
 	}
 	
-	public void printLayout() {
-	    @SuppressWarnings("rawtypes")
-		Iterator it = layout.entrySet().iterator();
-	    while (it.hasNext()) {
-	        @SuppressWarnings("rawtypes")
-			HashMap.Entry pair = (Map.Entry)it.next();
-	        System.out.println(pair.getKey() + " " + ((Coordinate) pair.getKey()).y + " = " + ((Piece) pair.getValue()).getName());
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
-	}
-	
+	//Not used yet
 	public boolean saveLayout() {
 		File file = new File("Layouts.txt");
 		FileWriter fw;

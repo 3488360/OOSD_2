@@ -15,24 +15,22 @@ public class HealerPiece extends AbstractPiece {
     public HealerPiece(Player player) {
         super(player);
         name = "Healer";
-        icon = resizeIcon(new ImageIcon("Healer.png", "Healer"));
+        icon = resizeIcon(new ImageIcon("images/Healer.png", "Healer"));
         maxHealth = 100;
         strength = -50;
         cost = 70;
+        currentHealth = maxHealth;
     }
 
     @Override
     public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
 		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
+		for(int i=-2; i <= 2; i++) {
+			for(int j=-2; j <= 2; j++) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
 		
 		return moves;
     }

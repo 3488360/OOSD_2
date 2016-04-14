@@ -1,6 +1,5 @@
 package model.pieces;
 
-import interfaces.Piece;
 import model.Player;
 
 import javax.swing.*;
@@ -20,7 +19,7 @@ public abstract class AbstractPiece implements Piece {
     *  - God
     *  - Healer
     *  */
-    private int currentHealth;
+    protected int currentHealth;
     protected String name;
     protected int cost;
     protected int maxHealth;

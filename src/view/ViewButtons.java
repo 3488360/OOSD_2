@@ -7,21 +7,18 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.Main;
-
-public class InterfaceButtons extends JPanel {
+/**
+ * Creates a new JPanel that contains the buttons located at the bottom of the screen.
+ *
+ */
+public class ViewButtons extends JPanel {
 	private static final long serialVersionUID = 5295137264520068029L;
 	
-	public InterfaceButtons() {
-		JButton restart = new JButton("Restart");
+	/**
+	 * Creates a new JPanel that contains the buttons located at the bottom of the screen.
+	 */
+	public ViewButtons() {
 		JButton exit = new JButton("Exit");
-		
-		
-		restart.addActionListener(new ActionListener () {
-			public void actionPerformed(ActionEvent e) {
-				restart();
-			}
-		});
 		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
@@ -29,19 +26,12 @@ public class InterfaceButtons extends JPanel {
 			}
 		});
 
-		add(restart);
 		add(exit);
 	}
 	
-	private void restart() {
-		int result = JOptionPane.showConfirmDialog (null, "Are you sure you want to restart?", "Warning", 0);
-		
-		if (result == JOptionPane.YES_OPTION) {
-			System.out.println("Game is restarting!");
-			Main.restartGame();
-		}
-	}
-	
+	/**
+	 * Asks for confirmation and then exits the program.
+	 */
 	private void exit() {
 		int result = JOptionPane.showConfirmDialog (null, "Are you sure you want to exit?", "Warning", 0);
 		

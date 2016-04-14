@@ -1,44 +1,32 @@
 package model;
 
 public class Player {
-	String name;
-	int points;
-	int numPieces;
+	String playerName; 	//The player's name
+	String name;		//If they are player1 or player2
+	int points;			//Points to buy pieces with
 	
 	public Player(String p1) {
 		name = p1;
 		points = 500;
 	}
 	
-	public void setPoints(int p) {
-		points = p;
+	public void setPlayerName (String playerName) {
+		this.playerName = playerName;
 	}
 	
-	public void addPoints(int p) {
-		points += p;
-	}
-	
-	public void takePoints(int p) {
-		points -= p;
-	}
-	
-	public int getPoints() {
-		return points;
+	public String getPlayerName() {
+		return playerName;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public int getNumPieces() {
-		return numPieces;
+	public void setPoints(int p) {
+		points = p;
 	}
 	
-	public void setNumPieces(int i) {
-		numPieces = i;
-	}
-	
-	public void setName (String name) {
-		this.name = name;
+	public int getPoints() {
+		return points;
 	}
 }
