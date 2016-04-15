@@ -1,16 +1,13 @@
 package view;
 
-//Had help from http://stackoverflow.com/questions/8637792/how-to-set-jformattedtextfield-so-it-only-allows-2-numbers
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +26,7 @@ public class ViewStart extends JFrame {
 	private JTextField player1Name;
 	private JTextField player2Name;
 	private JComboBox<String> boardLayout;
-	private JFormattedTextField initTimer;
+	private JTextField initTimer;
 	private BoardLayout[] layouts;
 	private Font subtitle;
 	
@@ -121,7 +118,6 @@ public class ViewStart extends JFrame {
 		JPanel timerGroup = new JPanel();
 		JPanel other = new JPanel();
 		Box box = Box.createVerticalBox();
-		NumberFormat timerFormat = NumberFormat.getNumberInstance();
 		
 		other.setLayout(new BorderLayout());
 		subtitleGame.setFont(subtitle);
@@ -140,8 +136,7 @@ public class ViewStart extends JFrame {
 		boardLayoutGroup.add(boardLayout);
 		box.add(boardLayoutGroup);
 		
-		timerFormat.setMaximumIntegerDigits(4);
-		initTimer = new JFormattedTextField(timerFormat);
+		initTimer = new JTextField();
 		initTimer.setColumns(4);
 		initTimer.setText("60");
 		timerGroup.add(timerLabel);

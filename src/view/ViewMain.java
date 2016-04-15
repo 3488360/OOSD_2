@@ -7,9 +7,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import controller.BoardController;
 import controller.GameController;
 import controller.PlayerController;
-import model.Board;
 import model.Coordinate;
 
 /**
@@ -30,10 +30,10 @@ public class ViewMain extends JFrame {
 	 * Creates the main user interface for the game that displays the board, player details and the timer.
 	 * 
 	 * @param gameController - The controller that will control communication with this interface and the model.
-	 * @param board - The board object that is used to keep track of the board and where pieces are located.
+	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, Board board, PlayerController playerController) {
+	public ViewMain(GameController gameController, BoardController boardController, PlayerController playerController) {
 		this.playerController = playerController;
 		ViewButtons buttons = new ViewButtons();
 		
@@ -44,7 +44,7 @@ public class ViewMain extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.board = new ViewBoard(gameController, board);
+		this.board = new ViewBoard(gameController, boardController);
 		timer = new ViewTimer();
 		
 		initTitle();

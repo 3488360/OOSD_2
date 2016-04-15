@@ -6,14 +6,12 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 public class SoldierPiece extends AbstractPiece {
     /* The Soldier has medium hp, medium attack and a medium move range */
     public SoldierPiece(Player player) {
         super(player);
         name = "Soldier";
-        icon = resizeIcon(new ImageIcon("images/Soldier2.png", "Soldier"));
+        icon = "images/Soldier2.png";
         maxHealth = 200;
         strength = 120;
         cost = 30;

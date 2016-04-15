@@ -1,6 +1,5 @@
 package model.pieces;
 
-import javax.swing.ImageIcon;
 
 import model.Coordinate;
 import model.Player;
@@ -13,8 +12,8 @@ public class TestPiece extends AbstractPiece {
 	public TestPiece(Player player) {
 		super(player); 
 		cost = 0;
-		name = "TestPiece";
-		icon = resizeIcon(new ImageIcon("images/K.png", "Test Piece"));
+		name = "Test";
+		icon = "images/K.png";
 		maxHealth = 10000;
 		strength = 10000;
 		currentHealth = maxHealth;

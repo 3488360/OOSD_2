@@ -115,7 +115,7 @@ public class Main {
 		return layouts;
 	}
 
-	private static Piece getPiece(String name, Player p) {
+	private static PieceInterface getPiece(String name, Player p) {
 		switch (name) {
 			case "King": return new KingPiece(p);
 			

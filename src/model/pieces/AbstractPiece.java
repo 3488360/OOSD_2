@@ -2,11 +2,7 @@ package model.pieces;
 
 import model.Player;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
-public abstract class AbstractPiece implements Piece {
+public abstract class AbstractPiece implements PieceInterface {
 
     /*
     * Side 1:
@@ -24,11 +20,11 @@ public abstract class AbstractPiece implements Piece {
     protected int cost;
     protected int maxHealth;
     protected int strength;
-    protected Icon icon;
+    protected String icon;
     private Player player;
 
     @Override
-    public Icon getIcon() {
+    public String getIcon() {
         return icon;
     }
 
@@ -70,16 +66,5 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public String getName() {
         return name;
-    }
-
-    protected ImageIcon resizeIcon(ImageIcon icon) {
-        Image img = icon.getImage();
-        BufferedImage bi = new BufferedImage(36, 36, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = bi.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(img, 0, 0, 36, 36, null);
-        g.dispose();
-        ImageIcon newIcon = new ImageIcon(bi);
-        return newIcon;
     }
 }

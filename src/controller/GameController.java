@@ -5,7 +5,7 @@ import java.util.List;
 import model.Coordinate;
 import model.Game;
 import model.Player;
-import model.pieces.Piece;
+import model.pieces.PieceInterface;
 import view.ViewMain;
 
 public class GameController {
@@ -13,7 +13,7 @@ public class GameController {
 	Game game;
 	
 	public GameController(Game game, PlayerController playerController){
-		userInterface = new ViewMain(this, game.getBoard(), playerController); 
+		userInterface = new ViewMain(this, new BoardController(game.getBoard()), playerController); 
 		this.game = game; 
 	}
 	
@@ -27,8 +27,8 @@ public class GameController {
 
 	public void updateBoard() {
 		userInterface.updateBoard();
-		
 	}
+	
 	public void hideSelected() {
 		userInterface.hideSelected();
 	}
@@ -58,7 +58,7 @@ public class GameController {
 		game.addPiece(pieceName);		
 	}
 
-	public void updateSelectedPiece(Piece p) {
+	public void updateSelectedPiece(PieceInterface p) {
 		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
 	}
 	

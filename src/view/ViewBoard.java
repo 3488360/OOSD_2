@@ -2,8 +2,8 @@ package view;
 
 import javax.swing.*;
 
+import controller.BoardController;
 import controller.GameController;
-import model.Board;
 import model.Coordinate;
 
 import java.awt.*;
@@ -11,19 +11,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Creates the board in the centre of the interface that the user can interact with.
+ * Is responsible for displaying where pieces are located and shows where they can move/attack.
+ */
 public class ViewBoard extends JPanel {
 	private static final long serialVersionUID = 8695643799420470531L;
 	
 	private final int CELLWIDTH = 40;
 	private final int CELLHEIGHT = 40;
-	private Board board;
 	private ViewCell grid[][];
-	private GameController gameController; 
+	private GameController gameController;
+	private ViewPiece viewPiece;
+	private BoardController boardController;
 	
-	public ViewBoard(GameController gameController, Board b) {
+	public ViewBoard(GameController gameController, BoardController boardCont) {
+		viewPiece = new ViewPiece();
 		this.gameController = gameController;
-		board = b;
-		grid = new ViewCell[board.getHeight()][board.getWidth()];
+		this.boardController = boardCont;
+		grid = new ViewCell[boardController.getHeight()][boardController.getWidth()];
 		
 		ActionListener gridButton = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -31,9 +37,9 @@ public class ViewBoard extends JPanel {
 			}
 		};
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible(), /*board.getAllCells()[i][a].getPiece()*/null);
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				grid[i][a] = new ViewCell(boardController.getAllCells()[i][a].getCol(), boardController.getAllCells()[i][a].getRow(), boardController.getAllCells()[i][a].getVisible());
 				grid[i][a].addActionListener(gridButton);
 			}
 		}
@@ -41,8 +47,8 @@ public class ViewBoard extends JPanel {
 		setLayout(new GridLayout(15, 15));
 		
 		//Adds JButtons or JLabels
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
 					grid[i][a].setBackground(Color.ORANGE);
 					grid[i][a].setForeground(Color.BLACK);
@@ -58,22 +64,30 @@ public class ViewBoard extends JPanel {
 	public void updateBoard () {
 		Coordinate co;
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a].setCanMoveTo(board.getAllCells()[i][a].getCanMoveTo());
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				grid[i][a].setCanMoveTo(boardController.getAllCells()[i][a].getCanMoveTo());
 			}
-		}	
+		}
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
+		//Colour key:
+		//		Orange - Background colour
+		//		Yellow - Player 1 pieces
+		//		Grey - Player 2 pieces
+		//		Green - Cells that the currently selected piece can move to
+		//		Red - Cells that the currently selected piece can attack	<--- To be implemented
+		// 		White - Currently selected cell
+		
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true){
 					co = new Coordinate(i, a);
-					if (board.getPiece(co) != null) {
-						if (board.getPiece(co).getPlayer().getName().equals("player1"))
+					if (boardController.getPiece(co)) {
+						if (boardController.getPiecePlayerColor(co).equals("player1"))
 							grid[i][a].setBackground(Color.YELLOW);
 						else
 							grid[i][a].setBackground(Color.GRAY);
-						grid[i][a].setIcon(board.getPiece(co).getIcon());
+						grid[i][a].setIcon(viewPiece.getIcon(boardController.getPieceName(co), boardController.getPieceIcon(co)));
 					} else {
 						grid[i][a].setBackground(Color.ORANGE);
 						grid[i][a].setIcon(null);
@@ -99,9 +113,9 @@ public class ViewBoard extends JPanel {
 	public void updateCells(List<Coordinate> list) {
 		// turns all the cells the piece can move to green
 		for (Coordinate moveableCoordinates : list) {
-			if (moveableCoordinates.x < board.getWidth()
+			if (moveableCoordinates.x < boardController.getWidth()
 					&& moveableCoordinates.x >= 0
-					&& moveableCoordinates.y < board.getHeight()
+					&& moveableCoordinates.y < boardController.getHeight()
 					&& moveableCoordinates.y >= 0) {
 				grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
 				grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);

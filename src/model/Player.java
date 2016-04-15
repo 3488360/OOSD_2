@@ -1,5 +1,6 @@
 package model;
 
+//Information expert. Stores the player's name and points.
 public class Player {
 	String playerName; 	//The player's name
 	String name;		//If they are player1 or player2

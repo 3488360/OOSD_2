@@ -1,20 +1,18 @@
 package model.pieces;
 
-
 import model.Coordinate;
 import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 public class KingPiece extends AbstractPiece {
+	
 	public KingPiece(Player player) {
 		super(player); 
-		cost = 100;
 		name = "King";
-		icon = resizeIcon(new ImageIcon("images/King.png", "King"));
+		cost = 100;
+		icon = "images/King.png";
 		maxHealth = 500;
 		strength = 50;
 		currentHealth = maxHealth;
@@ -37,5 +35,4 @@ public class KingPiece extends AbstractPiece {
 	public List<Coordinate> getAttackRange(Coordinate co) {
 		return getMoves(co);
 	}
-
 }

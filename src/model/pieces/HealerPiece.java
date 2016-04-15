@@ -7,15 +7,13 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 public class HealerPiece extends AbstractPiece {
     /* The Healer is ranged, has high hp, no attack and a medium move range */
 
     public HealerPiece(Player player) {
         super(player);
         name = "Healer";
-        icon = resizeIcon(new ImageIcon("images/Healer.png", "Healer"));
+        icon = "images/Healer.png";
         maxHealth = 100;
         strength = -50;
         cost = 70;

@@ -6,15 +6,13 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 public class ArcherPiece extends AbstractPiece {
     /* The Archer is ranged, has medium hp, medium attack and a high move range */
 
     public ArcherPiece(Player player) {
     	super(player);
         name = "Archer";
-        icon = resizeIcon(new ImageIcon("images/Archer2.png", "Archer"));
+        icon = "images/Archer2.png";
         maxHealth = 200;
         strength = 90;
         cost = 50;

@@ -3,14 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.pieces.Piece;
+import model.pieces.PieceInterface;
 
+//Information Expert. Keeps track of all cells.
 public class Board {
 	private final int WIDTH = 15;
 	private final int HEIGHT = 15;
 	private Cell cells[][] = new Cell[WIDTH][HEIGHT];
 	
-	Piece[] pieces = new Piece[5]; 
+	PieceInterface[] pieces = new PieceInterface[5]; 
 	
 	public Board () {
 		for (int a = 0; a < WIDTH; a++) {
@@ -36,15 +37,15 @@ public class Board {
 		return HEIGHT;
 	}
 	
-	public void setPiece(Coordinate co, Piece p){
+	public void setPiece(Coordinate co, PieceInterface p){
 		cells[co.x][co.y].setPiece(p);
 	}
 
-	public Piece getPiece(Coordinate co) {
+	public PieceInterface getPiece(Coordinate co) {
 		return (cells[co.x][co.y].getPiece());
 	}
 
-	public List<Coordinate> getMovement(Piece p, Coordinate co) {
+	public List<Coordinate> getMovement(PieceInterface p, Coordinate co) {
 		List<Coordinate> validMovements = new ArrayList<Coordinate>();
 		for(Coordinate coordinate : p.getMoves(co)) {
 			// check bounds:

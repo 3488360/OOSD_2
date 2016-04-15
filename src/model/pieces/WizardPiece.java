@@ -6,14 +6,12 @@ import model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
 public class WizardPiece extends AbstractPiece{
     /* The Wizard is ranged, has low hp, high attack and a medium move range */
     public WizardPiece(Player player) {
         super(player);
         name = "Wizard";
-        icon = resizeIcon(new ImageIcon("images/Wizard.png", "Wizard"));
+        icon = "images/Wizard.png";
         maxHealth = 100;
         strength = 240;
         cost = 50;
@@ -37,5 +35,4 @@ public class WizardPiece extends AbstractPiece{
     public List<Coordinate> getAttackRange(Coordinate co) {
         return null;
     }
-
 }

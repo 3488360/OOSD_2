@@ -11,9 +11,9 @@ public class Game {
 	private boolean done = false;
 	private Player turn;
 	private GameController gameController; 
-	private Move moves;
+	private Move moveDecider;
 	
-	//Singleton pattern. Make sure there is only one game object
+	//Singleton pattern. Makes sure there is only one game object
 	public static Game getInstance() {
 		if (instance == null) {
 			instance = new Game();
@@ -25,12 +25,21 @@ public class Game {
 		board = new Board();
 	}
 
+	/**
+	 * Starts the game. Sets up the board first, then keeps track of whose turn it is.
+	 * 
+	 * @param player1 - The player 1 object.
+	 * @param player2 - The player 2 object.
+	 * @param layoutName - The selected board layout to load.
+	 * @param timerInt - The timer's starting time as given by the user.
+	 * @param boardLayouts - An array of all the boardLayouts as loaded from the Layouts file.
+	 */
 	public void startGame(Player player1, Player player2, String layoutName, int timerInt, BoardLayout[] boardLayouts) {
 		boolean gameRunning = true;
 		int sec;
 		gameController = new GameController(this, new PlayerController(player1, player2));
 		GameTimer timer = new GameTimer(gameController, timerInt);
-		moves = new Move(board, gameController);
+		moveDecider = new Move(board, gameController);
 		
 		setupBoard(boardLayouts, layoutName);
 		turn = player1;
@@ -107,13 +116,15 @@ public class Game {
 		if (currentlySelected == null) {
 			currentlySelected = co;
 			if (board.getPiece(currentlySelected) != null) {
+				//There is a piece
 				gameController.updateSelectedPiece(board.getPiece(co));
-				System.out.println("There is a piece located here");
 				if (turn == board.getPiece(currentlySelected).getPlayer()) {
-					System.out.println("The piece belongs to the current player");
+					//If that piece belongs to the current player
 					gameController.updateMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
-					moves.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
+					moveDecider.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
 				}
+			} else {
+				currentlySelected = null;
 			}
 		} else if (sameCoordinates(currentlySelected, co)) {
 			currentlySelected = null;
@@ -122,16 +133,15 @@ public class Game {
 			gameController.updateBoard();
 		} else {
 			destinationSelected = co;
-			moves.setCoordinates(currentlySelected, destinationSelected, turn);
+			moveDecider.setCoordinates(currentlySelected, destinationSelected, turn);
 			
 			currentlySelected = null;
 			destinationSelected = null;
-			if(moves.determineMove())
+			if(moveDecider.determineMove())
 				done = true;  
 			gameController.hideSelected();
 			gameController.updateBoard();
 		}
-		
 	}
 	
 	private boolean sameCoordinates(Coordinate co, Coordinate dest){
@@ -154,6 +164,7 @@ public class Game {
 	public void close(){
 		gameController.close();
 		gameController = null;
+		instance = null;
 	}
 
 	public Board getBoard() {
