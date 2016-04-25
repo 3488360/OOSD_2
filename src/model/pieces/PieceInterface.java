@@ -1,14 +1,11 @@
-package interfaces;
+package model.pieces;
 
 import model.Coordinate;
 import model.Player;
 
-import javax.swing.*;
 import java.util.List;
 
-public interface Piece {
-
-
+public interface PieceInterface {
 	public List<Coordinate> getMoves(Coordinate coordinate);
 	public List<Coordinate> getAttackRange(Coordinate coordinate);
 
@@ -21,7 +18,7 @@ public interface Piece {
 
 	public Player getPlayer();
 
-	public Icon getIcon();
+	public String getIcon();
 
 
 }

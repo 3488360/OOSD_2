@@ -1,6 +1,5 @@
 package model.pieces;
 
-import javax.swing.ImageIcon;
 
 import model.Coordinate;
 import model.Player;
@@ -9,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestPiece extends AbstractPiece {
-
+	//A piece that is meant for testing with, not meant for regular gameplay
 	public TestPiece(Player player) {
 		super(player); 
 		cost = 0;
-		name = "TestPiece";
-		icon = resizeIcon(new ImageIcon("K.png", "Test Piece"));
+		name = "Test";
+		icon = "images/K.png";
 		maxHealth = 10000;
 		strength = 10000;
+		currentHealth = maxHealth;
 	}
 
 	@Override

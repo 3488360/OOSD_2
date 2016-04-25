@@ -1,7 +1,5 @@
 package model.pieces;
 
-import javax.swing.ImageIcon;
-
 import model.Coordinate;
 import model.Player;
 
@@ -13,41 +11,28 @@ public class QueenPiece extends AbstractPiece {
 	public QueenPiece (Player player) {
 		super(player);
 		name = "Queen";
-		cost = 80;
-		icon = resizeIcon(new ImageIcon("Queen.png", "Queen"));
-		maxHealth = 400;
-		strength = 200;
+		cost = 100;
+		icon = "images/Queen.png";
+		maxHealth = 250;
+		strength = 100;
+		currentHealth = maxHealth;
 	}
 
 	@Override
 	public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
 		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
+		for(int i=-1; i <= 1; i++) {
+			for(int j=-1; j <= 1; j++) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
 		
 		return moves;
 	}
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		List<Coordinate> moves = new ArrayList<Coordinate>();
-		
-		moves.add(new Coordinate(co.x - 1, co.y - 1));
-		moves.add(new Coordinate(co.x, co.y - 1));
-		moves.add(new Coordinate(co.x + 1, co.y - 1));
-		moves.add(new Coordinate(co.x - 1, co.y));
-		moves.add(new Coordinate(co.x + 1, co.y));
-		moves.add(new Coordinate(co.x - 1, co.y + 1));
-		moves.add(new Coordinate(co.x, co.y + 1));
-		moves.add(new Coordinate(co.x + 1, co.y + 1));
-		
-		return moves;
+		return null;
 	}
 }
