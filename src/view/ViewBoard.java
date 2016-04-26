@@ -5,6 +5,7 @@ import javax.swing.*;
 import controller.BoardController;
 import controller.GameController;
 import model.Coordinate;
+import model.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -110,16 +111,39 @@ public class ViewBoard extends JPanel {
 		gameController.passCoordinates(new Coordinate(button.getCol(), button.getRow())); 
 	}
 
-	public void updateCells(List<Coordinate> list) {
-		// turns all the cells the piece can move to green
-		for (Coordinate moveableCoordinates : list) {
-			if (moveableCoordinates.x < boardController.getWidth()
-					&& moveableCoordinates.x >= 0
-					&& moveableCoordinates.y < boardController.getHeight()
-					&& moveableCoordinates.y >= 0) {
-				grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
-				grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
-			}
+	public void updateCells(List<Coordinate> list, List<Coordinate> attackRange, Coordinate currentlySelected){
+		// turns all the cells the piece can move to green and all sqaures the piece can attack to red
+		for(Coordinate moveableCoordinates : list) {
+			 if(withinBoardDimensions(moveableCoordinates)){ 
+				 grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
+				 grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
+			 }
 		}
+		for(Coordinate attackCoordinates : attackRange){
+			if(withinBoardDimensions(attackCoordinates)){
+				if(grid[attackCoordinates.x][attackCoordinates.y].getCanMoveTo()){
+					if(boardController.getPiece(attackCoordinates)){
+						if(!(boardController.getPlayer(attackCoordinates).equals(boardController.getPlayer(currentlySelected)))){
+							grid[attackCoordinates.x][attackCoordinates.y].setBackground(Color.RED); 	
+						}
+					}	
+				}
+			}	
+		}
+	}	
+			
+	
+	
+	private boolean withinBoardDimensions(Coordinate moveableCoordinates){
+		if(moveableCoordinates.x < boardController.getWidth()
+				&& moveableCoordinates.x >= 0
+				&& moveableCoordinates.y < boardController.getHeight()
+				&& moveableCoordinates.y >= 0){
+				return true;
+		}		
+		return false;		
 	}
+		
+		
+	
 }

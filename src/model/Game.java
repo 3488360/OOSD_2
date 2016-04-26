@@ -120,8 +120,10 @@ public class Game {
 				gameController.updateSelectedPiece(board.getPiece(co));
 				if (turn == board.getPiece(currentlySelected).getPlayer()) {
 					//If that piece belongs to the current player
-					gameController.updateMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
+					gameController.updateMoves(board.getPiece(currentlySelected).getMoves(currentlySelected),board.getPiece(currentlySelected).getAttackRange(currentlySelected), currentlySelected);
 					moveDecider.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
+/* THIS NEED TO BE IMPLEMENTED AS THE ATTACK RANGE IS NOT THE SAME */
+//					moveDecider.setAttackRange(board.getPiece(currentlySelected).getAttackRange(currentlySelected)); 
 				}
 			} else {
 				currentlySelected = null;
@@ -151,15 +153,6 @@ public class Game {
 			return false; 
 		}
 	}
-	
-	//Keep for now
-/*	private void turnAllMoveableSquaresOff(){
-		for(int i = 0; i < board.getHeight(); i++){
-			for(int j = 0; j < board.getWidth(); j++){
-				board.getAllCells()[i][j].setCanMoveTo(false);
-			}
-		}
-	}*/	
 	
 	public void close(){
 		gameController.close();

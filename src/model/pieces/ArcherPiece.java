@@ -34,6 +34,14 @@ public class ArcherPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+		List<Coordinate> moves = new ArrayList<Coordinate>();
+		
+		for(int i=-4; i <= 4; i++) {
+			for(int j=-2; j <= 2; j++) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+		
+	return moves;
     }
 }

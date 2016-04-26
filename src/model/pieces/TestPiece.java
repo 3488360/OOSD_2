@@ -32,7 +32,13 @@ public class TestPiece extends AbstractPiece {
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		return null;
+		List<Coordinate> moves = new ArrayList<Coordinate>();
+		for (int i = 0; i < 15; i++) {
+			for (int a = 0; a < 15; a++) {
+				moves.add(new Coordinate(i, a));
+			}
+		}
+		return moves;
 	}
 
 }
