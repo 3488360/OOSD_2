@@ -9,8 +9,8 @@ import model.pieces.PieceInterface;
 import view.ViewMain;
 
 public class GameController {
-	ViewMain userInterface;
-	Game game;
+	private ViewMain userInterface;
+	private Game game;
 	
 	public GameController(Game game, PlayerController playerController){
 		userInterface = new ViewMain(this, new BoardController(game.getBoard()), playerController); 

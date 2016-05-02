@@ -12,7 +12,7 @@ public class PlayerController {
 	}
 	
 	public int getPoints(String name) {
-		if (name == player1.getName()) {
+		if (name.equals(player1.getName())) {
 			return player1.getPoints();
 		}
 		
@@ -20,7 +20,7 @@ public class PlayerController {
 	}
 	
 	public String getPlayerName(String name) {
-		if (name == player1.getName()) {
+		if (name.equals(player1.getName())) {
 			return player1.getPlayerName();
 		}
 		

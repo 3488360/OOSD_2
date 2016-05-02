@@ -50,7 +50,7 @@ public class ViewBoard extends JPanel {
 		//Adds JButtons or JLabels
 		for (int i = 0; i < boardController.getWidth(); i++) {
 			for (int a = 0; a < boardController.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
+				if (grid[i][a].getVisible()){
 					grid[i][a].setBackground(Color.ORANGE);
 					grid[i][a].setForeground(Color.BLACK);
 					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
@@ -81,7 +81,7 @@ public class ViewBoard extends JPanel {
 		
 		for (int i = 0; i < boardController.getWidth(); i++) {
 			for (int a = 0; a < boardController.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
+				if (grid[i][a].getVisible()){
 					co = new Coordinate(i, a);
 					if (boardController.getPiece(co)) {
 						if (boardController.getPiecePlayerColor(co).equals("player1"))
@@ -93,7 +93,7 @@ public class ViewBoard extends JPanel {
 						grid[i][a].setBackground(Color.ORANGE);
 						grid[i][a].setIcon(null);
 					}
-					if(grid[i][a].canMoveTo == true){
+					if(grid[i][a].canMoveTo){
 						grid[i][a].setBackground(Color.GREEN);
 					}
 				}

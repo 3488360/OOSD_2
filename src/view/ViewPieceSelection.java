@@ -85,7 +85,6 @@ public class ViewPieceSelection extends JPanel {
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(img, 0, 0, 20, 20, null);
         g.dispose();
-        ImageIcon newIcon = new ImageIcon(bi);
-        return newIcon;
+        return new ImageIcon(bi);
     }
 }
