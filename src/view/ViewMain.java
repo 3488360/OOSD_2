@@ -124,9 +124,9 @@ public class ViewMain extends JFrame {
 		timer.addSelectedPiece(name, currentHealth, currentStrength);
 	}
 	
-	public void updateMoves(List<Coordinate> list) {
+	public void updateMoves(List<Coordinate> list, List<Coordinate> attackRange, Coordinate currentlySelected) {
 		if(list != null)
-			board.updateCells(list);
+			board.updateCells(list, attackRange, currentlySelected);
 	}
 
 	/**

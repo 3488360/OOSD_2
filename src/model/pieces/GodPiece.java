@@ -35,7 +35,15 @@ public class GodPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+    	List<Coordinate> range = new ArrayList<Coordinate>();
+    	
+    	for(int i=-4; i <= 3; i+=2) {
+			for(int j=-4; j <= 3; j+=2) {
+				range.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+    	
+    	return range;
     }
 
 }

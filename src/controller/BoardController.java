@@ -3,6 +3,7 @@ package controller;
 import model.Board;
 import model.Cell;
 import model.Coordinate;
+import model.Player;
 
 /**
  * Responsible for communication between the board that is displayed and the board in the model.
@@ -41,8 +42,13 @@ public class BoardController {
 	public boolean getPiece(Coordinate co) {
 		if (board.getPiece(co) == null)
 			return false;
-					
+				
 		return true;
+	}
+	
+	public Player getPlayer(Coordinate co){
+		return board.getPlayer(co);
+		
 	}
 
 }

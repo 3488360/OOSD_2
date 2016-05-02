@@ -33,6 +33,14 @@ public class WizardPiece extends AbstractPiece{
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+    	List<Coordinate> moves = new ArrayList<Coordinate>();
+		
+		for(int i=-1; i <= 1; i++) {
+			for(int j=-4; j <= 4; j++) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+		
+		return moves;
     }
 }

@@ -62,7 +62,7 @@ public class GameController {
 		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
 	}
 	
-	public void updateMoves(List<Coordinate> moves) {
-		userInterface.updateMoves(moves);
+	public void updateMoves(List<Coordinate> moves, List<Coordinate> attackRange, Coordinate currentlySelected) {
+		userInterface.updateMoves(moves, attackRange, currentlySelected);
 	}
 }

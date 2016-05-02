@@ -34,7 +34,15 @@ public class TankPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+		List<Coordinate> moves = new ArrayList<Coordinate>();
+		
+		for(int i=-1; i <= 1; i+=1) {
+			for(int j=-1; j <= 1; j+=2) {
+				moves.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+		
+		return moves;
     }
 
 }
