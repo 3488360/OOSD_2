@@ -8,7 +8,7 @@ public class Move {
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
 	private Board board;
-	private Player player; 
+	private String player; 
 	private List<Coordinate> list;
 	private GameController gameController; 
 	
@@ -17,7 +17,7 @@ public class Move {
 		gameController = gc; 
 	}
 	
-	public void setCoordinates(Coordinate current, Coordinate destination, Player currentPlayer){
+	public void setCoordinates(Coordinate current, Coordinate destination, String currentPlayer){
 		currentlySelected = current;
 		destinationSelected = destination;
 		player = currentPlayer;
@@ -48,14 +48,23 @@ public class Move {
 		return false;
 	}
 	
+	private boolean canAttack() {
+		List<Coordinate> attackRange = board.getAttackRange(currentlySelected, player);
+		if (list != null){
+			for(Coordinate lists : attackRange){
+				if(lists.x == destinationSelected.x && lists.y == destinationSelected.y)
+					return true; 
+			}
+		}
+		return false;
+	}
+	
 	private boolean attackMove(){
-		if (board.getPiece(destinationSelected).getPlayer().equals(player)) {
+		if (board.getPiece(destinationSelected).getPlayerName() == player) {
 			gameController.message("You are trying to attack your own piece!");
 			return false;
-		} 
-		else 
-		{
-			if(canMoveTo()){
+		} else {
+			if(canAttack()){
 				int attack;
 				int health;
 				attack = board.getPiece(currentlySelected).getStrength();
@@ -64,7 +73,7 @@ public class Move {
 				if (health > attack) {
 					board.getPiece(destinationSelected).takeDamage(attack);
 				} else {
-					player.setPoints(player.getPoints() + (board.getPiece(destinationSelected).getCost() / 4) * 3);
+//					player.setPoints(player.getPoints() + (board.getPiece(destinationSelected).getCost() / 4) * 3);
 					board.setPiece(destinationSelected,	board.getPiece(currentlySelected));
 					board.setPiece(currentlySelected, null);
 					gameController.updateBoard();

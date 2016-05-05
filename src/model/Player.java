@@ -2,9 +2,9 @@ package model;
 
 //Information expert. Stores the player's name and points.
 public class Player {
-	String playerName; 	//The player's name
-	String name;		//If they are player1 or player2
-	int points;			//Points to buy pieces with
+	private String playerName; 	//The player's name
+	private String name;		//If they are player1 or player2
+	private int points;			//Points to buy pieces with
 	
 	public Player(String p1) {
 		name = p1;

@@ -4,25 +4,26 @@ import java.util.List;
 
 import model.Coordinate;
 import model.Game;
+import model.GameTimer;
 import model.Player;
 import model.pieces.PieceInterface;
 import view.ViewMain;
 
 public class GameController {
-	ViewMain userInterface;
-	Game game;
+	private ViewMain userInterface;
+	private Game game;
 	
-	public GameController(Game game, PlayerController playerController){
-		userInterface = new ViewMain(this, new BoardController(game.getBoard()), playerController); 
+	public GameController(Game game, PlayerController playerController, ButtonController buttonController, GameTimer timer) {
 		this.game = game; 
+		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer); 
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 	
 	public void update() {
 		userInterface.updateBoard();
-	}
-
-	public void passCoordinates(Coordinate coordinate) {
-		game.passCoordinates(coordinate);
 	}
 
 	public void updateBoard() {
@@ -31,10 +32,6 @@ public class GameController {
 	
 	public void hideSelected() {
 		userInterface.hideSelected();
-	}
-
-	public void updateTimer(int sec) {
-		userInterface.updateTimer(sec);
 	}
 	
 	public void message(String m) {
@@ -54,15 +51,19 @@ public class GameController {
 		userInterface.setVisible(false);
 	}
 
-	public void addPiece(String pieceName) {
-		game.addPiece(pieceName);		
-	}
-
 	public void updateSelectedPiece(PieceInterface p) {
 		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
 	}
 	
-	public void updateMoves(List<Coordinate> moves, List<Coordinate> attackRange, Coordinate currentlySelected) {
-		userInterface.updateMoves(moves, attackRange, currentlySelected);
+	public void updateMoves(List<Coordinate> moves) {
+		userInterface.updateMoves(moves);
+	}
+	
+	public void updateAttackRange(List<Coordinate> attackRange) {
+		userInterface.updateAttackRange(attackRange);
+	}
+
+	public void pause() {
+		game.pause();
 	}
 }

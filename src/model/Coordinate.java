@@ -1,7 +1,10 @@
 package model;
 
+import java.io.Serializable;
+
 //Code used from http://www.javaworld.com/article/2074996/hashcode-and-equals-method-in-java-object---a-pragmatic-concept.html
-public class Coordinate {
+public class Coordinate implements Serializable {
+	private static final long serialVersionUID = -5706916632698497786L;
 	public int x;
 	public int y; 
 	

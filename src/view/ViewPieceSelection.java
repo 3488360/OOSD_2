@@ -13,16 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.GameController;
+import controller.ButtonController;
 
 //Not implemented yet. It will add a panel of JButtons that the players can use to add more pieces to the board.
 public class ViewPieceSelection extends JPanel {
 	private static final long serialVersionUID = -7645116281798164489L;
 	
-	private GameController gameController;
+	private ButtonController buttonController;
 	
-	public ViewPieceSelection(GameController gc) {
-		this.gameController = gc;
+	public ViewPieceSelection(ButtonController bc) {
+		this.buttonController = bc;
 		add(pieces());
 	}
 	
@@ -73,12 +73,10 @@ public class ViewPieceSelection extends JPanel {
 	}
 	
 	private void selectAction(ActionEvent e) {
-		JButton btn = (JButton)e.getSource();
-		System.out.println(btn.getText());
-		gameController.addPiece(btn.getText());
+		buttonController.addPiece(((JButton) e.getSource()).getText());
 	}
 	
-    protected ImageIcon resizeIcon(ImageIcon icon) {
+    private ImageIcon resizeIcon(ImageIcon icon) {
         Image img = icon.getImage();
         BufferedImage bi = new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = bi.createGraphics();

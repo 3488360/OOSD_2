@@ -1,15 +1,15 @@
 package model.pieces;
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KingPiece extends AbstractPiece {
-	
-	public KingPiece(Player player) {
-		super(player); 
+	private static final long serialVersionUID = -8222583134405858015L;
+
+	public KingPiece(String playerName) {
+		super(playerName); 
 		name = "King";
 		cost = 100;
 		icon = "images/King.png";
@@ -33,14 +33,6 @@ public class KingPiece extends AbstractPiece {
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		List<Coordinate> moves = new ArrayList<Coordinate>();
-		
-		for(int i=-1; i <= 1; i++) {
-			for(int j=-1; j <= 1; j++) {
-				moves.add(new Coordinate(co.x + i, co.y + j));
-			}
-		}
-		
-		return moves;
+		return getMoves(co);
 	}
 }

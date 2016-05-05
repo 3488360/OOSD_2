@@ -1,17 +1,16 @@
 package model.pieces;
 
-
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GodPiece extends AbstractPiece {
     /* The God has medium hp, high attack and a high move range */
+	private static final long serialVersionUID = 6150525204578147335L;
 
-    public GodPiece(Player player) {
-        super(player);
+	public GodPiece(String playerName) {
+        super(playerName);
         name = "God";
         icon = "images/God.png";
         maxHealth = 200;
@@ -35,15 +34,15 @@ public class GodPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-    	List<Coordinate> range = new ArrayList<Coordinate>();
-    	
-    	for(int i=-4; i <= 3; i+=2) {
-			for(int j=-4; j <= 3; j+=2) {
-				range.add(new Coordinate(co.x + i, co.y + j));
+		List<Coordinate> attacks = new ArrayList<Coordinate>();
+		
+		for(int i=-1; i <= 1; i++) {
+			for(int j=-1; j <= 1; j++) {
+				attacks.add(new Coordinate(co.x + i, co.y + j));
 			}
 		}
-    	
-    	return range;
+		
+		return attacks;
     }
 
 }
