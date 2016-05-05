@@ -1,19 +1,19 @@
 package model;
 
-import model.pieces.PieceInterface;
+import model.pieces.Piece;
 
-//Information expert. Keeps track of the settings of each individual cell.
 public class Cell {
 	protected int row;
 	protected int col;
 	protected boolean isVisible;
-	private PieceInterface pieceOnSquare = null; 
+	private Piece pieceOnSquare = null; 
 	protected boolean canMoveTo = false;
 
 	public Cell (int i, int j, boolean visible) {
 		row = i;
 		col = j;
 		isVisible = visible;
+		
 	}
 	
 	public int getRow() {
@@ -28,11 +28,11 @@ public class Cell {
 		return isVisible;
 	}
 	
-	public PieceInterface getPiece(){
+	public Piece getPiece(){
 		return pieceOnSquare; 
 	}
 	
-	public void setPiece(PieceInterface piece){
+	public void setPiece(Piece piece){
 		pieceOnSquare = piece;  
 	}
 	

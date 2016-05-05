@@ -1,20 +1,20 @@
 package model.pieces;
 
+import javax.swing.ImageIcon;
 
 import model.Coordinate;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestPiece extends AbstractPiece {
-	private static final long serialVersionUID = 7050293379051739054L;
-
 	//A piece that is meant for testing with, not meant for regular gameplay
-	public TestPiece(String playerName) {
-		super(playerName); 
+	public TestPiece(Player player) {
+		super(player); 
 		cost = 0;
-		name = "Test";
-		icon = "images/K.png";
+		name = "TestPiece";
+		icon = resizeIcon(new ImageIcon("images/K.png", "Test Piece"));
 		maxHealth = 10000;
 		strength = 10000;
 		currentHealth = maxHealth;
@@ -33,7 +33,7 @@ public class TestPiece extends AbstractPiece {
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		return getMoves(co);
+		return null;
 	}
 
 }

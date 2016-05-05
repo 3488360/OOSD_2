@@ -1,84 +1,40 @@
 package model;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import controller.ButtonController;
 import controller.GameController;
 import controller.PlayerController;
-import model.pieces.ArcherPiece;
-import model.pieces.GodPiece;
-import model.pieces.HealerPiece;
-import model.pieces.KingPiece;
-import model.pieces.PieceInterface;
-import model.pieces.QueenPiece;
-import model.pieces.SoldierPiece;
-import model.pieces.TankPiece;
-import model.pieces.TestPiece;
-import model.pieces.WizardPiece;
 
-public class Game implements Observer {
+import java.util.List;
+
+public class Game {
 	private static Game instance = null;
 	private Board board;
+	private Coordinate currentlySelected = null;
+	private Coordinate destinationSelected = null;
 	private boolean done = false;
 	private Player turn;
 	private GameController gameController; 
-	private int timerTime = 60;
-	private int timerInt;
-	private PlayerController playerController;
 	
-	//Singleton pattern. Makes sure there is only one game object
+	//Singleton pattern. Make sure there is only one game object
 	public static Game getInstance() {
 		if (instance == null) {
 			instance = new Game();
 		}
+		
 		return instance;
 	}
-	
+	 
 	private Game() {
 		board = new Board();
 	}
 
-	/**
-	 * Starts the game. Sets up the board first, then keeps track of whose turn it is.
-	 * 
-	 * @param player1 - The player 1 object.
-	 * @param player2 - The player 2 object.
-	 * @param layoutName - The selected board layout to load.
-	 * @param timerInt - The timer's starting time as given by the user.
-	 * @param boardLayouts - An array of all the boardLayouts as loaded from the Layouts file.
-	 */
-	public void startGame(PlayerController playerController, BoardLayout layout, int timerInt, ButtonController buttonController) {
+	public void startGame(Player player1, Player player2, String layoutName, int timerInt, BoardLayout[] boardLayouts) {
 		boolean gameRunning = true;
-		this.timerInt = timerInt;
-		Move moveDecider;
-		Player player1 = playerController.getPlayer1();
-		Player player2 = playerController.getPlayer2();
-		this.playerController = playerController;
-		GameTimer timer;
+		int sec;
+		gameController = new GameController(this, new PlayerController(player1, player2));
+		GameTimer timer = new GameTimer(gameController, timerInt);
 		
-		if (layout.getCurrentTime() == -1)
-			timer = new GameTimer(timerInt);
-		else
-			timer = new GameTimer(timerInt, layout.getCurrentTime());
-			
-		timer.addObserver(this);
-		gameController = new GameController(this, playerController, buttonController, timer);
-		moveDecider = new Move(board, gameController);
-		buttonController.setGameVariables(board, this, gameController, moveDecider);
-		
-		setupBoard(layout);
-		
-		if (layout.getTurn() == null) {
-			turn = player1;
-		} else {
-			if (layout.getTurn() == "player1")
-				turn = player1;
-			else
-				turn = player2;
-		}
-			
-		setupGame(layout, player2, player2);
+		setupBoard(boardLayouts, layoutName);
+		turn = player1;
 		
 		gameController.updateBoard();
 		
@@ -89,8 +45,11 @@ public class Game implements Observer {
 			while(!done) {
 				try {
 					Thread.sleep(500);
-					if (timerTime == 0) {
+					sec = timer.checkTime();
+					if (sec == 0) {
 						done = true;
+					} else {
+						gameController.updateTimer(sec);
 					}
 				} catch (InterruptedException e) {
 					System.out.println("Can't put main thread to sleep");
@@ -104,7 +63,7 @@ public class Game implements Observer {
 				turn = player1;
 			}
 			
-			if (timerTime == 0) {
+			if (timer.checkTime() == 0) {
 				System.out.println("Timer ran out");
 				gameController.message("Timer ran out!\n" + turn.getPlayerName() + "'s turn.");
 			}
@@ -117,35 +76,23 @@ public class Game implements Observer {
 				gameRunning = false;
 			}
 		}
-		timer.deleteObserver(this);
 	}
 	
-	private void setupGame(BoardLayout layout, Player player1, Player player2) {
-		if (layout.getPlayer1Name() != null) {
-			player1.setPlayerName(layout.getPlayer1Name());
-		}
-		
-		if (layout.getPlayer2Name() != null) {
-			player2.setPlayerName(layout.getPlayer2Name());
-		}
-		
-		if (layout.getPlayer1Points() != -1) {
-			player1.setPoints(layout.getPlayer1Points());
-		}
-		
-		if (layout.getPlayer2Points() != -1) {
-			player2.setPoints(layout.getPlayer2Points());
-		}
-	}
-	
-	private void setupBoard(BoardLayout layout) {
+	private void setupBoard(BoardLayout[] boardLayouts, String layoutName) {
+		int b;
 		Coordinate co;
+		
+		for (b = 0; b < boardLayouts.length; b++) {
+			if (layoutName.equals(boardLayouts[b].getName())) {
+				break;
+			}
+		}
 		
 		for (int i = 0; i < 15; i++) {
 			for (int a = 0; a < 15; a++) {
 				co = new Coordinate(i, a);
-				if (layout.getPiece(co) != null) {
-					board.setPiece(co, layout.getPiece(co));
+				if (boardLayouts[b].getPiece(co) != null) {
+					board.setPiece(co, boardLayouts[b].getPiece(co));
 				}
 			}
 		}
@@ -156,84 +103,124 @@ public class Game implements Observer {
 		return false;
 	}
 	
-	public void pause() {
-		// TODO Auto-generated method stub
+	public void passCoordinates(Coordinate coor){
+//		determine if the coordinates selected are valid or not 
+		if(currentlySelected == null){ 
+			if (board.getPiece(coor)!= null && turn == board.getPiece(coor).getPlayer()){
+				currentlySelected = coor;
+				gameController.updateSelectedPiece(board.getPiece(currentlySelected));
+//			display all the places the piece can possibly move to
+				List<Coordinate> co = board.getPiece(currentlySelected).getMoves(currentlySelected);
+				Cell[][] cell = board.getAllCells(); 
+				for(int i = 0; i < co.size(); i++){
+					if(co.get(i).x < board.getWidth() && co.get(i).x >= 0 && co.get(i).y < board.getHeight() && co.get(i).y>= 0){
+						if(board.getAllCells()[co.get(i).x][co.get(i).y].getVisible() == true){
+							cell[co.get(i).x][co.get(i).y].setCanMoveTo(true);
+						}
+					}
+				}
+				gameController.updateBoard();
+			} else {
+				System.out.println("There is no piece located here or this piece is not yours");
+			}
+		}
+		
+		else if(sameCoordinates(currentlySelected, coor)){
+			currentlySelected = null; 
+			destinationSelected = null; 
+			gameController.hideSelected();
+			turnAllMoveableSquaresOff();
+		}
+		else{
+			destinationSelected = coor; 
+			calculateMove(); 
+			currentlySelected = null;
+			destinationSelected = null;
+			gameController.hideSelected();
+			turnAllMoveableSquaresOff();
+
+		}
+		
+		gameController.updateBoard();
 	}
 	
-	//Keep for now
-/*	private void turnAllMoveableSquaresOff(){
+	private boolean sameCoordinates(Coordinate cur, Coordinate dest){
+		if(dest!=null && cur.x == dest.x && cur.y == dest.y) { 
+			return true;
+		} else {
+			return false; 
+		}
+	}
+	private void turnAllMoveableSquaresOff(){
 		for(int i = 0; i < board.getHeight(); i++){
 			for(int j = 0; j < board.getWidth(); j++){
 				board.getAllCells()[i][j].setCanMoveTo(false);
 			}
 		}
-	}*/	
+	}	
+
+	private void calculateMove() {
+		int attack;
+		int health;
+		
+		if (board.getPiece(currentlySelected) != null) {
+			if (board.getPiece(destinationSelected) != null) {
+				//If it's an attacking move
+				System.out.println("Attacking!");
+				if (board.getPiece(destinationSelected).getPlayer().equals(turn)) {
+					gameController.message("You are trying to attack your own piece!");
+				} else {
+					attack = board.getPiece(currentlySelected).getStrength();
+					health = board.getPiece(destinationSelected).getCurrentHealth();
+					
+					if (health > attack) {
+						board.getPiece(destinationSelected).takeDamage(attack);
+					} else {
+						turn.setPoints(turn.getPoints() + (board.getPiece(destinationSelected).getCost()/4)*3);
+						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
+						board.setPiece(currentlySelected, null);
+						System.out.println("Successful move!");
+						gameController.updateBoard();
+						gameController.updatePoints();
+					}
+					System.out.println("Successful attack!");
+					currentlySelected = null;
+					destinationSelected = null;
+					done = true;
+				}
+				
+			} else {
+				//If it's moving the piece
+				if (turn.equals(board.getPlayer(currentlySelected))) {
+					System.out.println("Moving!");
+//					moves = board.getMovement(board.getPiece(currentlySelected), currentlySelected);
+					if(board.getAllCells()[destinationSelected.x][destinationSelected.y].canMoveTo == true){
+						board.setPiece(destinationSelected, board.getPiece(currentlySelected));
+						board.setPiece(currentlySelected, null);
+						gameController.updateBoard();
+						currentlySelected = null;
+						destinationSelected = null;
+						done = true;
+					}
+				} else System.out.println("That is not " + turn.getPlayerName() + "'s piece!");
+			}
+		} else {
+			//If no piece is under first selection
+			currentlySelected = null;
+			destinationSelected = null;
+		}
+	}
+	
+	public void close(){
+		gameController.close();
+		gameController = null;
+	}
 
 	public Board getBoard() {
 		return board;
 	}
 
-	public void addPiece(String pieceName, Coordinate co) {
-		PieceInterface p = getPiece(pieceName, turn.getPlayerName());
-		if (turn.getPoints() >= p.getCost()) {
-			board.setPiece(co, p);
-			turn.setPoints(turn.getPoints() - p.getCost());
-		} else {
-			gameController.message("Not enough points to buy that piece.");
-		}
-		
-	}
-
-	@Override
-	public void update(Observable timer, Object arg) {
-		timerTime = (int) arg;
-	}
-	
-	public int getTime() {
-		return timerTime;
-	}
-	
-	public int getInitTime() {
-		return timerInt;
-	}
-	
-	private PieceInterface getPiece(String name, String p) {
-		switch (name) {
-			case "King": return new KingPiece(p);
-			
-			case "Archer": return new ArcherPiece(p);
-			
-			case "God": return new GodPiece(p);
-			
-			case "Healer": return new HealerPiece(p);
-			
-			case "Queen": return new QueenPiece(p);
-			
-			case "Soldier": return new SoldierPiece(p);
-			
-			case "Tank": return new TankPiece(p);
-			
-			case "Test": return new TestPiece(p);
-			
-			case "Wizard": return new WizardPiece(p);
-		}
-	
-		return null;
-	}
-
-	public Player getTurn() {
-		return turn;
-	}
-
-	public Player getPlayer1() {
-		return playerController.getPlayer1();
-	}
-	
-	public Player getPlayer2() {
-		return playerController.getPlayer2();
-	}
-
-	public void setDone(boolean done) {
-		this.done = done;
+	public void addPiece(String pieceName) {
+		// TODO Implement this so as to allow the user to add new pieces and the cost of points.
 	}
 }

@@ -1,18 +1,21 @@
 package model.pieces;
 
 import model.Coordinate;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 public class TankPiece extends AbstractPiece {
     /* The Tank has high hp, medium attack and a low move range */
-	private static final long serialVersionUID = -5626954918577234965L;
 
-	public TankPiece(String playerName) {
-        super(playerName);
+
+    public TankPiece(Player player) {
+        super(player);
         name = "Tank";
-        icon = "images/Tank.png";
+        icon = resizeIcon(new ImageIcon("images/Tank.png", "Tank"));
         maxHealth = 500;
         strength = 90;
         cost = 40;
@@ -34,15 +37,7 @@ public class TankPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-		List<Coordinate> attacks = new ArrayList<Coordinate>();
-		
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				attacks.add(new Coordinate(co.x + i, co.y + j));
-			}
-		}
-		
-		return attacks;
+        return null;
     }
 
 }

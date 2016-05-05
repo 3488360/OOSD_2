@@ -1,18 +1,20 @@
 package model.pieces;
 
+
 import model.Coordinate;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class KingPiece extends AbstractPiece {
-	private static final long serialVersionUID = -8222583134405858015L;
+import javax.swing.ImageIcon;
 
-	public KingPiece(String playerName) {
-		super(playerName); 
-		name = "King";
+public class KingPiece extends AbstractPiece {
+	public KingPiece(Player player) {
+		super(player); 
 		cost = 100;
-		icon = "images/King.png";
+		name = "King";
+		icon = resizeIcon(new ImageIcon("images/King.png", "King"));
 		maxHealth = 500;
 		strength = 50;
 		currentHealth = maxHealth;
@@ -35,4 +37,5 @@ public class KingPiece extends AbstractPiece {
 	public List<Coordinate> getAttackRange(Coordinate co) {
 		return getMoves(co);
 	}
+
 }

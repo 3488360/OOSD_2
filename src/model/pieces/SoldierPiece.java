@@ -1,18 +1,19 @@
 package model.pieces;
 
 import model.Coordinate;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SoldierPiece extends AbstractPiece {
-	private static final long serialVersionUID = 1805844297535185000L;
+import javax.swing.ImageIcon;
 
-	/* The Soldier has medium hp, medium attack and a medium move range */
-    public SoldierPiece(String playerName) {
-        super(playerName);
+public class SoldierPiece extends AbstractPiece {
+    /* The Soldier has medium hp, medium attack and a medium move range */
+    public SoldierPiece(Player player) {
+        super(player);
         name = "Soldier";
-        icon = "images/Soldier2.png";
+        icon = resizeIcon(new ImageIcon("images/Soldier2.png", "Soldier"));
         maxHealth = 200;
         strength = 120;
         cost = 30;
@@ -34,15 +35,7 @@ public class SoldierPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-		List<Coordinate> attacks = new ArrayList<Coordinate>();
-		
-		for(int i=-1; i <= 1; i++) {
-			for(int j=-1; j <= 1; j++) {
-				attacks.add(new Coordinate(co.x + i, co.y + j));
-			}
-		}
-		
-		return attacks;
+        return null;
     }
 
 }

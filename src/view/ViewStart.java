@@ -1,24 +1,22 @@
 package view;
 
+//Had help from http://stackoverflow.com/questions/8637792/how-to-set-jformattedtextfield-so-it-only-allows-2-numbers
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.text.NumberFormat;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controller.ButtonController;
-import controller.LoadController;
 import controller.Main;
 import model.BoardLayout;
 
@@ -31,22 +29,17 @@ public class ViewStart extends JFrame {
 	private JTextField player1Name;
 	private JTextField player2Name;
 	private JComboBox<String> boardLayout;
-	private JTextField initTimer;
+	private JFormattedTextField initTimer;
 	private BoardLayout[] layouts;
-	private BoardLayout selectedLayout = null;
 	private Font subtitle;
-	private ButtonController buttonController;
-	private LoadController loadController;
 	
 	/**
 	 * Creates and displays the settings screen for the game.
 	 * 
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
 	 */
-	public ViewStart (BoardLayout[] layouts, ButtonController buttonController, LoadController loadController) {
+	public ViewStart (BoardLayout[] layouts) {
 		this.layouts = layouts;
-		this.buttonController = buttonController;
-		this.loadController = loadController;
 		
 		JLabel title = new JLabel("<HTML><U>King vs. Queen Settings</U></HTML>");
 		title.setFont(new Font("Sans-Serif", Font.BOLD, 20));
@@ -128,6 +121,7 @@ public class ViewStart extends JFrame {
 		JPanel timerGroup = new JPanel();
 		JPanel other = new JPanel();
 		Box box = Box.createVerticalBox();
+		NumberFormat timerFormat = NumberFormat.getNumberInstance();
 		
 		other.setLayout(new BorderLayout());
 		subtitleGame.setFont(subtitle);
@@ -146,7 +140,8 @@ public class ViewStart extends JFrame {
 		boardLayoutGroup.add(boardLayout);
 		box.add(boardLayoutGroup);
 		
-		initTimer = new JTextField();
+		timerFormat.setMaximumIntegerDigits(4);
+		initTimer = new JFormattedTextField(timerFormat);
 		initTimer.setColumns(4);
 		initTimer.setText("60");
 		timerGroup.add(timerLabel);
@@ -167,7 +162,6 @@ public class ViewStart extends JFrame {
 	private JPanel buttonSetup() {
 		JButton start = new JButton("Start");
 		JButton defaultBtn = new JButton("Default Settings");
-		JButton load = new JButton("Load");
 		JButton exit = new JButton("Exit");
 		JPanel buttons = new JPanel();
 		
@@ -183,21 +177,14 @@ public class ViewStart extends JFrame {
 			}
 		});
 		
-		load.addActionListener(new ActionListener () {
-			public void actionPerformed(ActionEvent e) {
-				load();
-			}
-		});
-		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				buttonController.exit();
+				exit();
 			}
 		});
 		
 		buttons.add(start, BorderLayout.SOUTH);
 		buttons.add(defaultBtn, BorderLayout.SOUTH);
-		buttons.add(load, BorderLayout.SOUTH);
 		buttons.add(exit, BorderLayout.SOUTH);
 		
 		return buttons;
@@ -208,10 +195,7 @@ public class ViewStart extends JFrame {
 	 */
 	private void start() {
 		this.dispose();
-		if (selectedLayout == null) {
-			selectedLayout = layouts[boardLayout.getSelectedIndex()];
-		}
-		Main.startGame(player1Name.getText(), player2Name.getText(), selectedLayout, Integer.parseInt(initTimer.getText()));
+		Main.startGame(player1Name.getText(), player2Name.getText(), boardLayout.getItemAt(boardLayout.getSelectedIndex()), Integer.parseInt(initTimer.getText()));
 	}
 	
 	/**
@@ -224,25 +208,14 @@ public class ViewStart extends JFrame {
 		initTimer.setText("60");
 	}
 	
-	private void load() {
-		List<Object> list = null;
+	/**
+	 * Asks for confirmation and then exits the program.
+	 */
+	private void exit() {
+		int result = JOptionPane.showConfirmDialog (null, "Are you sure you want to exit?", "Warning", 0);
 		
-		final JFileChooser fc = new JFileChooser(System.getProperty("user.dir"));
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files", "save", "save");
-		fc.setFileFilter(filter);
-		
-		int returnVal = fc.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			list = loadController.loadGame(fc.getSelectedFile());
-			if (list == null) {
-				JOptionPane.showMessageDialog(null, "An error occured when trying to load the file. Please see console for details.", "Error", 0);
-				return;
-			}
-			player1Name.setText((String) list.get(0));
-			player2Name.setText((String) list.get(1));
-			initTimer.setText(((Integer) list.get(2)).toString());
-			selectedLayout = (BoardLayout) list.get(3);
-			start();
+		if (result == JOptionPane.YES_OPTION) {
+			System.exit(0);
 		}
 	}
 }

@@ -1,10 +1,7 @@
 package model;
 
-import java.io.Serializable;
-
 //Code used from http://www.javaworld.com/article/2074996/hashcode-and-equals-method-in-java-object---a-pragmatic-concept.html
-public class Coordinate implements Serializable {
-	private static final long serialVersionUID = -5706916632698497786L;
+public class Coordinate {
 	public int x;
 	public int y; 
 	
@@ -25,11 +22,10 @@ public class Coordinate implements Serializable {
 	//Needs to be overridden so hashmap works in BoardLayout
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof Coordinate)) {
-			return false;
-		}
 		Coordinate co = (Coordinate)o;
-		return (co.x == x && co.y == y);
+		if (co.x == x && co.y == y)
+			return true;
+		return false;
 	}
 }
 	

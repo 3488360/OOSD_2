@@ -1,18 +1,20 @@
 package model.pieces;
 
 import model.Coordinate;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 public class ArcherPiece extends AbstractPiece {
     /* The Archer is ranged, has medium hp, medium attack and a high move range */
-	private static final long serialVersionUID = 6632606647302103884L;
 
-	public ArcherPiece(String playerName) {
-    	super(playerName);
+    public ArcherPiece(Player player) {
+    	super(player);
         name = "Archer";
-        icon = "images/Archer2.png";
+        icon = resizeIcon(new ImageIcon("images/Archer2.png", "Archer"));
         maxHealth = 200;
         strength = 90;
         cost = 50;
@@ -34,20 +36,6 @@ public class ArcherPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-		List<Coordinate> attacks = new ArrayList<Coordinate>();
-		
-		for(int i=-3; i <= 3; i++) {
-			if (i == -3 || i == 3) {
-				for(int j=-3; j <= 3; j++) {
-					attacks.add(new Coordinate(co.x + i, co.y + j));
-				}
-			} else {
-				for(int j=-3; j <= 3; j += 6) {
-					attacks.add(new Coordinate(co.x + i, co.y + j));
-				}
-			}
-		}
-		
-		return attacks;
+        return null;
     }
 }
