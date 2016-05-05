@@ -2,16 +2,16 @@ package model.pieces;
 
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HealerPiece extends AbstractPiece {
     /* The Healer is ranged, has high hp, no attack and a medium move range */
+	private static final long serialVersionUID = -4800393400413421387L;
 
-    public HealerPiece(Player player) {
-        super(player);
+	public HealerPiece(String playerName) {
+        super(playerName);
         name = "Healer";
         icon = "images/Healer.png";
         maxHealth = 100;
@@ -35,7 +35,15 @@ public class HealerPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+		List<Coordinate> attacks = new ArrayList<Coordinate>();
+		
+		for(int i=-1; i <= 1; i++) {
+			for(int j=-1; j <= 1; j++) {
+				attacks.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+		
+		return attacks;
     }
 
 }

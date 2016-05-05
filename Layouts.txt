@@ -1,8 +1,8 @@
 2
 Default Layout
 10
-0
-0
+100
+100
 player1
 9,14:Archer
 player1
@@ -47,4 +47,3 @@ player2
 6,0:Tank
 player2
 5,0:Wizard
-Test Layout

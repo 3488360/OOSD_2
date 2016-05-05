@@ -1,15 +1,15 @@
 package model.pieces;
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class QueenPiece extends AbstractPiece {
-	
-	public QueenPiece (Player player) {
-		super(player);
+	private static final long serialVersionUID = 4038043494671540160L;
+
+	public QueenPiece (String playerName) {
+		super(playerName);
 		name = "Queen";
 		cost = 100;
 		icon = "images/Queen.png";
@@ -33,6 +33,6 @@ public class QueenPiece extends AbstractPiece {
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		return null;
+		return getMoves(co);
 	}
 }

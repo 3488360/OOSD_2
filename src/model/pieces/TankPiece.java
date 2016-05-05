@@ -1,16 +1,16 @@
 package model.pieces;
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TankPiece extends AbstractPiece {
     /* The Tank has high hp, medium attack and a low move range */
+	private static final long serialVersionUID = -5626954918577234965L;
 
-    public TankPiece(Player player) {
-        super(player);
+	public TankPiece(String playerName) {
+        super(playerName);
         name = "Tank";
         icon = "images/Tank.png";
         maxHealth = 500;
@@ -34,7 +34,15 @@ public class TankPiece extends AbstractPiece {
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate co) {
-        return null;
+		List<Coordinate> attacks = new ArrayList<Coordinate>();
+		
+		for(int i = -1; i <= 1; i++) {
+			for(int j = -1; j <= 1; j++) {
+				attacks.add(new Coordinate(co.x + i, co.y + j));
+			}
+		}
+		
+		return attacks;
     }
 
 }

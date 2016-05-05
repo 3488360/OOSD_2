@@ -1,7 +1,6 @@
 package model.pieces;
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.List;
 
@@ -15,11 +14,7 @@ public interface PieceInterface {
 	public int getStrength();
 	public int getCost();
 	public String getName();
-
-	public Player getPlayer();
-
+	public String getPlayerName();
 	public String getIcon();
-
-
 }
 	

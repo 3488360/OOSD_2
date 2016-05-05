@@ -7,10 +7,12 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controller.BoardController;
+import controller.ButtonController;
 import controller.GameController;
 import controller.PlayerController;
+import model.Board;
 import model.Coordinate;
+import model.GameTimer;
 
 /**
  * The main user interface JFrame for the game. Contains a title, 
@@ -24,6 +26,7 @@ public class ViewMain extends JFrame {
 	private JLabel player1Points;
 	private JLabel player2Points;
 	private PlayerController playerController;
+	private ButtonController buttonController;
 	private JLabel turn;
 	
 	/**
@@ -33,19 +36,21 @@ public class ViewMain extends JFrame {
 	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, BoardController boardController, PlayerController playerController) {
+	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer) {
 		this.playerController = playerController;
-		ViewButtons buttons = new ViewButtons();
+		this.buttonController = buttonController;
+		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), gameController, playerController);
 		
 		//The properties of the main window/frame
 		setTitle("King vs. Queen");
-		setSize(810, 700);
+		setSize(850, 700);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.board = new ViewBoard(gameController, boardController);
+		this.board = new ViewBoard(buttonController, board);
 		timer = new ViewTimer();
+		gameTimer.addObserver(timer);
 		
 		initTitle();
 		initPlayers();
@@ -105,6 +110,7 @@ public class ViewMain extends JFrame {
 		box.add(player2Points);
 		box.add(turn);
 		box.add(Box.createVerticalStrut(50));
+		box.add(new ViewPieceSelection(buttonController));
 		
 		players.add(box);
 		
@@ -127,6 +133,11 @@ public class ViewMain extends JFrame {
 	public void updateMoves(List<Coordinate> list) {
 		if(list != null)
 			board.updateCells(list);
+	}
+	
+	public void updateAttackRange(List<Coordinate> attackRange) {
+		if(attackRange != null)
+			board.updateAttackRange(attackRange);
 	}
 
 	/**
@@ -160,14 +171,5 @@ public class ViewMain extends JFrame {
 	 */
 	public void message(String message) {
 		JOptionPane.showMessageDialog(null, message);
-	}
-
-	/** 
-	 * Updates the timer JPanel with the given seconds.
-	 * 
-	 * @param seconds - The amount of seconds on the timer.
-	 */
-	public void updateTimer(int seconds) {
-		timer.setInterfaceTimer(seconds);
 	}
 }

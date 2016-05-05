@@ -45,12 +45,16 @@ public class Board {
 		return (cells[co.x][co.y].getPiece());
 	}
 
-	public List<Coordinate> getMovement(PieceInterface p, Coordinate co) {
+	public List<Coordinate> getMovement(Coordinate co) {
 		List<Coordinate> validMovements = new ArrayList<Coordinate>();
-		for(Coordinate coordinate : p.getMoves(co)) {
+		for(Coordinate coordinate : getPiece(co).getMoves(co)) {
 			// check bounds:
 			int x = coordinate.x;
 			int y = coordinate.y;
+			
+			if (coordinate.equals(co)) {
+				continue;
+			}
 
 			if(x < 0 || x >= 15 || y < 0 || y >= 15) {
 				continue;
@@ -66,8 +70,36 @@ public class Board {
 		}
 		return validMovements;
 	}
+	
+	public List<Coordinate> getAttackRange(Coordinate co, String player) {
+		List<Coordinate> validMovements = new ArrayList<Coordinate>();
+		for(Coordinate coordinate : getPiece(co).getAttackRange(co)) {
+			// check bounds:
+			int x = coordinate.x;
+			int y = coordinate.y;
 
-	public Player getPlayer(Coordinate co) {
-		return cells[co.x][co.y].getPiece().getPlayer();
+			if(x < 0 || x >= 15 || y < 0 || y >= 15) {
+				continue;
+			}
+
+			// cross check
+			if((x >= 0 && x < 5) || (x >= 10 && x < 15))
+				if ((y >= 0 && y < 5) || (y >= 10 && y < 15)) {
+				continue;
+			}
+			
+			if (getPiece(coordinate) == null) {
+				continue;
+			} else if (getPiece(coordinate).getPlayerName() == player) {
+				continue;
+			}
+			validMovements.add(coordinate);
+
+		}
+		return validMovements;
+	}
+
+	public String getPlayer(Coordinate co) {
+		return cells[co.x][co.y].getPiece().getPlayerName();
 	}	
 }

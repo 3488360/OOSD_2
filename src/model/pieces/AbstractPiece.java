@@ -1,10 +1,10 @@
 package model.pieces;
 
-import model.Player;
+import java.io.Serializable;
 
-public abstract class AbstractPiece implements PieceInterface {
-
-    /*
+public abstract class AbstractPiece implements PieceInterface, Serializable {
+	private static final long serialVersionUID = -6084960025448091318L;
+	/*
     * Side 1:
     *  - Tank
     *  - Wizard
@@ -21,20 +21,20 @@ public abstract class AbstractPiece implements PieceInterface {
     protected int maxHealth;
     protected int strength;
     protected String icon;
-    private Player player;
+    protected String playerName;
 
     @Override
     public String getIcon() {
         return icon;
     }
 
-    public AbstractPiece(Player player) {
-        this.player = player;
+    public AbstractPiece(String playerName) {
+        this.playerName = playerName;
     }
 
     @Override
-    public Player getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return playerName;
     }
 
     @Override

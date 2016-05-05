@@ -2,15 +2,16 @@ package model.pieces;
 
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestPiece extends AbstractPiece {
+	private static final long serialVersionUID = 7050293379051739054L;
+
 	//A piece that is meant for testing with, not meant for regular gameplay
-	public TestPiece(Player player) {
-		super(player); 
+	public TestPiece(String playerName) {
+		super(playerName); 
 		cost = 0;
 		name = "Test";
 		icon = "images/K.png";
@@ -32,7 +33,7 @@ public class TestPiece extends AbstractPiece {
 
 	@Override
 	public List<Coordinate> getAttackRange(Coordinate co) {
-		return null;
+		return getMoves(co);
 	}
 
 }
