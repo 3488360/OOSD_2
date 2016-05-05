@@ -2,7 +2,6 @@ package model.pieces;
 
 
 import model.Coordinate;
-import model.Player;
 
 import java.util.List;
 
@@ -10,60 +9,61 @@ import java.util.List;
 * It encapsulates a Piece and decorates the getStrength method */
 public class DoubledAttackPiece implements PieceInterface {
 
-    private PieceInterface decorated;
+    private PieceInterface piece;
 
-    public DoubledAttackPiece(PieceInterface decorated) {
-        this.decorated = decorated;
+    public DoubledAttackPiece(PieceInterface piece) {
+        this.piece = piece;
     }
 
     /* Decorated method. Doubles the attack of a piece */
     @Override
     public int getStrength() {
-        return decorated.getStrength() * 2;
+        return piece.getStrength() * 2;
     }
 
     @Override
     public List<Coordinate> getMoves(Coordinate coordinate) {
-        return decorated.getMoves(coordinate);
+        return piece.getMoves(coordinate);
     }
 
     @Override
     public List<Coordinate> getAttackRange(Coordinate coordinate) {
-        return decorated.getAttackRange(coordinate);
+        return piece.getAttackRange(coordinate);
     }
 
     @Override
     public int getCurrentHealth() {
-        return decorated.getCurrentHealth();
+        return piece.getCurrentHealth();
     }
 
     @Override
     public int takeDamage(int amount) {
-        return decorated.takeDamage(amount);
+        return piece.takeDamage(amount);
     }
 
     @Override
     public int getMaxHealth() {
-        return decorated.getMaxHealth();
+        return piece.getMaxHealth();
     }
 
     @Override
     public int getCost() {
-        return decorated.getCost();
+        return piece.getCost();
     }
 
     @Override
     public String getName() {
-        return decorated.getName();
+        return piece.getName();
     }
 
     @Override
-    public Player getPlayer() {
-        return decorated.getPlayer();
+    public String getPlayerName() {
+        return piece.getPlayerName();
     }
+
 
     @Override
     public String getIcon() {
-        return decorated.getIcon();
+        return piece.getIcon();
     }
 }
