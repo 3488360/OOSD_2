@@ -2,9 +2,10 @@ package view;
 
 import javax.swing.*;
 
-import controller.ButtonController;
-import model.Board;
+import controller.BoardController;
+import controller.GameController;
 import model.Coordinate;
+import model.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,15 +22,15 @@ public class ViewBoard extends JPanel {
 	private final int CELLWIDTH = 40;
 	private final int CELLHEIGHT = 40;
 	private ViewCell grid[][];
-	private ButtonController buttonController;
+	private GameController gameController;
 	private ViewPiece viewPiece;
-	private Board board;
+	private BoardController boardController;
 	
-	public ViewBoard(ButtonController buttonController, Board board) {
+	public ViewBoard(GameController gameController, BoardController boardCont) {
 		viewPiece = new ViewPiece();
-		this.buttonController = buttonController;
-		this.board = board;
-		grid = new ViewCell[board.getHeight()][board.getWidth()];
+		this.gameController = gameController;
+		this.boardController = boardCont;
+		grid = new ViewCell[boardController.getHeight()][boardController.getWidth()];
 		
 		ActionListener gridButton = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -37,9 +38,9 @@ public class ViewBoard extends JPanel {
 			}
 		};
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				grid[i][a] = new ViewCell(boardController.getAllCells()[i][a].getCol(), boardController.getAllCells()[i][a].getRow(), boardController.getAllCells()[i][a].getVisible());
 				grid[i][a].addActionListener(gridButton);
 			}
 		}
@@ -47,9 +48,9 @@ public class ViewBoard extends JPanel {
 		setLayout(new GridLayout(15, 15));
 		
 		//Adds JButtons or JLabels
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				if (grid[i][a].getVisible()){
 					grid[i][a].setBackground(Color.ORANGE);
 					grid[i][a].setForeground(Color.BLACK);
 					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
@@ -64,9 +65,9 @@ public class ViewBoard extends JPanel {
 	public void updateBoard () {
 		Coordinate co;
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a].setCanMoveTo(board.getAllCells()[i][a].getCanMoveTo());
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				grid[i][a].setCanMoveTo(boardController.getAllCells()[i][a].getCanMoveTo());
 			}
 		}
 		
@@ -78,21 +79,21 @@ public class ViewBoard extends JPanel {
 		//		Red - Cells that the currently selected piece can attack	<--- To be implemented
 		// 		White - Currently selected cell
 		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
+		for (int i = 0; i < boardController.getWidth(); i++) {
+			for (int a = 0; a < boardController.getHeight(); a++) {
+				if (grid[i][a].getVisible()){
 					co = new Coordinate(i, a);
-					if (board.getPiece(co) != null) {
-						if (board.getPiece(co).getPlayerName() == "player1")
+					if (boardController.getPiece(co)) {
+						if (boardController.getPiecePlayerColor(co).equals("player1"))
 							grid[i][a].setBackground(Color.YELLOW);
 						else
 							grid[i][a].setBackground(Color.GRAY);
-						grid[i][a].setIcon(viewPiece.getIcon(board.getPiece(co).getName(), board.getPiece(co).getIcon()));
+						grid[i][a].setIcon(viewPiece.getIcon(boardController.getPieceName(co), boardController.getPieceIcon(co)));
 					} else {
 						grid[i][a].setBackground(Color.ORANGE);
 						grid[i][a].setIcon(null);
 					}
-					if(grid[i][a].canMoveTo == true){
+					if(grid[i][a].canMoveTo){
 						grid[i][a].setBackground(Color.GREEN);
 					}
 				}
@@ -106,26 +107,43 @@ public class ViewBoard extends JPanel {
 			button.setBackground(Color.WHITE);
 		else
 			button.setBackground(Color.ORANGE);
-		
-		buttonController.passCoordinates(new Coordinate(button.getCol(), button.getRow()));
+
+		gameController.passCoordinates(new Coordinate(button.getCol(), button.getRow())); 
 	}
 
-	public void updateCells(List<Coordinate> list) {
-		// turns all the cells the piece can move to green
-		for (Coordinate moveableCoordinates : list) {
-			if (moveableCoordinates.x < board.getWidth()
-					&& moveableCoordinates.x >= 0
-					&& moveableCoordinates.y < board.getHeight()
-					&& moveableCoordinates.y >= 0) {
-				grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
-				grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
-			}
+	public void updateCells(List<Coordinate> list, List<Coordinate> attackRange, Coordinate currentlySelected){
+		// turns all the cells the piece can move to green and all sqaures the piece can attack to red
+		for(Coordinate moveableCoordinates : list) {
+			 if(withinBoardDimensions(moveableCoordinates)){ 
+				 grid[moveableCoordinates.x][moveableCoordinates.y].setCanMoveTo(true);
+				 grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
+			 }
 		}
-	}
+		for(Coordinate attackCoordinates : attackRange){
+			if(withinBoardDimensions(attackCoordinates)){
+				if(grid[attackCoordinates.x][attackCoordinates.y].getCanMoveTo()){
+					if(boardController.getPiece(attackCoordinates)){
+						if(!(boardController.getPlayer(attackCoordinates).equals(boardController.getPlayer(currentlySelected)))){
+							grid[attackCoordinates.x][attackCoordinates.y].setBackground(Color.RED); 	
+						}
+					}	
+				}
+			}	
+		}
+	}	
+			
 	
-	public void updateAttackRange(List<Coordinate> attackRange) {
-		for (Coordinate attackRanges : attackRange) {
-			grid[attackRanges.x][attackRanges.y].setBackground(Color.RED);
-		}
+	
+	private boolean withinBoardDimensions(Coordinate moveableCoordinates){
+		if(moveableCoordinates.x < boardController.getWidth()
+				&& moveableCoordinates.x >= 0
+				&& moveableCoordinates.y < boardController.getHeight()
+				&& moveableCoordinates.y >= 0){
+				return true;
+		}		
+		return false;		
 	}
+		
+		
+	
 }

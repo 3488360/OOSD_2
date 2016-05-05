@@ -25,10 +25,11 @@ public class Coordinate implements Serializable {
 	//Needs to be overridden so hashmap works in BoardLayout
 	@Override
 	public boolean equals(Object o) {
+		if(!(o instanceof Coordinate)) {
+			return false;
+		}
 		Coordinate co = (Coordinate)o;
-		if (co.x == x && co.y == y)
-			return true;
-		return false;
+		return (co.x == x && co.y == y);
 	}
 }
 	
