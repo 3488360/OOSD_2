@@ -1,6 +1,7 @@
 package view;
 
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
 
 public class ViewCell extends JButton {
 	private static final long serialVersionUID = -7155500879732378953L;
@@ -14,6 +15,15 @@ public class ViewCell extends JButton {
 		this.row = row;
 		this.col = col;
 		this.isVisible = isVisible;
+		resetBorder();
+	}
+
+	public void resetBorder() {
+		setBorder(UIManager.getBorder("Button.border"));
+	}
+
+	public void raiseBorder() {
+		setBorder(BorderFactory.createLoweredBevelBorder());
 	}
 	
 	public boolean getVisible () {

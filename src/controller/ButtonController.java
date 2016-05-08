@@ -11,6 +11,7 @@ public class ButtonController {
 	private Board board;
 	private Game game;
 	private Coordinate currentlySelected;
+	private Coordinate pendingMove;
 	private String pieceName = null;
 	private boolean addPiece;
 	private GameController gameController;
@@ -21,6 +22,14 @@ public class ButtonController {
 		this.game = g;
 		this.gameController = gc;
 		this.moveDecider = m;
+	}
+
+	public void setPendingMove(Coordinate co) {
+		pendingMove = co;
+	}
+
+	public Coordinate getPendingMove() {
+		return pendingMove;
 	}
 	
 	public void passCoordinates(Coordinate co) {
