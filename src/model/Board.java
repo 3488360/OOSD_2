@@ -96,6 +96,7 @@ public class Board {
 			validMovements.add(coordinate);
 
 		}
+		System.out.println("Returning valid movements");
 		return validMovements;
 	}
 

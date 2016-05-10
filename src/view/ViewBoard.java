@@ -9,6 +9,9 @@ import model.Coordinate;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 /**
@@ -25,22 +28,28 @@ public class ViewBoard extends JPanel {
 	private ViewPiece viewPiece;
 	private Board board;
 	
-	public ViewBoard(ButtonController buttonController, Board board) {
+	public ViewBoard(ButtonController buttonController, final Board board) {
 		viewPiece = new ViewPiece();
 		this.buttonController = buttonController;
 		this.board = board;
 		grid = new ViewCell[board.getHeight()][board.getWidth()];
-		
-		ActionListener gridButton = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonPressed(e);
+				
+		MouseAdapter mouse = new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				if(SwingUtilities.isLeftMouseButton(e)){
+					buttonPressed(e); 
+				}
+				else if(SwingUtilities.isRightMouseButton(e)){
+					rightButonClicked(e);
+				}
 			}
 		};
 		
+		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
-				grid[i][a].addActionListener(gridButton);
+				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());			
+				grid[i][a].addMouseListener(mouse);
 			}
 		}
 		
@@ -100,7 +109,7 @@ public class ViewBoard extends JPanel {
 		}
 	}
 	
-	private void buttonPressed(ActionEvent e) {
+	private void buttonPressed(MouseEvent e) {
 		ViewCell button = (ViewCell)e.getSource();
 		if (button.getBackground() != Color.WHITE)
 			button.setBackground(Color.WHITE);
@@ -110,6 +119,14 @@ public class ViewBoard extends JPanel {
 		buttonController.passCoordinates(new Coordinate(button.getCol(), button.getRow()));
 	}
 
+	private void rightButonClicked(MouseEvent e ){
+		ViewCell button = (ViewCell)e.getSource();
+		
+	
+		updateAttackRange(board.getAttackRange(new Coordinate(button.getCol(), button.getRow()), board.getPlayer(new Coordinate(button.getCol(), button.getRow()))));
+		
+	}
+	
 	public void updateCells(List<Coordinate> list) {
 		// turns all the cells the piece can move to green
 		for (Coordinate moveableCoordinates : list) {
@@ -124,8 +141,12 @@ public class ViewBoard extends JPanel {
 	}
 	
 	public void updateAttackRange(List<Coordinate> attackRange) {
+		if(attackRange == null){
+			System.out.println("There is no attacking range");
+		}
 		for (Coordinate attackRanges : attackRange) {
 			grid[attackRanges.x][attackRanges.y].setBackground(Color.RED);
+			System.out.println();
 		}
 	}
 }
