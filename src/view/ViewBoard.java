@@ -129,6 +129,35 @@ public class ViewBoard extends JPanel {
 			}
 		}
 	}
+	
+	private void buttonPressed(MouseEvent e) {
+		ViewCell button = (ViewCell)e.getSource();
+		Coordinate coordinate = new Coordinate(button.getCol(), button.getRow());
+		if(e.getID() == MouseEvent.MOUSE_ENTERED) {
+			if(buttonController.getPendingMove() != null) {
+				button.raiseBorder();
+				buttonController.setPendingMove(coordinate);
+			}
+		}
+
+		else if (e.getID() == MouseEvent.MOUSE_EXITED) {
+			button.resetBorder();
+		}
+
+		else if(e.getID() == MouseEvent.MOUSE_PRESSED) {
+			buttonController.passCoordinates(coordinate);
+			buttonController.setPendingMove(coordinate);
+		}
+		
+		else if(e.getID() == MouseEvent.MOUSE_RELEASED) {
+			coordinate = buttonController.getPendingMove();
+			button = grid[coordinate.x][coordinate.y];
+
+			buttonController.passCoordinates(coordinate);
+			buttonController.setPendingMove(null);
+			button.resetBorder();
+		}
+	}
 
 	public void updateCells(List<Coordinate> list) {
 		// turns all the cells the piece can move to green

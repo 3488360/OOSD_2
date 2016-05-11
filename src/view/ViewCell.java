@@ -17,11 +17,11 @@ public class ViewCell extends JButton {
 		this.isVisible = isVisible;
 		resetBorder();
 	}
-	
+
 	public void resetBorder() {
 		setBorder(UIManager.getBorder("Button.border"));
 	}
-	
+
 	public void raiseBorder() {
 		setBorder(BorderFactory.createLoweredBevelBorder());
 	}

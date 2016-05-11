@@ -27,11 +27,11 @@ public class ButtonController {
 		this.moveDecider = m;
 		this.userInterface = userInterface;
 	}
-	
+
 	public void setPendingMove(Coordinate co) {
 		pendingMove = co;
 	}
-	
+
 	public Coordinate getPendingMove() {
 		return pendingMove;
 	}
