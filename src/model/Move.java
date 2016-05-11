@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 import controller.GameController;
+import model.pieces.PieceInterface;
 
 public class Move {
 	private Coordinate currentlySelected; 
@@ -26,7 +27,10 @@ public class Move {
 	public boolean determineMove(){
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(destinationSelected) != null) {
-				return attackMove();
+				if (board.getPiece(currentlySelected).getName().equals("Healer")) 
+					return healingMove();
+				else
+					return attackMove();
 			}
 			return normalMove();
 		}
@@ -60,7 +64,7 @@ public class Move {
 	}
 	
 	private boolean attackMove(){
-		if (board.getPiece(destinationSelected).getPlayerName() == player) {
+		if (board.getPiece(destinationSelected).getPlayerName().equals(player)) {
 			gameController.message("You are trying to attack your own piece!");
 			return false;
 		} else {
@@ -99,9 +103,22 @@ public class Move {
 		return false;
 	}
 	
-	@SuppressWarnings("unused")
-	private void healingMove(){
-		// TODO Implement what happens when healing
+	private boolean healingMove() {
+		PieceInterface piece = board.getPiece(destinationSelected);
+		
+		if (board.getPlayer(currentlySelected).equals(piece.getPlayerName())) {
+			if ((piece.getCurrentHealth() - board.getPiece(currentlySelected).getStrength()) > piece.getMaxHealth()) {
+				piece.takeDamage(board.getPiece(currentlySelected).getStrength());
+			} else if (piece.getCurrentHealth() == piece.getMaxHealth()) {
+				return false;
+			} else {
+				piece.takeDamage(piece.getMaxHealth() - piece.getCurrentHealth());
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 }

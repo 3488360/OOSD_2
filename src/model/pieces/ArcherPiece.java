@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArcherPiece extends AbstractPiece {
-    /* The Archer is ranged, has medium hp, medium attack and a high move range */
+    /* The Archer is ranged, has medium hp, medium-to-low attack and a high move range */
 	private static final long serialVersionUID = 6632606647302103884L;
 
 	public ArcherPiece(String playerName) {
     	super(playerName);
         name = "Archer";
         icon = "images/Archer2.png";
-        maxHealth = 200;
-        strength = 90;
-        cost = 50;
+        maxHealth = 300;
+        strength = 100;
+        cost = 60;
         currentHealth = maxHealth;
     }
 

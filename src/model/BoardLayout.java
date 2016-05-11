@@ -24,14 +24,14 @@ public class BoardLayout implements Serializable {
 	}
 	
 	public void addPiece(Coordinate co, PieceInterface p) {
-		System.out.println("Added " + p.getName() + " that belongs to " + p.getPlayerName());
+//		System.out.println(name + " Added " + p.getName() + " that belongs to " + p.getPlayerName());
 		layout.put(co, p);
 	}
 	
 	public PieceInterface getPiece(Coordinate co) {
-		PieceInterface p = layout.get(co);
-		if (p != null)
-			System.out.println("Loaded " + p.getName() + " that belongs to " + p.getPlayerName());
+//		PieceInterface p = layout.get(co);
+//		if (p != null)
+//			System.out.println(name + " Loaded " + p.getName() + " that belongs to " + p.getPlayerName());
 		return layout.get(co);
 	}
 	

@@ -11,6 +11,7 @@ public class GameTimer extends Observable {
 	private int interval;
 	private int startInterval;
 	private TimerTask task;
+	private int pauseTime;
 	
 	public GameTimer (int interval) {
 		this.interval = interval;
@@ -47,5 +48,15 @@ public class GameTimer extends Observable {
 		time.cancel();
 		time.purge();
 		interval = startInterval;
+	}
+	
+	public void pause() {
+		pauseTime = interval;
+		stop();
+	}
+	
+	public void resume() {
+		interval = pauseTime;
+		start();
 	}
 }

@@ -16,7 +16,7 @@ public class HealerPiece extends AbstractPiece {
         icon = "images/Healer.png";
         maxHealth = 100;
         strength = -50;
-        cost = 70;
+        cost = 90;
         currentHealth = maxHealth;
     }
 

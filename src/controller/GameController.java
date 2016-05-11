@@ -63,7 +63,7 @@ public class GameController {
 		userInterface.updateAttackRange(attackRange);
 	}
 
-	public void pause() {
-		game.pause();
+	public ViewMain getInterface() {
+		return userInterface;
 	}
 }
