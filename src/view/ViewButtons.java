@@ -76,7 +76,7 @@ public class ViewButtons extends JPanel {
 		if (saveName == null) {
 			return;
 		}
-		
+
 		saved = saveController.saveGame(saveName, player1, player2);
 		
 		if (!saved) {

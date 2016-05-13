@@ -22,7 +22,7 @@ public class GameController {
 		return game;
 	}
 	
-	public void update() {
+public void update() {
 		userInterface.updateBoard();
 	}
 

@@ -16,6 +16,8 @@ public class ButtonController {
 	private GameController gameController;
 	private Move moveDecider;
 	
+	private CommandManager cmg = new CommandManager(); 
+	
 	public void setGameVariables(Board b, Game g, GameController gc, Move m) {
 		this.board = b;
 		this.game = g;
@@ -28,12 +30,14 @@ public class ButtonController {
 			//Placing a new piece onto the board
 			if (board.getPiece(co) == null) {
 				game.addPiece(pieceName, co); //Call factory to create a new piece
+				cmg.executeCommand(new AddPieceCommand(game, gameController, pieceName, co));
 				addPiece = false;
 				gameController.updateBoard();
+//				commandController(new AddPieceCommand(..)); 
 			}
 		} else {
 			//Determine if the coordinates selected are valid or not
-			if (currentlySelected == null) {
+				if (currentlySelected == null) {
 				currentlySelected = co;
 				if (board.getPiece(currentlySelected) != null) {
 					//There is a piece
@@ -52,11 +56,18 @@ public class ButtonController {
 				gameController.hideSelected();
 				gameController.updateBoard();
 			} else {
-				moveDecider.setCoordinates(currentlySelected, co, game.getTurn().getName());
+//				moveDecider.setCoordinates(currentlySelected, co, game.getTurn().getName());
 				
-				currentlySelected = null;
-				if(moveDecider.determineMove())
+//				currentlySelected = null;
+//				if(moveDecider.determineMove()){
+				if (board.getPiece(currentlySelected) != null) {
+					if (board.getPiece(co) != null){
+						cmg.executeCommand(new AttackCommand(gameController, board));
+					}
+					Command mc = new MoveCommand(gameController, game.getTurn().getName(), board, currentlySelected, co);
+					cmg.executeCommand(mc);	
 					game.setDone(true);  
+				}	
 				gameController.hideSelected();
 				gameController.updateBoard();
 			}
@@ -77,6 +88,10 @@ public class ButtonController {
 	
 	public void save() {
 		
+	}
+	
+	public void undo(){
+		cmg.undo();
 	}
 	
 	public void addPiece(String pieceName) {

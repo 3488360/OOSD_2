@@ -25,11 +25,14 @@ public class Move {
 	
 	public boolean determineMove(){
 		if (board.getPiece(currentlySelected) != null) {
-			if (board.getPiece(destinationSelected) != null) {
+			if (board.getPiece(destinationSelected) != null){
+//				if the piece clicked on is is not empty i.e theres a piece than we are attacking the piece 
 				return attackMove();
 			}
 			return normalMove();
 		}
+//		return command.execute()		
+
 		return false;
 	}
 	
@@ -48,7 +51,7 @@ public class Move {
 		return false;
 	}
 	
-	private boolean canAttack() {
+	private boolean Attack() {
 		List<Coordinate> attackRange = board.getAttackRange(currentlySelected, player);
 		if (list != null){
 			for(Coordinate lists : attackRange){
@@ -63,8 +66,9 @@ public class Move {
 		if (board.getPiece(destinationSelected).getPlayerName() == player) {
 			gameController.message("You are trying to attack your own piece!");
 			return false;
-		} else {
-			if(canAttack()){
+		} 
+		else{
+			if(Attack()){
 				int attack;
 				int health;
 				attack = board.getPiece(currentlySelected).getStrength();
