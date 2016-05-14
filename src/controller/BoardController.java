@@ -36,7 +36,8 @@ public class BoardController {
 	}
 
 	public String getPiecePlayerColor(Coordinate co) {
-		return board.getPiece(co).getPlayer().getName();
+		//return board.getPiece(co).getPlayer().getName();
+		return null;
 	}
 
 	public boolean getPiece(Coordinate co) {
@@ -46,7 +47,7 @@ public class BoardController {
 		return true;
 	}
 	
-	public Player getPlayer(Coordinate co){
+	public String getPlayer(Coordinate co){
 		return board.getPlayer(co);
 		
 	}

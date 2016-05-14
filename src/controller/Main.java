@@ -3,6 +3,8 @@ package controller;
 import model.*;
 import view.ViewStart;
 
+import javax.swing.*;
+
 public class Main {
 	private static boolean waiting;
 	private static BoardLayout boardLayout;
@@ -11,6 +13,13 @@ public class Main {
 	private static final PlayerController playerController = new PlayerController();
 	
 	public static void main(String[] args) {
+
+		// macOS fix
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		Game game;
 		final LoadController loadController = new LoadController();
 		ButtonController buttonController = new ButtonController();

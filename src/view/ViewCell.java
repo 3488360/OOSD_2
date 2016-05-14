@@ -1,5 +1,7 @@
 package view;
 
+import model.State;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,7 +27,37 @@ public class ViewCell extends JButton {
 	public void raiseBorder() {
 		setBorder(BorderFactory.createLoweredBevelBorder());
 	}
-	
+
+
+	public void setState(State state) {
+		Color color;
+		switch(state) {
+
+			case PLAYER1:
+				color = Color.YELLOW;
+				break;
+
+			case PLAYER2:
+				color = Color.GRAY;
+				break;
+
+			case ATTACK:
+				color = Color.RED;
+				break;
+
+			case MOVE:
+				color = Color.GREEN;
+				break;
+
+			case NORMAL:
+			default:
+				color = Color.ORANGE;
+				break;
+		}
+
+		setBackground(color);
+	}
+
 	public boolean getVisible () {
 		return isVisible;
 	}
