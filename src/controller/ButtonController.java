@@ -6,26 +6,43 @@ import model.Board;
 import model.Coordinate;
 import model.Game;
 import model.Move;
+import view.ViewMain;
 
 public class ButtonController {
 	private Board board;
 	private Game game;
 	private Coordinate currentlySelected;
+	private Coordinate pendingMove;
 	private String pieceName = null;
 	private boolean addPiece;
 	private GameController gameController;
 	private Move moveDecider;
+	private ViewMain userInterface;
+	private boolean isPaused = false;
 	
-	private CommandManager cmg = new CommandManager(); 
+	private CommandManager cmg; 
 	
-	public void setGameVariables(Board b, Game g, GameController gc, Move m) {
+	public void setGameVariables(Board b, Game g, GameController gc, Move m, ViewMain userInterface) {
 		this.board = b;
 		this.game = g;
 		this.gameController = gc;
 		this.moveDecider = m;
+		this.userInterface = userInterface;
+		cmg = new CommandManager(gc); 
+		cmg.addPlayer(game.getPlayer1());
+		cmg.addPlayer(game.getPlayer2());
+	}
+
+	public void setPendingMove(Coordinate co) {
+		pendingMove = co;
+	}
+
+	public Coordinate getPendingMove() {
+		return pendingMove;
 	}
 	
 	public void passCoordinates(Coordinate co) {
+		
 		if (addPiece) {
 			//Placing a new piece onto the board
 			if (board.getPiece(co) == null) {
@@ -42,11 +59,11 @@ public class ButtonController {
 				if (board.getPiece(currentlySelected) != null) {
 					//There is a piece
 					gameController.updateSelectedPiece(board.getPiece(co));
-					if (game.getTurn().getName() == board.getPiece(currentlySelected).getPlayerName()) {
+					if (game.getTurn().equals(board.getPiece(currentlySelected).getPlayerName())) {
 						//If that piece belongs to the current player
-						gameController.updateMoves(board.getMovement(co));
-						gameController.updateAttackRange(board.getAttackRange(co, game.getTurn().getName()));
-						moveDecider.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
+						gameController.updateMoves(board.getMovement(co, game.getTurn()));
+						gameController.updateAttackRange(board.getAttackRange(co, game.getTurn()));
+//						moveDecider.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
 					}
 				} else {
 					currentlySelected = null;
@@ -56,18 +73,21 @@ public class ButtonController {
 				gameController.hideSelected();
 				gameController.updateBoard();
 			} else {
-//				moveDecider.setCoordinates(currentlySelected, co, game.getTurn().getName());
+//				moveDecider.setCoordinates(currentlySelected, co, game.getTurn());
 				
-//				currentlySelected = null;
+				
 //				if(moveDecider.determineMove()){
 				if (board.getPiece(currentlySelected) != null) {
 					if (board.getPiece(co) != null){
-						cmg.executeCommand(new AttackCommand(gameController, board));
+						cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
 					}
-					Command mc = new MoveCommand(gameController, game.getTurn().getName(), board, currentlySelected, co);
-					cmg.executeCommand(mc);	
-					game.setDone(true);  
+					else{
+						Command mc = new MoveCommand(gameController, game.getTurn(), board, currentlySelected, co);
+						cmg.executeCommand(mc);	
+					}	
+//					game.setDone(true);  
 				}	
+				currentlySelected = null;
 				gameController.hideSelected();
 				gameController.updateBoard();
 			}
@@ -83,15 +103,20 @@ public class ButtonController {
 	}
 	
 	public void pause() {
-		
-	}
-	
-	public void save() {
-		
+		if (isPaused) {
+			isPaused = false;
+			game.resume();
+			userInterface.resume();
+		} else {
+			isPaused = true;
+			game.pause();
+			userInterface.pause();		
+		}
 	}
 	
 	public void undo(){
 		cmg.undo();
+		gameController.updateBoard();
 	}
 	
 	public void addPiece(String pieceName) {
@@ -111,5 +136,9 @@ public class ButtonController {
 		if (result == JOptionPane.YES_OPTION) {
 			System.exit(0);	
 		}
+	}
+
+	public Game getGame() {
+		return game;
 	}
 }

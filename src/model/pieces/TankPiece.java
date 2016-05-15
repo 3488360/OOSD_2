@@ -15,7 +15,7 @@ public class TankPiece extends AbstractPiece {
         icon = "images/Tank.png";
         maxHealth = 500;
         strength = 90;
-        cost = 40;
+        cost = 50;
         currentHealth = maxHealth;
     }
 

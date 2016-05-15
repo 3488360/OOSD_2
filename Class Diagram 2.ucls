@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="view.ViewStart" project="OOSD_3" file="/OOSD_3/src/view/ViewStart.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="303" x="287" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="view.ViewMain" project="OOSD_3" file="/OOSD_3/src/view/ViewMain.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="401" x="520" y="1773"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="view.ViewBoard" project="OOSD_3" file="/OOSD_3/src/view/ViewBoard.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="233" x="926" y="2182"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="view.ViewPiece" project="OOSD_3" file="/OOSD_3/src/view/ViewPiece.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="183" x="800" y="2447"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="view.ViewButtons" project="OOSD_3" file="/OOSD_3/src/view/ViewButtons.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="376" x="1162" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="view.ViewPieceSelection" project="OOSD_3" 
+    file="/OOSD_3/src/view/ViewPieceSelection.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="207" x="915" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="view.ViewCell" project="OOSD_3" file="/OOSD_3/src/view/ViewCell.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="143" x="1023" y="2447"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="view.ViewTimer" project="OOSD_3" file="/OOSD_3/src/view/ViewTimer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="233" x="520" y="2182"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="model.Board" project="OOSD_3" file="/OOSD_3/src/model/Board.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="261" width="278" x="336" y="2447"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="model.Move" project="OOSD_3" file="/OOSD_3/src/model/Move.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="243" width="268" x="221" y="945"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="model.Player" project="OOSD_3" file="/OOSD_3/src/model/Player.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="157" x="1206" y="2447"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="model.Game" project="OOSD_3" file="/OOSD_3/src/model/Game.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="441" width="341" x="1003" y="945"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="model.BoardLayout" project="OOSD_3" file="/OOSD_3/src/model/BoardLayout.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="531" width="225" x="287" y="374"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="model.Coordinate" project="OOSD_3" file="/OOSD_3/src/model/Coordinate.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="138" x="261" y="1436"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="model.GameTimer" project="OOSD_3" file="/OOSD_3/src/model/GameTimer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="113" x="1241" y="1436"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="model.Cell" project="OOSD_3" file="/OOSD_3/src/model/Cell.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="297" width="167" x="148" y="2766"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="model.pieces.TestPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/TestPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="2404" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="model.pieces.WizardPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/WizardPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="969" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="19" language="java" name="model.pieces.PieceInterface" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/PieceInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="247" x="108" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="model.pieces.QueenPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/QueenPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="2117" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="model.pieces.TankPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/TankPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="1256" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="model.pieces.GodPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/GodPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="682" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="model.pieces.KingPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/KingPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="1543" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="model.pieces.SoldierPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/SoldierPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="1830" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="model.pieces.AbstractPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/AbstractPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="137" x="1399" y="2766"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="model.pieces.ArcherPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/ArcherPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="395" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="model.pieces.HealerPiece" project="OOSD_3" 
+    file="/OOSD_3/src/model/pieces/HealerPiece.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="247" x="2691" y="3175"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="controller.SaveController" project="OOSD_3" 
+    file="/OOSD_3/src/controller/SaveController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="212" x="1415" y="374"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="controller.Main" project="OOSD_3" file="/OOSD_3/src/controller/Main.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="245" x="630" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="controller.PlayerController" project="OOSD_3" 
+    file="/OOSD_3/src/controller/PlayerController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="165" x="1220" y="2182"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="controller.ButtonController" project="OOSD_3" 
+    file="/OOSD_3/src/controller/ButtonController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="361" x="552" y="374"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="controller.LoadController" project="OOSD_3" 
+    file="/OOSD_3/src/controller/LoadController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="206" x="41" y="374"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="controller.GameController" project="OOSD_3" 
+    file="/OOSD_3/src/controller/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="350" x="592" y="1436"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="35">    
+    <bendpoint x="230" y="1436"/>    
+    <bendpoint x="230" y="1773"/>    
+    <bendpoint x="230" y="2182"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="36" name="board"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="39" name="loadController"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="41">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="42" name="player2"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <generalization id="45">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="46">    
+    <bendpoint x="1405" y="945"/>    
+    <bendpoint x="1405" y="1436"/>    
+    <bendpoint x="1405" y="1773"/>    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="47" name="playerController"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="50" name="playerController"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="53" name="userInterface"/>      
+      <multiplicity id="54" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="56" name="buttonController"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="59" name="moveDecider"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="62" name="selectedLayout"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="65" name="timer"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="68" name="instance"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="71">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="72" name="currentlySelected"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <bendpoint x="345" y="2766"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="75" name="pieces"/>      
+      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="78" name="timer"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="81" name="gameController"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="83">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="84">    
+    <bendpoint x="540" y="945"/>    
+    <bendpoint x="540" y="1436"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="85" name="userInterface"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="88" name="destinationSelected"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="90">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="91">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="92" name="buttonController"/>      
+      <multiplicity id="93" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="95" name="player1"/>      
+      <multiplicity id="96" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="97">    
+    <bendpoint x="1189" y="1436"/>    
+    <bendpoint x="1189" y="1773"/>    
+    <bendpoint x="1189" y="2182"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="98" name="turn"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="100">    
+    <bendpoint x="561" y="1436"/>    
+    <bendpoint x="561" y="945"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="101" name="buttonController"/>      
+      <multiplicity id="102" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="103">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="104" name="saveController"/>      
+      <multiplicity id="105" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="106">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="107">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="108" name="board"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <bendpoint x="972" y="1773"/>    
+    <bendpoint x="972" y="1436"/>    
+    <bendpoint x="972" y="945"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="111" name="buttonController"/>      
+      <multiplicity id="112" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="114" name="game"/>      
+      <multiplicity id="115" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="117" name="pieceOnSquare"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="120" name="buttonController"/>      
+      <multiplicity id="121" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="122">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="123" name="cells"/>      
+      <multiplicity id="124" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <bendpoint x="993" y="1436"/>    
+    <bendpoint x="951" y="1773"/>    
+    <bendpoint x="895" y="2182"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="126" name="board"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="128">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="129" name="gameController"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="131">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="132" name="layouts"/>      
+      <multiplicity id="133" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="135" name="board"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="137">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="138" name="game"/>      
+      <multiplicity id="139" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="140">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="141" name="boardLayout"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="143">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="144" name="boardLayouts"/>      
+      <multiplicity id="145" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="146">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="147">    
+    <bendpoint x="1384" y="374"/>    
+    <bendpoint x="1384" y="945"/>    
+    <bendpoint x="1384" y="1436"/>    
+    <bendpoint x="1384" y="1773"/>    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="148" name="playerController"/>      
+      <multiplicity id="149" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="150">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="151">    
+    <bendpoint x="582" y="945"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="152" name="gameController"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="154">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="25"/>  
+  </generalization>  
+  <association id="155">    
+    <bendpoint x="1210" y="1436"/>    
+    <bendpoint x="1210" y="1773"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="156" name="playerController"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="158">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="159" name="list"/>      
+      <multiplicity id="160" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="161">    
+    <bendpoint x="190" y="945"/>    
+    <bendpoint x="190" y="1436"/>    
+    <bendpoint x="190" y="1773"/>    
+    <bendpoint x="190" y="2182"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="162" name="board"/>      
+      <multiplicity id="163" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="164">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="165" name="game"/>      
+      <multiplicity id="166" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="167">    
+    <bendpoint x="519" y="945"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="168" name="currentlySelected"/>      
+      <multiplicity id="169" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="170">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="171" name="grid"/>      
+      <multiplicity id="172" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="173">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="174" name="viewPiece"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="176">    
+    <bendpoint x="117" y="945"/>    
+    <bendpoint x="117" y="1436"/>    
+    <bendpoint x="117" y="1773"/>    
+    <bendpoint x="117" y="2182"/>    
+    <bendpoint x="117" y="2447"/>    
+    <bendpoint x="117" y="2766"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="177" name="layout"/>      
+      <multiplicity id="178" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

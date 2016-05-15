@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.*;
+import model.pieces.PieceInterface;
 
 public class AttackCommand implements Command {
 //	We need a game controller to notify the user client that an attack has failed
@@ -16,40 +17,44 @@ public class AttackCommand implements Command {
 	int health; 
 	
 	private Board board;
-	private Player currentPlayer; 
+	private String currentPlayer; 
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
+	private PieceInterface pieceBeingAttacked; 
 	
 	
 	
-	
-	public AttackCommand(GameController gameController, Board board){
+	public AttackCommand(GameController gameController, Board board, Coordinate currentSelected, Coordinate destinationSelected, String currentPlayer){
 		this.gameController = gameController; 
 		this.board = board; 
+		this.currentlySelected = currentSelected;
+		this.destinationSelected = destinationSelected;
+		this.currentPlayer = currentPlayer;
 	}
 	
 	
 	@Override
 	public void execute() {
-		if (board.getPiece(destinationSelected).getPlayerName() == currentPlayer.getName()) {
+		if (board.getPiece(destinationSelected).getPlayerName().equals(currentPlayer)) {
 			gameController.message("You are trying to attack your own piece!");
-//			return false;
 		} 
+		
 		else{
 			if(canAttackTo()){
+				pieceBeingAttacked = board.getPiece(destinationSelected);
 				attack = board.getPiece(currentlySelected).getStrength();
-				health = board.getPiece(destinationSelected).getCurrentHealth();
+				health = pieceBeingAttacked.getCurrentHealth();
 				
 				if (health > attack) {
-					board.getPiece(destinationSelected).takeDamage(attack);
-				} else {
+					pieceBeingAttacked.takeDamage(attack);
+				}else {
 //					player.setPoints(player.getPoints() + (board.getPiece(destinationSelected).getCost() / 4) * 3);
 					board.setPiece(destinationSelected,	board.getPiece(currentlySelected));
 					board.setPiece(currentlySelected, null);
 					gameController.updateBoard();
 					gameController.updatePoints();
 				}
-//				return true; 
+				gameController.getGame().setDone(true);
 			}
 			else{
 //													IS THIS REDUNDANT?
@@ -60,8 +65,9 @@ public class AttackCommand implements Command {
 	}
 
 	private boolean canAttackTo() {
-		List<Coordinate> attackRange = board.getAttackRange(currentlySelected, currentPlayer.getName());
-		if (attackingMoves != null){
+		List<Coordinate> attackRange = board.getAttackRange(currentlySelected, currentPlayer);
+		System.out.println("We want to go to: " + destinationSelected.x + "," + destinationSelected.y);
+		if (attackRange != null){
 			for(Coordinate lists : attackRange){
 				if(lists.x == destinationSelected.x && lists.y == destinationSelected.y)
 					return true; 
@@ -74,12 +80,19 @@ public class AttackCommand implements Command {
 	public void undo() {
 //		If the piece wasn't destroyed 	
 //		add the health lost back to the piece that was attacked 
-		board.getPiece(destinationSelected).takeDamage(-attack); 
 		
+		if(board.getPiece(currentlySelected) == null){
+//			if the piece was destroyed instead 
+			board.setPiece(currentlySelected, board.getPiece(destinationSelected));
+			board.setPiece(destinationSelected, pieceBeingAttacked);			
+		}else
+		{
+			board.getPiece(destinationSelected).takeDamage(-attack); 
+		}
 		
-//		if the piece was destroyed instead 
-		board.setPiece(currentlySelected, board.getPiece(destinationSelected));
-		board.setPiece(destinationSelected, null);
+		gameController.getGame().setDone(true);
+		
+
 		
 	}
 

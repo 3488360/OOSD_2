@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -11,7 +12,6 @@ import model.Game;
 
 public class SaveController {
 	private Game game;
-	private Board board;
 	private PlayerController playerController;
 	
 	public SaveController (Game game, PlayerController playerController) {
@@ -19,15 +19,15 @@ public class SaveController {
 		this.playerController = playerController;
 	}
 	
-	public boolean saveGame(String saveName, String player1, String player2) {
-		BoardLayout save = new BoardLayout(saveName);
-		board = game.getBoard();
+	public boolean saveGame(File saveFile, String player1, String player2) {
+		Board board = game.getBoard();
+		BoardLayout save = new BoardLayout(saveFile.getName().replace(".save", ""));;
 		Coordinate co;
 		FileOutputStream out = null;
 		ObjectOutputStream out2 = null;
 		
 		try {
-			out = new FileOutputStream(saveName + ".save");
+			out = new FileOutputStream(saveFile.getName().replace(".save", "") + ".save");
 			out2 = new ObjectOutputStream(out);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class SaveController {
 		save.setPlayer1Points(playerController.getPlayerPoints("player1"));
 		save.setPlayer2Points(playerController.getPlayerPoints("player2"));
 		save.setCurrentTime(game.getTime());
-		save.setTurn(game.getTurn().getName());
+		save.setTurn(game.getTurn());
 		save.setTime(game.getInitTime());
 		
 		try {

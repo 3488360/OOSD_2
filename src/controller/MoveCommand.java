@@ -33,9 +33,8 @@ public class MoveCommand implements Command {
 				board.setPiece(destinationSelected,board.getPiece(currentlySelected));
 				board.setPiece(currentlySelected, null);
 //				gameController.updateBoard(); maybe put this after exiting the move function? 
-				currentlySelected = null;
-				destinationSelected = null;
 //				return true;
+				gameController.getGame().setDone(true);
 			}
 			else{
 //				THIS IS REDUNDNT PLEASE ANSWER ASAP 
@@ -46,14 +45,9 @@ public class MoveCommand implements Command {
 	}
 
 	
-//	To be implemented
-	public void setMoveableCells(){
-
-	}
-	
 	private boolean canMoveTo(){
 //		if the destination cell is in the list of movable cells
-		List<Coordinate> moveableMoves = board.getMovement(currentlySelected);
+		List<Coordinate> moveableMoves = board.getMovement(currentlySelected, player);
 		if (moveableMoves != null){
 			for(Coordinate lists : moveableMoves){
 				if(lists.x == destinationSelected.x && lists.y == destinationSelected.y)
@@ -69,7 +63,7 @@ public class MoveCommand implements Command {
 		board.setPiece(currentlySelected, board.getPiece(destinationSelected));
 //		remove the piece that the piece just moved into 
 		board.setPiece(destinationSelected, null);
-		
+		gameController.getGame().setDone(true);
 	}
 
 }

@@ -39,7 +39,7 @@ public class ViewMain extends JFrame {
 	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer) {
 		this.playerController = playerController;
 		this.buttonController = buttonController;
-		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), gameController, playerController);
+		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), buttonController, playerController, gameController.getGame());
 		
 		//The properties of the main window/frame
 		setTitle("King vs. Queen");
@@ -171,5 +171,13 @@ public class ViewMain extends JFrame {
 	 */
 	public void message(String message) {
 		JOptionPane.showMessageDialog(null, message);
+	}
+
+	public void pause() {
+		board.setVisible(false);
+	}
+	
+	public void resume() {
+		board.setVisible(true);
 	}
 }

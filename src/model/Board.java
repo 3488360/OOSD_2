@@ -45,7 +45,7 @@ public class Board {
 		return (cells[co.x][co.y].getPiece());
 	}
 
-	public List<Coordinate> getMovement(Coordinate co) {
+	public List<Coordinate> getMovement(Coordinate co, String player) {
 		List<Coordinate> validMovements = new ArrayList<Coordinate>();
 		for(Coordinate coordinate : getPiece(co).getMoves(co)) {
 			// check bounds:
@@ -65,6 +65,10 @@ public class Board {
 				if ((y >= 0 && y < 5) || (y >= 10 && y < 15)) {
 				continue;
 			}
+			
+			if (getPiece(coordinate) != null && getPiece(coordinate).getPlayerName().equals(player)) {
+				continue;
+			}
 			validMovements.add(coordinate);
 
 		}
@@ -77,6 +81,10 @@ public class Board {
 			// check bounds:
 			int x = coordinate.x;
 			int y = coordinate.y;
+			
+			if (coordinate.equals(co)) {
+				continue;
+			}
 
 			if(x < 0 || x >= 15 || y < 0 || y >= 15) {
 				continue;
@@ -90,17 +98,20 @@ public class Board {
 			
 			if (getPiece(coordinate) == null) {
 				continue;
-			} else if (getPiece(coordinate).getPlayerName() == player) {
+			} else if (getPiece(coordinate).getPlayerName().equals(player) && !getPiece(co).getName().equals("Healer")) {
+				continue;
+			} else if (!getPiece(coordinate).getPlayerName().equals(player) && getPiece(co).getName().equals("Healer")) {
 				continue;
 			}
 			validMovements.add(coordinate);
 
 		}
-		System.out.println("Returning valid movements");
 		return validMovements;
 	}
 
 	public String getPlayer(Coordinate co) {
-		return cells[co.x][co.y].getPiece().getPlayerName();
+		if (cells[co.x][co.y].getPiece() != null)
+			return cells[co.x][co.y].getPiece().getPlayerName();
+		return null;
 	}	
 }

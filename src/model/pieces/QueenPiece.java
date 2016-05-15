@@ -13,7 +13,7 @@ public class QueenPiece extends AbstractPiece {
 		name = "Queen";
 		cost = 100;
 		icon = "images/Queen.png";
-		maxHealth = 250;
+		maxHealth = 400;
 		strength = 100;
 		currentHealth = maxHealth;
 	}

@@ -22,7 +22,7 @@ public class GameController {
 		return game;
 	}
 	
-public void update() {
+	public void update() {
 		userInterface.updateBoard();
 	}
 
@@ -63,7 +63,7 @@ public void update() {
 		userInterface.updateAttackRange(attackRange);
 	}
 
-	public void pause() {
-		game.pause();
+	public ViewMain getInterface() {
+		return userInterface;
 	}
 }
