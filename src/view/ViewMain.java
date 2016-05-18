@@ -36,7 +36,7 @@ public class ViewMain extends JFrame {
 	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer) {
+	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer, AbstractUIFactory uiFactory) {
 		this.playerController = playerController;
 		this.buttonController = buttonController;
 		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), gameController, playerController);
@@ -48,7 +48,7 @@ public class ViewMain extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.board = new ViewBoard(buttonController, board);
+		this.board = new ViewBoard(buttonController, board, uiFactory);
 		timer = new ViewTimer();
 		gameTimer.addObserver(timer);
 		

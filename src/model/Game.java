@@ -16,6 +16,7 @@ import model.pieces.SoldierPiece;
 import model.pieces.TankPiece;
 import model.pieces.TestPiece;
 import model.pieces.WizardPiece;
+import view.AbstractUIFactory;
 
 public class Game implements Observer {
 	private static Game instance = null;
@@ -48,7 +49,7 @@ public class Game implements Observer {
 	 * @param timerInt - The timer's starting time as given by the user.
 	 * @param boardLayouts - An array of all the boardLayouts as loaded from the Layouts file.
 	 */
-	public void startGame(PlayerController playerController, BoardLayout layout, int timerInt, ButtonController buttonController) {
+	public void startGame(PlayerController playerController, BoardLayout layout, int timerInt, ButtonController buttonController, AbstractUIFactory uiFactory) {
 		boolean gameRunning = true;
 		this.timerInt = timerInt;
 		Move moveDecider;
@@ -63,7 +64,7 @@ public class Game implements Observer {
 			timer = new GameTimer(timerInt, layout.getCurrentTime());
 			
 		timer.addObserver(this);
-		gameController = new GameController(this, playerController, buttonController, timer);
+		gameController = new GameController(this, playerController, buttonController, timer, uiFactory);
 		moveDecider = new Move(board, gameController);
 		buttonController.setGameVariables(board, this, gameController, moveDecider);
 		

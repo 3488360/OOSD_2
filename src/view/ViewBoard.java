@@ -25,11 +25,13 @@ public class ViewBoard extends JPanel {
 	private ButtonController buttonController;
 	private ViewPiece viewPiece;
 	private Board board;
+	private AbstractUIFactory uiFactory;
 	
-	public ViewBoard(ButtonController buttonController, Board board) {
+	public ViewBoard(ButtonController buttonController, Board board, AbstractUIFactory uiFactory) {
 		viewPiece = new ViewPiece();
 		this.buttonController = buttonController;
 		this.board = board;
+		this.uiFactory = uiFactory;
 		grid = new ViewCell[board.getHeight()][board.getWidth()];
 		
 		MouseListener gridButton = new MouseListener() {
@@ -61,7 +63,7 @@ public class ViewBoard extends JPanel {
 		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
+				grid[i][a] =uiFactory.createCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
 				grid[i][a].addMouseListener(gridButton);
 			}
 		}

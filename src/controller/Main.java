@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.AbstractUIFactory;
 import view.ViewStart;
 
 import javax.swing.*;
@@ -14,12 +15,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		// macOS fix
-		try {
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
 		Game game;
 		final LoadController loadController = new LoadController();
 		ButtonController buttonController = new ButtonController();
@@ -38,7 +33,8 @@ public class Main {
 		}
 		
 		game = Game.getInstance();
-		game.startGame(playerController, boardLayout, timer, buttonController);
+		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory("");
+		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
 	}
 
 	public static void startGame(String player1Name, String player2Name, BoardLayout selectedBoardLayout, int timerNum) {

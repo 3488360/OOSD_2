@@ -7,15 +7,16 @@ import model.Game;
 import model.GameTimer;
 import model.Player;
 import model.pieces.PieceInterface;
+import view.AbstractUIFactory;
 import view.ViewMain;
 
 public class GameController {
 	private ViewMain userInterface;
 	private Game game;
 	
-	public GameController(Game game, PlayerController playerController, ButtonController buttonController, GameTimer timer) {
-		this.game = game; 
-		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer); 
+	public GameController(Game game, PlayerController playerController, ButtonController buttonController, GameTimer timer, AbstractUIFactory uiFactory) {
+		this.game = game;
+		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer, uiFactory);
 	}
 	
 	public Game getGame() {
