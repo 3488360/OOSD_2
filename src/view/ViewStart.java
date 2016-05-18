@@ -37,18 +37,20 @@ public class ViewStart extends JFrame {
 	private Font subtitle;
 	private ButtonController buttonController;
 	private LoadController loadController;
+	private AbstractUIFactory uiFactory;
 	
 	/**
 	 * Creates and displays the settings screen for the game.
 	 * 
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
 	 */
-	public ViewStart (BoardLayout[] layouts, ButtonController buttonController, LoadController loadController) {
+	public ViewStart (BoardLayout[] layouts, ButtonController buttonController, LoadController loadController, AbstractUIFactory uiFactory) {
 		this.layouts = layouts;
 		this.buttonController = buttonController;
 		this.loadController = loadController;
+		this.uiFactory = uiFactory;
 		
-		JLabel title = new JLabel("<HTML><U>King vs. Queen Settings</U></HTML>");
+		JLabel title = uiFactory.createLabel("<HTML><U>King vs. Queen Settings</U></HTML>");
 		title.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		
@@ -84,14 +86,14 @@ public class ViewStart extends JFrame {
 		JPanel players2 = new JPanel();
 		JPanel player1Group = new JPanel();
 		JPanel player2Group = new JPanel();
-		JLabel player1Label = new JLabel("Player 1 Name:");
-		JLabel player2Label = new JLabel("Player 2 Name:");
+		JLabel player1Label = uiFactory.createLabel("Player 1 Name:");
+		JLabel player2Label = uiFactory.createLabel("Player 2 Name:");
 		Box box = Box.createVerticalBox();
 		JPanel players = new JPanel();
 
 		players.setLayout(new BorderLayout());
 		
-		subtitlePlayers = new JLabel("Player Settings");
+		subtitlePlayers = uiFactory.createLabel("Player Settings");
 		subtitlePlayers.setFont(subtitle);
 		playerTitle.add(subtitlePlayers, BorderLayout.NORTH);
 		players.add(playerTitle, BorderLayout.NORTH);
@@ -120,9 +122,9 @@ public class ViewStart extends JFrame {
 	 * @return A JPanel that contains the settings for the game itself.
 	 */
 	private JPanel gameSetup() {
-		JLabel boardLayoutLabel = new JLabel("Board Layout:");
-		JLabel timerLabel = new JLabel("Set Timer:");
-		JLabel subtitleGame = new JLabel("Game Settings");
+		JLabel boardLayoutLabel = uiFactory.createLabel("Board Layout:");
+		JLabel timerLabel = uiFactory.createLabel("Set Timer:");
+		JLabel subtitleGame = uiFactory.createLabel("Game Settings");
 		JPanel otherTitle = new JPanel();
 		JPanel boardLayoutGroup = new JPanel();
 		JPanel timerGroup = new JPanel();
@@ -165,10 +167,10 @@ public class ViewStart extends JFrame {
 	 * @return A JPanel containing the buttons.
 	 */
 	private JPanel buttonSetup() {
-		JButton start = new JButton("Start");
-		JButton defaultBtn = new JButton("Default Settings");
-		JButton load = new JButton("Load");
-		JButton exit = new JButton("Exit");
+		JButton start = uiFactory.createButton("Start");
+		JButton defaultBtn = uiFactory.createButton("Default Settings");
+		JButton load = uiFactory.createButton("Load");
+		JButton exit = uiFactory.createButton("Exit");
 		JPanel buttons = new JPanel();
 		
 		start.addActionListener(new ActionListener () {

@@ -16,11 +16,12 @@ public class Main {
 	public static void main(String[] args) {
 
 		Game game;
+		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory("");
 		final LoadController loadController = new LoadController();
 		ButtonController buttonController = new ButtonController();
 		
 		boardLayouts = loadController.loadLayouts();
-		new ViewStart(boardLayouts, buttonController, loadController);
+		new ViewStart(boardLayouts, buttonController, loadController, uiFactory);
 		waiting = true;
 		
 		while (waiting) {
@@ -33,7 +34,7 @@ public class Main {
 		}
 		
 		game = Game.getInstance();
-		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory("");
+
 		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
 	}
 

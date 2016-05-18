@@ -26,14 +26,14 @@ public class ViewButtons extends JPanel {
 	/**
 	 * Creates a new JPanel that contains the buttons located at the bottom of the screen.
 	 */
-	public ViewButtons(Board b, String player1, String player2, GameController game, PlayerController pc) {
+	public ViewButtons(Board b, String player1, String player2, GameController game, PlayerController pc, AbstractUIFactory uiFactory) {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.gameController = game;
 		saveController = new SaveController(game.getGame(), pc);
-		JButton pause = new JButton("Pause");
-		JButton exit = new JButton("Exit");
-		JButton save = new JButton ("Save");
+		JButton pause = uiFactory.createButton("Pause");
+		JButton exit = uiFactory.createButton("Exit");
+		JButton save = uiFactory.createButton ("Save");
 		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {

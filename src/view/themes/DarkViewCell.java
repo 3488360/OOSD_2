@@ -1,6 +1,7 @@
-package view;
+package view.themes;
 
 import model.State;
+import view.ViewCell;
 
 import javax.swing.*;
 import java.awt.*;

@@ -79,7 +79,7 @@ public class ViewBoard extends JPanel {
 					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
 					add(grid[i][a]);
 				} else {
-					add(new JLabel());
+					add(uiFactory.createLabel());
 				}
 			}
 		}
