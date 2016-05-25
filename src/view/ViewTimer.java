@@ -24,14 +24,14 @@ public class ViewTimer extends JPanel implements Observer {
     /**
      * Creates a new timer JPanel
      */
-    public ViewTimer() {
+    public ViewTimer(AbstractUIFactory uiFactory) {
     	Box box = Box.createVerticalBox();
-    	timer = new JLabel("Time: 00");
+    	timer = uiFactory.createLabel("Time: 00");
     	timer.setFont(new Font("Sans-Serif", Font.PLAIN, 18));
     	timer.setBorder(new EmptyBorder(0, 0, 0, 60));
-		health = new JLabel();
-		strength = new JLabel();
-		selectedPieceName = new JLabel();
+		health = uiFactory.createLabel();
+		strength = uiFactory.createLabel();
+		selectedPieceName = uiFactory.createLabel();
 		
 		box.add(timer);
 		box.add(selectedPieceName);
