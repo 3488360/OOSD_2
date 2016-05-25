@@ -24,14 +24,14 @@ public class ViewButtons extends JPanel {
 	/**
 	 * Creates a new JPanel that contains the buttons located at the bottom of the screen.
 	 */
-	public ViewButtons(Board b, String player1, String player2, ButtonControllerInterface bc) {
+	public ViewButtons(Board b, String player1, String player2, ButtonControllerInterface bc, AbstractUIFactory uiFactory) {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.buttonController = bc;
-		pause = new JButton("Pause");
-		JButton exit = new JButton("Exit");
-		JButton save = new JButton ("Save");
-		load = new JButton("Load");
+		pause = uiFactory.createButton("Pause");
+		JButton exit = uiFactory.createButton("Exit");
+		JButton save = uiFactory.createButton ("Save");
+		load = uiFactory.createButton("Load");
 		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {

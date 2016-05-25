@@ -24,14 +24,17 @@ public class ViewBoardEditor extends JFrame {
 	private LayoutEditorController editorController;
 	private Font subtitle;
 	private JComboBox<String> shapes;
-	private JLabel xLabel = new JLabel("Width: ");
+	private JLabel xLabel;
+	private AbstractUIFactory uiFactory;
 	
-	public ViewBoardEditor(LayoutEditorController editorController) {
+	public ViewBoardEditor(LayoutEditorController editorController, AbstractUIFactory uiFactory) {
 		this.editorController = editorController;
+		this.uiFactory = uiFactory;
+		xLabel = uiFactory.createLabel("Width: ");
 		
-		JLabel title = new JLabel("<HTML><U>Board Settings</U></HTML>");
+		JLabel title = uiFactory.createLabel("<HTML><U>Board Settings</U></HTML>");
 		title.setFont(new Font("Sans-Serif", Font.BOLD, 20));
-		JPanel titlePanel = new JPanel();
+		JPanel titlePanel = uiFactory.createPanel();
 		
 		subtitle = new Font("Sans-Serif", Font.BOLD, 18);
 		
@@ -57,10 +60,10 @@ public class ViewBoardEditor extends JFrame {
 	
 	private Box BoardShapes() {
 		Box boardShapes = Box.createVerticalBox();
-		JPanel panel = new JPanel();
-		JLabel boardShapesLabel = new JLabel("Board Shapes");
+		JPanel panel = uiFactory.createPanel();
+		JLabel boardShapesLabel = uiFactory.createLabel("Board Shapes");
 		shapes = new JComboBox<String>();
-		JPanel panel2 = new JPanel();
+		JPanel panel2 = uiFactory.createPanel();
 		
 		shapes.addItem("Plus");
 		shapes.addItem("Circle");
@@ -83,9 +86,9 @@ public class ViewBoardEditor extends JFrame {
 	}
 	
 	private Box BoardCoordinates() {
-		JPanel x = new JPanel();
-		JPanel y = new JPanel();
-		JLabel yLabel = new JLabel("Height: ");
+		JPanel x = uiFactory.createPanel();
+		JPanel y = uiFactory.createPanel();
+		JLabel yLabel = uiFactory.createLabel("Height: ");
 		Box box = Box.createVerticalBox();
 		boardX = new JTextField("13");
 		boardY = new JTextField("13");
@@ -109,9 +112,9 @@ public class ViewBoardEditor extends JFrame {
 	}
 	
 	private void buttonSetup() {
-		JButton exit = new JButton("Exit");
-		JButton next = new JButton("Continue");
-		JPanel panel = new JPanel();
+		JButton exit = uiFactory.createButton("Exit");
+		JButton next = uiFactory.createButton("Continue");
+		JPanel panel = uiFactory.createPanel();
 		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {

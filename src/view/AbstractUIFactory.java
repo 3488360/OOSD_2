@@ -13,6 +13,7 @@ public abstract class AbstractUIFactory {
     public abstract JButton createButton(String text);
     public abstract JButton createButton(String text, ImageIcon icon);
     public abstract ViewCell createCell(int row, int col, boolean isVisible);
+    public abstract JPanel createPanel();
 
     public static AbstractUIFactory getFactory(String theme) {
         switch(theme) {

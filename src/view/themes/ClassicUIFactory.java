@@ -32,4 +32,9 @@ public class ClassicUIFactory extends AbstractUIFactory {
     public ViewCell createCell(int row, int col, boolean isVisible) {
         return new ClassicViewCell(row, col, isVisible);
     }
+
+    @Override
+    public JPanel createPanel() {
+        return new ClassicPanel();
+    }
 }

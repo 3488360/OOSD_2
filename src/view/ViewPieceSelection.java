@@ -32,14 +32,16 @@ public class ViewPieceSelection extends JPanel {
 	private JButton tank;
 	private JButton wizard;
 	private JButton delete;
+	private AbstractUIFactory uiFactory;
 	
-	public ViewPieceSelection(ButtonControllerInterface bc) {
+	public ViewPieceSelection(ButtonControllerInterface bc, AbstractUIFactory uiFactory) {
 		this.buttonController = bc;
+		this.uiFactory = uiFactory;
 		add(pieces());
 	}
 	
 	private JPanel pieces() {
-		JPanel pieces = new JPanel();
+		JPanel pieces = uiFactory.createPanel();
 		pieces.setLayout(new GridLayout(4, 2));
 		ActionListener btnSelect = new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
@@ -47,31 +49,31 @@ public class ViewPieceSelection extends JPanel {
 			}
 		};
 		
-		king = new JButton("King", resizeIcon(new ImageIcon("images/King.png")));
+		king = uiFactory.createButton("King", resizeIcon(new ImageIcon("images/King.png")));
 		king.addActionListener(btnSelect);
 		king.setBackground(Color.LIGHT_GRAY);
-		archer = new JButton("Archer", resizeIcon(new ImageIcon("images/Archer2.png")));
+		archer = uiFactory.createButton("Archer", resizeIcon(new ImageIcon("images/Archer2.png")));
 		archer.addActionListener(btnSelect);
 		archer.setBackground(Color.LIGHT_GRAY);
-		god = new JButton("God", resizeIcon(new ImageIcon("images/God.png")));
+		god = uiFactory.createButton("God", resizeIcon(new ImageIcon("images/God.png")));
 		god.addActionListener(btnSelect);
 		god.setBackground(Color.LIGHT_GRAY);
-		healer = new JButton("Healer", resizeIcon(new ImageIcon("images/Healer.png")));
+		healer = uiFactory.createButton("Healer", resizeIcon(new ImageIcon("images/Healer.png")));
 		healer.addActionListener(btnSelect);
 		healer.setBackground(Color.LIGHT_GRAY);
-		queen = new JButton("Queen", resizeIcon(new ImageIcon("images/Queen.png")));
+		queen = uiFactory.createButton("Queen", resizeIcon(new ImageIcon("images/Queen.png")));
 		queen.addActionListener(btnSelect);
 		queen.setBackground(Color.LIGHT_GRAY);
-		soldier = new JButton("Soldier", resizeIcon(new ImageIcon("images/Soldier2.png")));
+		soldier = uiFactory.createButton("Soldier", resizeIcon(new ImageIcon("images/Soldier2.png")));
 		soldier.addActionListener(btnSelect);
 		soldier.setBackground(Color.LIGHT_GRAY);
-		tank = new JButton("Tank", resizeIcon(new ImageIcon("images/Tank.png")));
+		tank = uiFactory.createButton("Tank", resizeIcon(new ImageIcon("images/Tank.png")));
 		tank.addActionListener(btnSelect);
 		tank.setBackground(Color.LIGHT_GRAY);
-		wizard = new JButton("Wizard", resizeIcon(new ImageIcon("images/Wizard.png")));
+		wizard = uiFactory.createButton("Wizard", resizeIcon(new ImageIcon("images/Wizard.png")));
 		wizard.addActionListener(btnSelect);
 		wizard.setBackground(Color.LIGHT_GRAY);
-		delete = new JButton("Delete");
+		delete = uiFactory.createButton("Delete");
 		delete.addActionListener(btnSelect);
 		delete.setBackground(Color.LIGHT_GRAY);
 		

@@ -7,6 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DarkViewCell extends ViewCell {
+    private static final Color ATTACK = Color.decode("#570000");
+    private static final Color PLAYER1 = Color.LIGHT_GRAY;
+    private static final Color PLAYER2 = Color.DARK_GRAY;
+    private static final Color MOVE = Color.decode("#005700");
+    private static final Color NORMAL = Color.decode("#000057");
     public DarkViewCell(int row, int col, boolean isVisible) {
         super(row, col, isVisible);
     }
@@ -25,24 +30,24 @@ public class DarkViewCell extends ViewCell {
         switch(state) {
 
             case PLAYER1:
-                color = Color.DARK_GRAY;
+                color = PLAYER1;
                 break;
 
             case PLAYER2:
-                color = Color.LIGHT_GRAY;
+                color = PLAYER2;
                 break;
 
             case ATTACK:
-                color = Color.RED;
+                color = ATTACK;
                 break;
 
             case MOVE:
-                color = Color.GREEN;
+                color = MOVE;
                 break;
 
             case NORMAL:
             default:
-                color = Color.ORANGE;
+                color = NORMAL;
                 break;
         }
 
