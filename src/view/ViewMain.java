@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 import controller.GameController;
 import controller.PlayerController;
 import model.Board;
@@ -20,13 +20,12 @@ import model.GameTimer;
  */
 public class ViewMain extends JFrame {
 	private static final long serialVersionUID = 4121790745247284131L;
-	
 	private ViewBoard board;
 	private ViewTimer timer;
 	private JLabel player1Points;
 	private JLabel player2Points;
 	private PlayerController playerController;
-	private ButtonController buttonController;
+	private ButtonControllerInterface buttonController;
 	private JLabel turn;
 	
 	/**
@@ -36,14 +35,14 @@ public class ViewMain extends JFrame {
 	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer) {
+	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer gameTimer) {
 		this.playerController = playerController;
 		this.buttonController = buttonController;
-		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), gameController, playerController);
+		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), buttonController);
 		
 		//The properties of the main window/frame
 		setTitle("King vs. Queen");
-		setSize(850, 700);
+		setSize(890, 700);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,5 +170,13 @@ public class ViewMain extends JFrame {
 	 */
 	public void message(String message) {
 		JOptionPane.showMessageDialog(null, message);
+	}
+
+	public void pause() {
+		board.setVisible(false);
+	}
+	
+	public void resume() {
+		board.setVisible(true);
 	}
 }

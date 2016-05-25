@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 import controller.LoadController;
 import controller.Main;
 import model.BoardLayout;
@@ -35,7 +35,7 @@ public class ViewStart extends JFrame {
 	private BoardLayout[] layouts;
 	private BoardLayout selectedLayout = null;
 	private Font subtitle;
-	private ButtonController buttonController;
+	private ButtonControllerInterface buttonController;
 	private LoadController loadController;
 	
 	/**
@@ -43,7 +43,7 @@ public class ViewStart extends JFrame {
 	 * 
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
 	 */
-	public ViewStart (BoardLayout[] layouts, ButtonController buttonController, LoadController loadController) {
+	public ViewStart (BoardLayout[] layouts, ButtonControllerInterface buttonController, LoadController loadController) {
 		this.layouts = layouts;
 		this.buttonController = buttonController;
 		this.loadController = loadController;
@@ -56,7 +56,7 @@ public class ViewStart extends JFrame {
 		
 		//Set the window's properties
 		setTitle("King vs. Queen Settings");
-		setSize(420, 200);
+		setSize(460, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,6 +168,7 @@ public class ViewStart extends JFrame {
 		JButton start = new JButton("Start");
 		JButton defaultBtn = new JButton("Default Settings");
 		JButton load = new JButton("Load");
+		JButton create = new JButton("Layout Editor");
 		JButton exit = new JButton("Exit");
 		JPanel buttons = new JPanel();
 		
@@ -189,6 +190,12 @@ public class ViewStart extends JFrame {
 			}
 		});
 		
+		create.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startLayoutEditor();
+			}
+		});
+		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				buttonController.exit();
@@ -198,11 +205,17 @@ public class ViewStart extends JFrame {
 		buttons.add(start, BorderLayout.SOUTH);
 		buttons.add(defaultBtn, BorderLayout.SOUTH);
 		buttons.add(load, BorderLayout.SOUTH);
+		buttons.add(create, BorderLayout.SOUTH);
 		buttons.add(exit, BorderLayout.SOUTH);
 		
 		return buttons;
 	}
 	
+	private void startLayoutEditor() {
+		this.setVisible(false);
+		Main.startLayoutEditor();
+	}
+
 	/**
 	 * Closes this interface and then calls startGame in main.
 	 */
@@ -243,6 +256,20 @@ public class ViewStart extends JFrame {
 			initTimer.setText(((Integer) list.get(2)).toString());
 			selectedLayout = (BoardLayout) list.get(3);
 			start();
+		}
+	}
+
+	public void setLayouts(BoardLayout[] boardLayouts) {
+		boardLayout.removeAllItems();
+		
+		layouts = boardLayouts;
+		
+		if (layouts != null) {
+			for (int i = 0; i < layouts.length; i++) {
+				boardLayout.addItem(layouts[i].getName());
+			}
+		} else {
+			boardLayout.addItem("No Layouts Found");
 		}
 	}
 }

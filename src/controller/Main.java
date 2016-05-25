@@ -9,14 +9,14 @@ public class Main {
 	private static int timer;
 	private static BoardLayout[] boardLayouts;
 	private static final PlayerController playerController = new PlayerController();
+	private static ViewStart start;
+	private static LoadController loadController = new LoadController();
 	
 	public static void main(String[] args) {
-		Game game;
-		final LoadController loadController = new LoadController();
 		ButtonController buttonController = new ButtonController();
 		
-		boardLayouts = loadController.loadLayouts();
-		new ViewStart(boardLayouts, buttonController, loadController);
+		boardLayouts = loadController.loadLayouts2();
+		start = new ViewStart(boardLayouts, buttonController, loadController);
 		waiting = true;
 		
 		while (waiting) {
@@ -28,7 +28,7 @@ public class Main {
 			}
 		}
 		
-		game = Game.getInstance();
+		Game game = Game.getInstance(boardLayout);
 		game.startGame(playerController, boardLayout, timer, buttonController);
 	}
 
@@ -38,5 +38,15 @@ public class Main {
 		boardLayout = selectedBoardLayout;
 		timer = timerNum;
 		waiting = false;
+	}
+
+	public static void startLayoutEditor() {
+		new LayoutEditorController();
+	}
+
+	public static void showStart() {
+		boardLayouts = loadController.loadLayouts2();
+		start.setLayouts(boardLayouts);
+		start.setVisible(true);
 	}
 }

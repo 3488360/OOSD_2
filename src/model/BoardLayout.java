@@ -17,6 +17,7 @@ public class BoardLayout implements Serializable {
 	private int player1Points = -1;
 	private int player2Points = -1;
 	private int time = -1;
+	private BoardShape boardShape;
 	
 	public BoardLayout (String name) {
 		this.name = name;
@@ -24,14 +25,14 @@ public class BoardLayout implements Serializable {
 	}
 	
 	public void addPiece(Coordinate co, PieceInterface p) {
-		System.out.println("Added " + p.getName() + " that belongs to " + p.getPlayerName());
+//		System.out.println(name + " Added " + p.getName() + " that belongs to " + p.getPlayerName());
 		layout.put(co, p);
 	}
 	
 	public PieceInterface getPiece(Coordinate co) {
-		PieceInterface p = layout.get(co);
-		if (p != null)
-			System.out.println("Loaded " + p.getName() + " that belongs to " + p.getPlayerName());
+//		PieceInterface p = layout.get(co);
+//		if (p != null)
+//			System.out.println(name + " Loaded " + p.getName() + " that belongs to " + p.getPlayerName());
 		return layout.get(co);
 	}
 	
@@ -90,6 +91,14 @@ public class BoardLayout implements Serializable {
 
 	public void setCurrentTime(int currentTime) {
 		this.currentTime = currentTime;
+	}
+
+	public BoardShape getBoardShape() {
+		return boardShape;
+	}
+
+	public void setBoardShape(BoardShape boardShape) {
+		this.boardShape = boardShape;
 	}
 
 }

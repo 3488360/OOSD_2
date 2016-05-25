@@ -24,6 +24,43 @@ import model.pieces.TestPiece;
 import model.pieces.WizardPiece;
 
 public class LoadController {
+	public BoardLayout[] loadLayouts2() {
+		final String FILE_DIR = System.getProperty("user.dir");
+		List<BoardLayout> layouts = new ArrayList<BoardLayout>();
+		BoardLayout[] layouts2;
+		File directory = new File(FILE_DIR);
+		ObjectInputStream objectStream = null;
+		FileInputStream fileStream;
+		BoardLayout newLayout;
+		
+		for (File file : directory.listFiles()) {
+			if (file.isFile() && (file.getName().endsWith(".layout"))) {
+				try {
+					fileStream = new FileInputStream(file);
+					objectStream = new ObjectInputStream(fileStream);
+					newLayout = (BoardLayout) objectStream.readObject();
+					layouts.add(newLayout);
+				} catch (IOException | ClassNotFoundException e) {
+					System.out.print("Issue with loading layouts from dir " + FILE_DIR);
+					e.printStackTrace();
+					return null;
+				} finally {
+					try {
+						objectStream.close();
+					} catch (IOException e) {
+						System.out.println("Could not close object stream");
+					}
+				}
+
+			}
+		}
+		
+		layouts2 = new BoardLayout[layouts.size()];
+		layouts2 = layouts.toArray(layouts2);
+		
+		return layouts2;
+	}
+	
 	public BoardLayout[] loadLayouts() {
 		String p;
 		String currentLine;

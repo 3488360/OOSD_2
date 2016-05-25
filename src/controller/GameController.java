@@ -13,7 +13,7 @@ public class GameController {
 	private ViewMain userInterface;
 	private Game game;
 	
-	public GameController(Game game, PlayerController playerController, ButtonController buttonController, GameTimer timer) {
+	public GameController(Game game, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer timer) {
 		this.game = game; 
 		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer); 
 	}
@@ -63,7 +63,7 @@ public class GameController {
 		userInterface.updateAttackRange(attackRange);
 	}
 
-	public void pause() {
-		game.pause();
+	public ViewMain getInterface() {
+		return userInterface;
 	}
 }

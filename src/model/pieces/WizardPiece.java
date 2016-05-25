@@ -13,9 +13,9 @@ public class WizardPiece extends AbstractPiece{
         super(playerName);
         name = "Wizard";
         icon = "images/Wizard.png";
-        maxHealth = 100;
-        strength = 240;
-        cost = 50;
+        maxHealth = 200;
+        strength = 150;
+        cost = 60;
         currentHealth = maxHealth;
     }
 

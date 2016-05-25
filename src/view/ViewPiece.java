@@ -33,7 +33,7 @@ public class ViewPiece {
         BufferedImage bi = new BufferedImage(36, 36, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = bi.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(img, 0, 0, 36, 36, null);
+        g.drawImage(img, 0, 0, 32, 32, null);
         g.dispose();
         ImageIcon newIcon = new ImageIcon(bi);
         return newIcon;
