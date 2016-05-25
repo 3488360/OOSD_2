@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 import controller.LoadController;
 import controller.Main;
 import model.BoardLayout;
@@ -35,22 +35,20 @@ public class ViewStart extends JFrame {
 	private BoardLayout[] layouts;
 	private BoardLayout selectedLayout = null;
 	private Font subtitle;
-	private ButtonController buttonController;
+	private ButtonControllerInterface buttonController;
 	private LoadController loadController;
-	private AbstractUIFactory uiFactory;
 	
 	/**
 	 * Creates and displays the settings screen for the game.
 	 * 
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
 	 */
-	public ViewStart (BoardLayout[] layouts, ButtonController buttonController, LoadController loadController, AbstractUIFactory uiFactory) {
+	public ViewStart (BoardLayout[] layouts, ButtonControllerInterface buttonController, LoadController loadController) {
 		this.layouts = layouts;
 		this.buttonController = buttonController;
 		this.loadController = loadController;
-		this.uiFactory = uiFactory;
 		
-		JLabel title = uiFactory.createLabel("<HTML><U>King vs. Queen Settings</U></HTML>");
+		JLabel title = new JLabel("<HTML><U>King vs. Queen Settings</U></HTML>");
 		title.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		
@@ -58,7 +56,7 @@ public class ViewStart extends JFrame {
 		
 		//Set the window's properties
 		setTitle("King vs. Queen Settings");
-		setSize(420, 200);
+		setSize(460, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,14 +84,14 @@ public class ViewStart extends JFrame {
 		JPanel players2 = new JPanel();
 		JPanel player1Group = new JPanel();
 		JPanel player2Group = new JPanel();
-		JLabel player1Label = uiFactory.createLabel("Player 1 Name:");
-		JLabel player2Label = uiFactory.createLabel("Player 2 Name:");
+		JLabel player1Label = new JLabel("Player 1 Name:");
+		JLabel player2Label = new JLabel("Player 2 Name:");
 		Box box = Box.createVerticalBox();
 		JPanel players = new JPanel();
 
 		players.setLayout(new BorderLayout());
 		
-		subtitlePlayers = uiFactory.createLabel("Player Settings");
+		subtitlePlayers = new JLabel("Player Settings");
 		subtitlePlayers.setFont(subtitle);
 		playerTitle.add(subtitlePlayers, BorderLayout.NORTH);
 		players.add(playerTitle, BorderLayout.NORTH);
@@ -122,9 +120,9 @@ public class ViewStart extends JFrame {
 	 * @return A JPanel that contains the settings for the game itself.
 	 */
 	private JPanel gameSetup() {
-		JLabel boardLayoutLabel = uiFactory.createLabel("Board Layout:");
-		JLabel timerLabel = uiFactory.createLabel("Set Timer:");
-		JLabel subtitleGame = uiFactory.createLabel("Game Settings");
+		JLabel boardLayoutLabel = new JLabel("Board Layout:");
+		JLabel timerLabel = new JLabel("Set Timer:");
+		JLabel subtitleGame = new JLabel("Game Settings");
 		JPanel otherTitle = new JPanel();
 		JPanel boardLayoutGroup = new JPanel();
 		JPanel timerGroup = new JPanel();
@@ -167,10 +165,11 @@ public class ViewStart extends JFrame {
 	 * @return A JPanel containing the buttons.
 	 */
 	private JPanel buttonSetup() {
-		JButton start = uiFactory.createButton("Start");
-		JButton defaultBtn = uiFactory.createButton("Default Settings");
-		JButton load = uiFactory.createButton("Load");
-		JButton exit = uiFactory.createButton("Exit");
+		JButton start = new JButton("Start");
+		JButton defaultBtn = new JButton("Default Settings");
+		JButton load = new JButton("Load");
+		JButton create = new JButton("Layout Editor");
+		JButton exit = new JButton("Exit");
 		JPanel buttons = new JPanel();
 		
 		start.addActionListener(new ActionListener () {
@@ -191,6 +190,12 @@ public class ViewStart extends JFrame {
 			}
 		});
 		
+		create.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startLayoutEditor();
+			}
+		});
+		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				buttonController.exit();
@@ -200,11 +205,17 @@ public class ViewStart extends JFrame {
 		buttons.add(start, BorderLayout.SOUTH);
 		buttons.add(defaultBtn, BorderLayout.SOUTH);
 		buttons.add(load, BorderLayout.SOUTH);
+		buttons.add(create, BorderLayout.SOUTH);
 		buttons.add(exit, BorderLayout.SOUTH);
 		
 		return buttons;
 	}
 	
+	private void startLayoutEditor() {
+		this.setVisible(false);
+		Main.startLayoutEditor();
+	}
+
 	/**
 	 * Closes this interface and then calls startGame in main.
 	 */
@@ -245,6 +256,20 @@ public class ViewStart extends JFrame {
 			initTimer.setText(((Integer) list.get(2)).toString());
 			selectedLayout = (BoardLayout) list.get(3);
 			start();
+		}
+	}
+
+	public void setLayouts(BoardLayout[] boardLayouts) {
+		boardLayout.removeAllItems();
+		
+		layouts = boardLayouts;
+		
+		if (layouts != null) {
+			for (int i = 0; i < layouts.length; i++) {
+				boardLayout.addItem(layouts[i].getName());
+			}
+		} else {
+			boardLayout.addItem("No Layouts Found");
 		}
 	}
 }

@@ -9,22 +9,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 
 //Not implemented yet. It will add a panel of JButtons that the players can use to add more pieces to the board.
 public class ViewPieceSelection extends JPanel {
 	private static final long serialVersionUID = -7645116281798164489L;
 	
-	private ButtonController buttonController;
-	private AbstractUIFactory uiFactory;
+	private ButtonControllerInterface buttonController;
+	private JButton king;
+	private JButton archer;
+	private JButton god;
+	private JButton healer;
+	private JButton queen;
+	private JButton soldier;
+	private JButton tank;
+	private JButton wizard;
+	private JButton delete;
 	
-	public ViewPieceSelection(ButtonController bc, AbstractUIFactory uiFactory) {
+	public ViewPieceSelection(ButtonControllerInterface bc) {
 		this.buttonController = bc;
-		this.uiFactory = uiFactory;
 		add(pieces());
 	}
 	
@@ -37,39 +47,43 @@ public class ViewPieceSelection extends JPanel {
 			}
 		};
 		
-		JButton king = uiFactory.createButton("King", resizeIcon(new ImageIcon("images/King.png")));
+		king = new JButton("King", resizeIcon(new ImageIcon("images/King.png")));
 		king.addActionListener(btnSelect);
 		king.setBackground(Color.LIGHT_GRAY);
-		JButton archer = uiFactory.createButton("Archer", resizeIcon(new ImageIcon("images/Archer2.png")));
+		archer = new JButton("Archer", resizeIcon(new ImageIcon("images/Archer2.png")));
 		archer.addActionListener(btnSelect);
 		archer.setBackground(Color.LIGHT_GRAY);
-		JButton god = uiFactory.createButton("God", resizeIcon(new ImageIcon("images/God.png")));
+		god = new JButton("God", resizeIcon(new ImageIcon("images/God.png")));
 		god.addActionListener(btnSelect);
 		god.setBackground(Color.LIGHT_GRAY);
-		JButton healer = uiFactory.createButton("Healer", resizeIcon(new ImageIcon("images/Healer.png")));
+		healer = new JButton("Healer", resizeIcon(new ImageIcon("images/Healer.png")));
 		healer.addActionListener(btnSelect);
 		healer.setBackground(Color.LIGHT_GRAY);
-		JButton queen = uiFactory.createButton("Queen", resizeIcon(new ImageIcon("images/Queen.png")));
+		queen = new JButton("Queen", resizeIcon(new ImageIcon("images/Queen.png")));
 		queen.addActionListener(btnSelect);
 		queen.setBackground(Color.LIGHT_GRAY);
-		JButton soldier = uiFactory.createButton("Soldier", resizeIcon(new ImageIcon("images/Soldier2.png")));
+		soldier = new JButton("Soldier", resizeIcon(new ImageIcon("images/Soldier2.png")));
 		soldier.addActionListener(btnSelect);
 		soldier.setBackground(Color.LIGHT_GRAY);
-		JButton tank = uiFactory.createButton("Tank", resizeIcon(new ImageIcon("images/Tank.png")));
+		tank = new JButton("Tank", resizeIcon(new ImageIcon("images/Tank.png")));
 		tank.addActionListener(btnSelect);
 		tank.setBackground(Color.LIGHT_GRAY);
-		JButton wizard = uiFactory.createButton("Wizard", resizeIcon(new ImageIcon("images/Wizard.png")));
+		wizard = new JButton("Wizard", resizeIcon(new ImageIcon("images/Wizard.png")));
 		wizard.addActionListener(btnSelect);
 		wizard.setBackground(Color.LIGHT_GRAY);
+		delete = new JButton("Delete");
+		delete.addActionListener(btnSelect);
+		delete.setBackground(Color.LIGHT_GRAY);
 		
 		pieces.add(king);
-		pieces.add(archer);
-		pieces.add(god);
-		pieces.add(healer);
 		pieces.add(queen);
 		pieces.add(soldier);
+		pieces.add(god);
 		pieces.add(tank);
+		pieces.add(healer);
+		pieces.add(archer);
 		pieces.add(wizard);
+		//pieces.add(delete);
 		
 		return pieces;
 	}
@@ -87,5 +101,51 @@ public class ViewPieceSelection extends JPanel {
         g.dispose();
         ImageIcon newIcon = new ImageIcon(bi);
         return newIcon;
+    }
+    
+    public void setJButton(String pieceName) {
+		Border border = BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(), BorderFactory.createEmptyBorder(2, 14, 2, 14));
+		Border border2 = UIManager.getBorder("Button.border");
+    	
+		king.setBorder(border2);
+		archer.setBorder(border2);
+		god.setBorder(border2);
+		healer.setBorder(border2);
+		queen.setBorder(border2);
+		soldier.setBorder(border2);
+		tank.setBorder(border2);
+		wizard.setBorder(border2);
+		delete.setBorder(border2);
+    	
+		//System.out.println("Piece " + pieceName);
+		
+    	switch (pieceName) {
+	    	case "King": king.setBorder(border);
+	    		break;
+	    	
+	    	case "Archer": archer.setBorder(border);
+	    		break;
+	    	
+	    	case "God": god.setBorder(border);
+	    		break;
+	    	
+	    	case "Healer": healer.setBorder(border);
+	    		break;
+	    	
+	    	case "Queen": queen.setBorder(border);
+	    		break;
+	    	
+	    	case "Soldier": soldier.setBorder(border);
+	    		break;
+	    	
+	    	case "Tank": tank.setBorder(border);
+	    		break;
+	    	
+	    	case "Wizard": wizard.setBorder(border);
+	    		break;
+	    		
+	    	case "Delete": delete.setBorder(border);
+    			break;
+    	}
     }
 }

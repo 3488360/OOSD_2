@@ -7,16 +7,15 @@ import model.Game;
 import model.GameTimer;
 import model.Player;
 import model.pieces.PieceInterface;
-import view.AbstractUIFactory;
 import view.ViewMain;
 
 public class GameController {
 	private ViewMain userInterface;
 	private Game game;
 	
-	public GameController(Game game, PlayerController playerController, ButtonController buttonController, GameTimer timer, AbstractUIFactory uiFactory) {
-		this.game = game;
-		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer, uiFactory);
+	public GameController(Game game, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer timer) {
+		this.game = game; 
+		userInterface = new ViewMain(this, game.getBoard(), playerController, buttonController, timer); 
 	}
 	
 	public Game getGame() {
@@ -64,7 +63,7 @@ public class GameController {
 		userInterface.updateAttackRange(attackRange);
 	}
 
-	public void pause() {
-		game.pause();
+	public ViewMain getInterface() {
+		return userInterface;
 	}
 }

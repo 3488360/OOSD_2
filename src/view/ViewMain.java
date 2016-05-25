@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 import controller.GameController;
 import controller.PlayerController;
 import model.Board;
@@ -20,15 +20,13 @@ import model.GameTimer;
  */
 public class ViewMain extends JFrame {
 	private static final long serialVersionUID = 4121790745247284131L;
-	
 	private ViewBoard board;
 	private ViewTimer timer;
 	private JLabel player1Points;
 	private JLabel player2Points;
 	private PlayerController playerController;
-	private ButtonController buttonController;
+	private ButtonControllerInterface buttonController;
 	private JLabel turn;
-	private AbstractUIFactory uiFactory;
 	
 	/**
 	 * Creates the main user interface for the game that displays the board, player details and the timer.
@@ -37,21 +35,20 @@ public class ViewMain extends JFrame {
 	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonController buttonController, GameTimer gameTimer, AbstractUIFactory uiFactory) {
+	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer gameTimer) {
 		this.playerController = playerController;
 		this.buttonController = buttonController;
-		this.uiFactory = uiFactory;
-		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), gameController, playerController, this.uiFactory);
+		ViewButtons buttons = new ViewButtons(board, playerController.getPlayerName("player1"), playerController.getPlayerName("player2"), buttonController);
 		
 		//The properties of the main window/frame
 		setTitle("King vs. Queen");
-		setSize(850, 700);
+		setSize(890, 700);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.board = new ViewBoard(buttonController, board, uiFactory);
-		timer = new ViewTimer(this.uiFactory);
+		this.board = new ViewBoard(buttonController, board);
+		timer = new ViewTimer();
 		gameTimer.addObserver(timer);
 		
 		initTitle();
@@ -68,7 +65,7 @@ public class ViewMain extends JFrame {
 	 */
 	private void initTitle() {
 		JPanel title = new JPanel();
-		JLabel gameTitle = uiFactory.createLabel("King vs. Queen");
+		JLabel gameTitle = new JLabel("King vs. Queen");
 		
 		gameTitle.setFont(new Font("Sans-Serif", Font.BOLD, 22));
 		
@@ -82,8 +79,8 @@ public class ViewMain extends JFrame {
 	 */
 	private void initPlayers() {
 		JPanel players = new JPanel();
-		JLabel player1Label = uiFactory.createLabel(playerController.getPlayerName("player1"));
-		JLabel player2Label = uiFactory.createLabel(playerController.getPlayerName("player2"));
+		JLabel player1Label = new JLabel(playerController.getPlayerName("player1"));
+		JLabel player2Label = new JLabel(playerController.getPlayerName("player2"));
 		Font playerNames = new Font("Sans-Serif", Font.BOLD, 20);
 		Font points = new Font("Sans-Serif", Font.PLAIN, 17);
 		Box playersAndButtons = Box.createVerticalBox();
@@ -95,14 +92,14 @@ public class ViewMain extends JFrame {
 		player2Label.setFont(playerNames);
 		player2Label.setBorder(playerBorder);
 		
-		player1Points = uiFactory.createLabel("Points: " + Integer.toString(playerController.getPoints("player1")));
+		player1Points = new JLabel("Points: " + Integer.toString(playerController.getPoints("player1")));
 		player1Points.setFont(points);
 		player1Points.setBorder(pointsBorder);
-		player2Points = uiFactory.createLabel("Points: " + Integer.toString(playerController.getPoints("player1")));
+		player2Points = new JLabel("Points: " + Integer.toString(playerController.getPoints("player1")));
 		player2Points.setFont(points);
 		player2Points.setBorder(pointsBorder);
 		
-		turn = uiFactory.createLabel();
+		turn = new JLabel();
 		
 		Box box = Box.createVerticalBox();
 		
@@ -112,7 +109,7 @@ public class ViewMain extends JFrame {
 		box.add(player2Points);
 		box.add(turn);
 		box.add(Box.createVerticalStrut(50));
-		box.add(new ViewPieceSelection(buttonController, this.uiFactory));
+		box.add(new ViewPieceSelection(buttonController));
 		
 		players.add(box);
 		
@@ -173,5 +170,13 @@ public class ViewMain extends JFrame {
 	 */
 	public void message(String message) {
 		JOptionPane.showMessageDialog(null, message);
+	}
+
+	public void pause() {
+		board.setVisible(false);
+	}
+	
+	public void resume() {
+		board.setVisible(true);
 	}
 }

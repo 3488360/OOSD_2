@@ -8,14 +8,14 @@ import java.util.List;
 public class SoldierPiece extends AbstractPiece {
 	private static final long serialVersionUID = 1805844297535185000L;
 
-	/* The Soldier has medium hp, medium attack and a medium move range */
+	/* The Soldier has medium hp-to-high, low attack and a medium move range */
     public SoldierPiece(String playerName) {
         super(playerName);
         name = "Soldier";
         icon = "images/Soldier2.png";
-        maxHealth = 200;
-        strength = 120;
-        cost = 30;
+        maxHealth = 350;
+        strength = 100;
+        cost = 40;
         currentHealth = maxHealth;
     }
 

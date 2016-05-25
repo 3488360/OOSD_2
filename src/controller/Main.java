@@ -1,10 +1,7 @@
 package controller;
 
 import model.*;
-import view.AbstractUIFactory;
 import view.ViewStart;
-
-import javax.swing.*;
 
 public class Main {
 	private static boolean waiting;
@@ -12,16 +9,14 @@ public class Main {
 	private static int timer;
 	private static BoardLayout[] boardLayouts;
 	private static final PlayerController playerController = new PlayerController();
+	private static ViewStart start;
+	private static LoadController loadController = new LoadController();
 	
 	public static void main(String[] args) {
-
-		Game game;
-		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory("");
-		final LoadController loadController = new LoadController();
 		ButtonController buttonController = new ButtonController();
 		
-		boardLayouts = loadController.loadLayouts();
-		new ViewStart(boardLayouts, buttonController, loadController, uiFactory);
+		boardLayouts = loadController.loadLayouts2();
+		start = new ViewStart(boardLayouts, buttonController, loadController);
 		waiting = true;
 		
 		while (waiting) {
@@ -33,9 +28,8 @@ public class Main {
 			}
 		}
 		
-		game = Game.getInstance();
-
-		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
+		Game game = Game.getInstance(boardLayout);
+		game.startGame(playerController, boardLayout, timer, buttonController);
 	}
 
 	public static void startGame(String player1Name, String player2Name, BoardLayout selectedBoardLayout, int timerNum) {
@@ -44,5 +38,15 @@ public class Main {
 		boardLayout = selectedBoardLayout;
 		timer = timerNum;
 		waiting = false;
+	}
+
+	public static void startLayoutEditor() {
+		new LayoutEditorController();
+	}
+
+	public static void showStart() {
+		boardLayouts = loadController.loadLayouts2();
+		start.setLayouts(boardLayouts);
+		start.setVisible(true);
 	}
 }

@@ -1,14 +1,17 @@
 package model;
 
+import java.io.Serializable;
+
 import model.pieces.PieceInterface;
 
 //Information expert. Keeps track of the settings of each individual cell.
-public class Cell {
-	protected int row;
-	protected int col;
-	protected boolean isVisible;
+public class Cell implements Serializable {
+	private static final long serialVersionUID = 2894491490148318878L;
+	private int row;
+	private int col;
+	private boolean isVisible;
 	private PieceInterface pieceOnSquare = null; 
-	protected boolean canMoveTo = false;
+	private boolean canMoveTo = false;
 
 	public Cell (int i, int j, boolean visible) {
 		row = i;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GodPiece extends AbstractPiece {
-    /* The God has medium hp, high attack and a high move range */
+    /* The God has medium-to-low hp, high attack and a high move range */
 	private static final long serialVersionUID = 6150525204578147335L;
 
 	public GodPiece(String playerName) {
@@ -14,8 +14,8 @@ public class GodPiece extends AbstractPiece {
         name = "God";
         icon = "images/God.png";
         maxHealth = 200;
-        strength = 240;
-        cost = 60;
+        strength = 200;
+        cost = 70;
         currentHealth = maxHealth;
     }
 

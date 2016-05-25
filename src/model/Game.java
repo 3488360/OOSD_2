@@ -6,6 +6,7 @@ import java.util.Observer;
 import controller.ButtonController;
 import controller.GameController;
 import controller.PlayerController;
+import controller.SaveController;
 import model.pieces.ArcherPiece;
 import model.pieces.GodPiece;
 import model.pieces.HealerPiece;
@@ -27,17 +28,18 @@ public class Game implements Observer {
 	private int timerTime = 60;
 	private int timerInt;
 	private PlayerController playerController;
+	private GameTimer timer;
 	
 	//Singleton pattern. Makes sure there is only one game object
-	public static Game getInstance() {
+	public static Game getInstance(BoardLayout boardLayout) {
 		if (instance == null) {
-			instance = new Game();
+			instance = new Game(boardLayout);
 		}
 		return instance;
 	}
 	
-	private Game() {
-		board = new Board();
+	private Game(BoardLayout boardLayout) {
+		board = new Board(boardLayout.getBoardShape());
 	}
 
 	/**
@@ -56,7 +58,7 @@ public class Game implements Observer {
 		Player player1 = playerController.getPlayer1();
 		Player player2 = playerController.getPlayer2();
 		this.playerController = playerController;
-		GameTimer timer;
+		setupGame(layout, player2, player2);
 		
 		if (layout.getCurrentTime() == -1)
 			timer = new GameTimer(timerInt);
@@ -66,26 +68,26 @@ public class Game implements Observer {
 		timer.addObserver(this);
 		gameController = new GameController(this, playerController, buttonController, timer, uiFactory);
 		moveDecider = new Move(board, gameController);
-		buttonController.setGameVariables(board, this, gameController, moveDecider);
+		buttonController.setGameVariables(board, this, gameController, moveDecider, gameController.getInterface(), new SaveController(this, playerController));
 		
 		setupBoard(layout);
 		
 		if (layout.getTurn() == null) {
 			turn = player1;
 		} else {
-			if (layout.getTurn() == "player1")
+			if (layout.getTurn().equals("player1"))
 				turn = player1;
 			else
 				turn = player2;
 		}
-			
-		setupGame(layout, player2, player2);
 		
 		gameController.updateBoard();
 		
 		while (gameRunning) {
 			gameController.updateTurn(turn);
 			timer.start();
+			
+			//System.out.println("It is " + turn.getName() + "'s turn!");
 			
 			while(!done) {
 				try {
@@ -99,18 +101,20 @@ public class Game implements Observer {
 				}
 			}
 			
-			if (turn == player1) {
-				turn = player2;
-			} else {
-				turn = player1;
-			}
-			
 			if (timerTime == 0) {
 				System.out.println("Timer ran out");
 				gameController.message("Timer ran out!\n" + turn.getPlayerName() + "'s turn.");
 			}
 			
+			if (turn.equals(player1)) {
+				turn = player2;
+			} else {
+				turn = player1;
+			}
+			
 			timer.stop();
+			
+			timerTime = timerInt;
 			
 			done = false;
 			
@@ -158,31 +162,26 @@ public class Game implements Observer {
 	}
 	
 	public void pause() {
-		// TODO Auto-generated method stub
+		timer.pause();
 	}
 	
-	//Keep for now
-/*	private void turnAllMoveableSquaresOff(){
-		for(int i = 0; i < board.getHeight(); i++){
-			for(int j = 0; j < board.getWidth(); j++){
-				board.getAllCells()[i][j].setCanMoveTo(false);
-			}
-		}
-	}*/	
+	public void resume() {
+		timer.resume();
+	}
 
 	public Board getBoard() {
 		return board;
 	}
 
 	public void addPiece(String pieceName, Coordinate co) {
-		PieceInterface p = getPiece(pieceName, turn.getPlayerName());
+		PieceInterface p = getPiece(pieceName, turn.getName());
 		if (turn.getPoints() >= p.getCost()) {
 			board.setPiece(co, p);
 			turn.setPoints(turn.getPoints() - p.getCost());
+			gameController.updatePoints();
 		} else {
 			gameController.message("Not enough points to buy that piece.");
 		}
-		
 	}
 
 	@Override
@@ -222,8 +221,8 @@ public class Game implements Observer {
 		return null;
 	}
 
-	public Player getTurn() {
-		return turn;
+	public String getTurn() {
+		return turn.getName();
 	}
 
 	public Player getPlayer1() {

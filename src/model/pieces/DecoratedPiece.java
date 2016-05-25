@@ -5,12 +5,12 @@ import model.Coordinate;
 import java.util.List;
 
 public abstract class DecoratedPiece implements PieceInterface {
-
     private PieceInterface piece;
 
     public DecoratedPiece(PieceInterface piece) {
         this.piece = piece;
     }
+    
     @Override
     public List<Coordinate> getMoves(Coordinate coordinate) {
         return piece.getMoves(coordinate);
