@@ -17,6 +17,7 @@ public class BoardLayout implements Serializable {
 	private int player1Points = -1;
 	private int player2Points = -1;
 	private int time = -1;
+	private BoardShape boardShape;
 	
 	public BoardLayout (String name) {
 		this.name = name;
@@ -90,6 +91,14 @@ public class BoardLayout implements Serializable {
 
 	public void setCurrentTime(int currentTime) {
 		this.currentTime = currentTime;
+	}
+
+	public BoardShape getBoardShape() {
+		return boardShape;
+	}
+
+	public void setBoardShape(BoardShape boardShape) {
+		this.boardShape = boardShape;
 	}
 
 }

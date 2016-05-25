@@ -10,7 +10,7 @@ public abstract class DecoratedPiece implements PieceInterface {
     public DecoratedPiece(PieceInterface piece) {
         this.piece = piece;
     }
-
+    
     @Override
     public List<Coordinate> getMoves(Coordinate coordinate) {
         return piece.getMoves(coordinate);

@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
+
 import model.pieces.PieceInterface;
 
 //Information expert. Keeps track of the settings of each individual cell.
-public class Cell {
+public class Cell implements Serializable {
+	private static final long serialVersionUID = 2894491490148318878L;
 	private int row;
 	private int col;
 	private boolean isVisible;

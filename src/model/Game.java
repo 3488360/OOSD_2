@@ -6,6 +6,7 @@ import java.util.Observer;
 import controller.ButtonController;
 import controller.GameController;
 import controller.PlayerController;
+import controller.SaveController;
 import model.pieces.ArcherPiece;
 import model.pieces.GodPiece;
 import model.pieces.HealerPiece;
@@ -29,15 +30,15 @@ public class Game implements Observer {
 	private GameTimer timer;
 	
 	//Singleton pattern. Makes sure there is only one game object
-	public static Game getInstance() {
+	public static Game getInstance(BoardLayout boardLayout) {
 		if (instance == null) {
-			instance = new Game();
+			instance = new Game(boardLayout);
 		}
 		return instance;
 	}
 	
-	private Game() {
-		board = new Board();
+	private Game(BoardLayout boardLayout) {
+		board = new Board(boardLayout.getBoardShape());
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class Game implements Observer {
 		timer.addObserver(this);
 		gameController = new GameController(this, playerController, buttonController, timer);
 		moveDecider = new Move(board, gameController);
-		buttonController.setGameVariables(board, this, gameController, moveDecider, gameController.getInterface());
+		buttonController.setGameVariables(board, this, gameController, moveDecider, gameController.getInterface(), new SaveController(this, playerController));
 		
 		setupBoard(layout);
 		
@@ -85,7 +86,7 @@ public class Game implements Observer {
 			gameController.updateTurn(turn);
 			timer.start();
 			
-			System.out.println("It is " + turn.getName() + "'s turn!");
+			//System.out.println("It is " + turn.getName() + "'s turn!");
 			
 			while(!done) {
 				try {
@@ -180,7 +181,6 @@ public class Game implements Observer {
 		} else {
 			gameController.message("Not enough points to buy that piece.");
 		}
-		
 	}
 
 	@Override

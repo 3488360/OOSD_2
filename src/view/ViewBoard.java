@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 
-import controller.ButtonController;
+import controller.ButtonControllerInterface;
 import model.Board;
 import model.Coordinate;
 
@@ -20,40 +20,17 @@ public class ViewBoard extends JPanel {
 	private final int CELLWIDTH = 40;
 	private final int CELLHEIGHT = 40;
 	private ViewCell grid[][];
-	private ButtonController buttonController;
+	private ButtonControllerInterface buttonController;
 	private ViewPiece viewPiece;
 	private Board board;
+	private Coordinate pendingMove;
+	private MouseListener gridButton;
 	
-	public ViewBoard(ButtonController buttonController, Board board) {
-		viewPiece = new ViewPiece();
+	public ViewBoard(ButtonControllerInterface buttonController, Board board) {
 		this.buttonController = buttonController;
-		this.board = board;
-		grid = new ViewCell[board.getHeight()][board.getWidth()];
-		
-		MouseListener gridButton = getMouseListener();
-		
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
-				grid[i][a].addMouseListener(gridButton);
-			}
-		}
-		
-		setLayout(new GridLayout(15, 15));
-		
-		//Adds JButtons or JLabels
-		for (int i = 0; i < board.getWidth(); i++) {
-			for (int a = 0; a < board.getHeight(); a++) {
-				if (grid[i][a].getVisible() == true){
-					grid[i][a].setBackground(Color.ORANGE);
-					grid[i][a].setForeground(Color.BLACK);
-					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
-					add(grid[i][a]);
-				} else {
-					add(new JLabel());
-				}
-			}
-		}
+		gridButton = getMouseListener();
+		viewPiece = new ViewPiece();
+		setNewBoard(board);
 	}
 	
 	private MouseListener getMouseListener() {
@@ -67,9 +44,9 @@ public class ViewBoard extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				ViewCell button = (ViewCell)e.getSource();
-				if(buttonController.getPendingMove() != null) {
+				if(pendingMove != null) {
 					button.raiseBorder();
-					buttonController.setPendingMove(new Coordinate(button.getCol(), button.getRow()));
+					pendingMove = new Coordinate(button.getCol(), button.getRow());
 				}
 			}
 
@@ -83,20 +60,19 @@ public class ViewBoard extends JPanel {
 				ViewCell button = (ViewCell)e.getSource();
 				Coordinate co = new Coordinate(button.getCol(), button.getRow());
 				buttonController.passCoordinates(co);
-				buttonController.setPendingMove(co);
+				pendingMove = co;
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				ViewCell button = (ViewCell) e.getSource();
 				Coordinate co = new Coordinate(button.getCol(), button.getRow());
-				co = buttonController.getPendingMove();
+				co = pendingMove;
 				button = grid[co.x][co.y];
 				buttonController.passCoordinates(co);
-				buttonController.setPendingMove(null);
+				pendingMove = null;
 				button.resetBorder();
 			}
-
 		};
 	}
 	
@@ -129,35 +105,6 @@ public class ViewBoard extends JPanel {
 			}
 		}
 	}
-	
-	private void buttonPressed(MouseEvent e) {
-		ViewCell button = (ViewCell)e.getSource();
-		Coordinate coordinate = new Coordinate(button.getCol(), button.getRow());
-		if(e.getID() == MouseEvent.MOUSE_ENTERED) {
-			if(buttonController.getPendingMove() != null) {
-				button.raiseBorder();
-				buttonController.setPendingMove(coordinate);
-			}
-		}
-
-		else if (e.getID() == MouseEvent.MOUSE_EXITED) {
-			button.resetBorder();
-		}
-
-		else if(e.getID() == MouseEvent.MOUSE_PRESSED) {
-			buttonController.passCoordinates(coordinate);
-			buttonController.setPendingMove(coordinate);
-		}
-		
-		else if(e.getID() == MouseEvent.MOUSE_RELEASED) {
-			coordinate = buttonController.getPendingMove();
-			button = grid[coordinate.x][coordinate.y];
-
-			buttonController.passCoordinates(coordinate);
-			buttonController.setPendingMove(null);
-			button.resetBorder();
-		}
-	}
 
 	public void updateCells(List<Coordinate> list) {
 		// turns all the cells the piece can move to green
@@ -170,10 +117,37 @@ public class ViewBoard extends JPanel {
 	
 	public void updateAttackRange(List<Coordinate> attackRange) {
 		for (Coordinate attackRanges : attackRange) {
-/*			if (grid[attackRanges.x][attackRanges.y].getBackground() == Color.GREEN)
-				grid[attackRanges.x][attackRanges.y].setBackground(Color.PINK);
-			else*/
-				grid[attackRanges.x][attackRanges.y].setBackground(Color.RED);
+			grid[attackRanges.x][attackRanges.y].setBackground(Color.RED);
 		}
+	}
+
+	public void setNewBoard(Board b) {
+		this.board = b;
+		grid = new ViewCell[board.getWidth()][board.getHeight()];
+		
+		for (int i = 0; i < board.getWidth(); i++) {
+			for (int a = 0; a < board.getHeight(); a++) {
+				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
+				grid[i][a].addMouseListener(gridButton);
+			}
+		}
+		
+		setLayout(new GridLayout(board.getWidth(), board.getHeight()));
+		
+		//Adds JButtons or JLabels
+		for (int i = 0; i < board.getWidth(); i++) {
+			for (int a = 0; a < board.getHeight(); a++) {
+				if (grid[i][a].getVisible() == true) {
+					grid[i][a].setBackground(Color.ORANGE);
+					grid[i][a].setForeground(Color.BLACK);
+					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
+					add(grid[i][a]);
+				} else {
+					add(new JLabel());
+				}
+			}
+		}
+		
+		updateBoard();
 	}
 }

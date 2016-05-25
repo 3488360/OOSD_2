@@ -9,6 +9,7 @@ public class Player {
 	public Player(String p1) {
 		name = p1;
 		points = 500;
+		playerName = name;
 	}
 	
 	public void setPlayerName (String playerName) {

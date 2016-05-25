@@ -1,6 +1,8 @@
 package controller;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.Board;
 import model.Coordinate;
@@ -8,32 +10,25 @@ import model.Game;
 import model.Move;
 import view.ViewMain;
 
-public class ButtonController {
+public class ButtonController implements ButtonControllerInterface {
 	private Board board;
 	private Game game;
 	private Coordinate currentlySelected;
-	private Coordinate pendingMove;
 	private String pieceName = null;
 	private boolean addPiece;
 	private GameController gameController;
 	private Move moveDecider;
 	private ViewMain userInterface;
 	private boolean isPaused = false;
+	private SaveController saveController;
 	
-	public void setGameVariables(Board b, Game g, GameController gc, Move m, ViewMain userInterface) {
+	public void setGameVariables(Board b, Game g, GameController gc, Move m, ViewMain userInterface, SaveController saveController) {
 		this.board = b;
 		this.game = g;
 		this.gameController = gc;
 		this.moveDecider = m;
 		this.userInterface = userInterface;
-	}
-
-	public void setPendingMove(Coordinate co) {
-		pendingMove = co;
-	}
-
-	public Coordinate getPendingMove() {
-		return pendingMove;
+		this.saveController = saveController;
 	}
 	
 	public void passCoordinates(Coordinate co) {
@@ -117,5 +112,24 @@ public class ButtonController {
 
 	public Game getGame() {
 		return game;
+	}
+
+	public void saveGame(String player1, String player2) {
+		pause();
+		
+		final JFileChooser fc = new JFileChooser(System.getProperty("user.dir"));
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files", "save", "save");
+		fc.setFileFilter(filter);
+		
+		int returnVal = fc.showSaveDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			if (!saveController.saveGame(fc.getSelectedFile(), player1, player2)) {
+				JOptionPane.showMessageDialog(null, "An error occured when trying to save the file. Please see console for details.", "Error", 0);
+				return;
+			}
+		}
+
+		pause();
+		
 	}
 }
