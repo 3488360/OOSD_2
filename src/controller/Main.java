@@ -1,7 +1,12 @@
 package controller;
 
 import model.*;
+import view.AbstractUIFactory;
+import view.ViewSelectTheme;
 import view.ViewStart;
+import view.themes.ClassicUIFactory;
+
+import javax.swing.text.View;
 
 public class Main {
 	private static boolean waiting;
@@ -11,14 +16,23 @@ public class Main {
 	private static final PlayerController playerController = new PlayerController();
 	private static ViewStart start;
 	private static LoadController loadController = new LoadController();
+	private static String factory;
 	
 	public static void main(String[] args) {
+		ViewSelectTheme selectTheme = new ViewSelectTheme();
+		selectTheme.setVisible(true);
+		//start("classic");
+	}
+
+	public static void start(String factory) {
+		Main.factory = factory;
 		ButtonController buttonController = new ButtonController();
+		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory(factory);
 		
 		boardLayouts = loadController.loadLayouts2();
-		start = new ViewStart(boardLayouts, buttonController, loadController);
+		start = new ViewStart(boardLayouts, buttonController, loadController, uiFactory);
 		waiting = true;
-		
+
 		while (waiting) {
 			try {
 				Thread.sleep(500);
@@ -27,9 +41,10 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-		
+
 		Game game = Game.getInstance(boardLayout);
-		game.startGame(playerController, boardLayout, timer, buttonController);
+
+		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
 	}
 
 	public static void startGame(String player1Name, String player2Name, BoardLayout selectedBoardLayout, int timerNum) {
@@ -41,7 +56,7 @@ public class Main {
 	}
 
 	public static void startLayoutEditor() {
-		new LayoutEditorController();
+		new LayoutEditorController(AbstractUIFactory.getFactory(factory));
 	}
 
 	public static void showStart() {

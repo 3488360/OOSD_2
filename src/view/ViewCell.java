@@ -1,15 +1,17 @@
 package view;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.UIManager;
+import model.State;
 
-public class ViewCell extends JButton {
+import javax.swing.*;
+import java.awt.*;
+
+public abstract class ViewCell extends JButton {
 	private static final long serialVersionUID = -7155500879732378953L;
 	
 	private int row;
 	private int col;
 	boolean isVisible;
+	protected boolean canMoveTo = false;
 	
 	public ViewCell (int row, int col, boolean isVisible) {
 		this.row = row;
@@ -17,14 +19,12 @@ public class ViewCell extends JButton {
 		this.isVisible = isVisible;
 		resetBorder();
 	}
-	
-	public void resetBorder() {
-		setBorder(UIManager.getBorder("Button.border"));
-	}
-	
-	public void raiseBorder() {
-		setBorder(BorderFactory.createLoweredBevelBorder());
-	}
+
+	public abstract void resetBorder();
+
+	public abstract void raiseBorder();
+
+	public abstract void setState(State state);
 
 	public boolean getVisible () {
 		return isVisible;
@@ -36,5 +36,13 @@ public class ViewCell extends JButton {
 	
 	public int getCol() {
 		return col;
+	}
+	
+	public boolean getCanMoveTo(){
+		return canMoveTo; 
+	}
+	
+	public void setCanMoveTo(boolean canMove){
+		canMoveTo = canMove; 
 	}
 }

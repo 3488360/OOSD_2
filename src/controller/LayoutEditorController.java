@@ -18,6 +18,7 @@ import model.pieces.SoldierPiece;
 import model.pieces.TankPiece;
 import model.pieces.TestPiece;
 import model.pieces.WizardPiece;
+import view.AbstractUIFactory;
 import view.ViewBoardEditor;
 import view.ViewLayoutEditor;
 
@@ -31,11 +32,13 @@ public class LayoutEditorController implements ButtonControllerInterface {
 	private ViewBoardEditor boardEditor;
 	private SaveController saveController;
 	private PlayerController pc;
+	private AbstractUIFactory uiFactory;
 	
-	public LayoutEditorController() {
+	public LayoutEditorController(AbstractUIFactory uiFactory) {
 		pc = new PlayerController();
+		this.uiFactory = uiFactory;
 		this.saveController = new SaveController(null, pc);
-		boardEditor = new ViewBoardEditor(this);
+		boardEditor = new ViewBoardEditor(this, uiFactory);
 	}
 	
 	public void setGameVariables(Board board, ViewLayoutEditor userInterface, SaveController saveController) {
@@ -148,9 +151,9 @@ public class LayoutEditorController implements ButtonControllerInterface {
 		boardEditor = null;
 		
 		if (shape.equals("Circle")) {
-			userInterface = new ViewLayoutEditor(new BoardShape("Circle", x), this, pc);
+			userInterface = new ViewLayoutEditor(new BoardShape("Circle", x), this, pc, uiFactory);
 		} else {
-			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, pc);
+			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, pc, uiFactory);
 		}
 		
 	}

@@ -5,6 +5,7 @@ import javax.swing.*;
 import controller.ButtonControllerInterface;
 import model.Board;
 import model.Coordinate;
+import model.State;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -25,11 +26,13 @@ public class ViewBoard extends JPanel {
 	private Board board;
 	private Coordinate pendingMove;
 	private MouseListener gridButton;
+	private AbstractUIFactory uiFactory;
 	
-	public ViewBoard(ButtonControllerInterface buttonController, Board board) {
+	public ViewBoard(ButtonControllerInterface buttonController, Board board, AbstractUIFactory uiFactory) {
 		this.buttonController = buttonController;
 		gridButton = getMouseListener();
 		viewPiece = new ViewPiece();
+		this.uiFactory = uiFactory;
 		setNewBoard(board);
 	}
 	
@@ -93,12 +96,12 @@ public class ViewBoard extends JPanel {
 					co = new Coordinate(i, a);
 					if (board.getPiece(co) != null) {
 						if (board.getPiece(co).getPlayerName().equals("player1"))
-							grid[i][a].setBackground(Color.YELLOW);
+							grid[i][a].setState(State.PLAYER1);
 						else
-							grid[i][a].setBackground(Color.GRAY);
+							grid[i][a].setState(State.PLAYER2);
 						grid[i][a].setIcon(viewPiece.getIcon(board.getPiece(co).getName(), board.getPiece(co).getIcon()));
 					} else {
-						grid[i][a].setBackground(Color.ORANGE);
+						grid[i][a].setState(State.NORMAL);
 						grid[i][a].setIcon(null);
 					}
 				}
@@ -110,14 +113,14 @@ public class ViewBoard extends JPanel {
 		// turns all the cells the piece can move to green
 		for (Coordinate moveableCoordinates : list) {
 			if (moveableCoordinates.x < board.getWidth() && moveableCoordinates.x >= 0 && moveableCoordinates.y < board.getHeight() && moveableCoordinates.y >= 0) {
-				grid[moveableCoordinates.x][moveableCoordinates.y].setBackground(Color.GREEN);
+				grid[moveableCoordinates.x][moveableCoordinates.y].setState(State.MOVE);
 			}
 		}
 	}
 	
 	public void updateAttackRange(List<Coordinate> attackRange) {
 		for (Coordinate attackRanges : attackRange) {
-			grid[attackRanges.x][attackRanges.y].setBackground(Color.RED);
+			grid[attackRanges.x][attackRanges.y].setState(State.ATTACK);
 		}
 	}
 
@@ -127,7 +130,7 @@ public class ViewBoard extends JPanel {
 		
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
-				grid[i][a] = new ViewCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
+				grid[i][a] = uiFactory.createCell(board.getAllCells()[i][a].getCol(), board.getAllCells()[i][a].getRow(), board.getAllCells()[i][a].getVisible());
 				grid[i][a].addMouseListener(gridButton);
 			}
 		}
@@ -138,12 +141,12 @@ public class ViewBoard extends JPanel {
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int a = 0; a < board.getHeight(); a++) {
 				if (grid[i][a].getVisible() == true) {
-					grid[i][a].setBackground(Color.ORANGE);
+					grid[i][a].setState(State.NORMAL);
 					grid[i][a].setForeground(Color.BLACK);
 					grid[i][a].setBounds(grid[i][a].getRow(), grid[i][a].getCol(), CELLWIDTH, CELLHEIGHT);
 					add(grid[i][a]);
 				} else {
-					add(new JLabel());
+					add(uiFactory.createLabel());
 				}
 			}
 		}
