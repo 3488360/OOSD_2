@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ViewSelectTheme extends JFrame {
-
-    private JComboBox<String> comboBox;
+	private static final long serialVersionUID = -4327327675225533114L;
+	private JComboBox<String> comboBox;
     private static final String[] availableFactories = {"classic", "dark"};
 
     public ViewSelectTheme() {

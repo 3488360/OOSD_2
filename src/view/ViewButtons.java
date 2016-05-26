@@ -20,6 +20,7 @@ public class ViewButtons extends JPanel {
 	private String player2;
 	private JButton pause;
 	private JButton load;
+	private JButton undo;
 	
 	/**
 	 * Creates a new JPanel that contains the buttons located at the bottom of the screen.
@@ -32,6 +33,7 @@ public class ViewButtons extends JPanel {
 		JButton exit = uiFactory.createButton("Exit");
 		JButton save = uiFactory.createButton ("Save");
 		load = uiFactory.createButton("Load");
+		undo = uiFactory.createButton("Undo");
 		
 		exit.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
@@ -57,10 +59,17 @@ public class ViewButtons extends JPanel {
 			}
 		});
 		
+		undo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buttonController.undo();
+			}
+		});
+		
 		if (buttonController.getClass().getName().equals("controller.LayoutEditorController")) {
 			add(load);
 		} else {
 			add(pause);
+			add(undo);
 		}
 		
 		add(save);

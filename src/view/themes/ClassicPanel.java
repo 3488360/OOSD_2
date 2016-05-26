@@ -8,6 +8,6 @@ public class ClassicPanel extends JPanel {
 
     public ClassicPanel() {
         super();
-        setBackground(Color.decode("#DDDDDD"));
+        //setBackground(Color.decode("#DDDDDD"));
     }
 }

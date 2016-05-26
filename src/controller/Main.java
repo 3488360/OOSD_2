@@ -4,9 +4,6 @@ import model.*;
 import view.AbstractUIFactory;
 import view.ViewSelectTheme;
 import view.ViewStart;
-import view.themes.ClassicUIFactory;
-
-import javax.swing.text.View;
 
 public class Main {
 	private static boolean waiting;
@@ -17,17 +14,25 @@ public class Main {
 	private static ViewStart start;
 	private static LoadController loadController = new LoadController();
 	private static String factory;
+	private static ButtonController buttonController;
+	private static AbstractUIFactory uiFactory;
 	
 	public static void main(String[] args) {
 		ViewSelectTheme selectTheme = new ViewSelectTheme();
 		selectTheme.setVisible(true);
-		//start("classic");
-	}
-
-	public static void start(String factory) {
-		Main.factory = factory;
-		ButtonController buttonController = new ButtonController();
-		AbstractUIFactory uiFactory = AbstractUIFactory.getFactory(factory);
+		waiting = true;
+		
+		while (waiting) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				System.out.println("Cannot put main thread to sleep");
+				e.printStackTrace();
+			}
+		}
+		
+		buttonController = new ButtonController();
+		uiFactory = AbstractUIFactory.getFactory(factory);
 		
 		boardLayouts = loadController.loadLayouts2();
 		start = new ViewStart(boardLayouts, buttonController, loadController, uiFactory);
@@ -47,12 +52,21 @@ public class Main {
 		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
 	}
 
+	public static void start(String factory) {
+		Main.factory = factory;
+		waiting = false;
+		
+	}
+
 	public static void startGame(String player1Name, String player2Name, BoardLayout selectedBoardLayout, int timerNum) {
 		playerController.getPlayer1().setPlayerName(player1Name);
 		playerController.getPlayer2().setPlayerName(player2Name);
 		boardLayout = selectedBoardLayout;
 		timer = timerNum;
 		waiting = false;
+		
+		/*Game game = Game.getInstance(boardLayout);
+		game.startGame(playerController, boardLayout, timerNum, buttonController, uiFactory);*/
 	}
 
 	public static void startLayoutEditor() {

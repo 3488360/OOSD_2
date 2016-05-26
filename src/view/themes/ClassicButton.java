@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ClassicButton extends JButton {
+	private static final long serialVersionUID = 2336995438536949975L;
 
-    public ClassicButton(String text, Icon icon) {
+	public ClassicButton(String text, Icon icon) {
         super(text, icon);
         init();
     }

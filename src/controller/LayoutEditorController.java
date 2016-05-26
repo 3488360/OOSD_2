@@ -55,11 +55,13 @@ public class LayoutEditorController implements ButtonControllerInterface {
 	public void passCoordinates(Coordinate co) {
 		//System.out.println(co.x + " and " + co.y + " was selected");
 		if (addPiece && playerSelected) {
-			if (board.getPiece(co) == null) {
+			if (board.getPiece(co) != null && playerName.equals("Delete")) {
+				board.setPiece(co, null);
+			} else {
 				PieceInterface p = getPiece(pieceName, playerName);
 				board.setPiece(co, p);
-				userInterface.updateBoard();
 			}
+			userInterface.updateBoard();
 		}
 	}
 	
@@ -131,6 +133,34 @@ public class LayoutEditorController implements ButtonControllerInterface {
 	}
 
 	public void saveGame(String player1, String player2) {
+		boolean team1King = false;
+		boolean team1Queen = false;
+		boolean team2King = false;
+		boolean team2Queen = false;
+		
+		if (board.countPiece("King", "player1") > 0) {
+			team1King = true;
+		}
+		
+		if (board.countPiece("Queen", "player1") > 0) {
+			team1Queen = true;
+		}
+		
+		if (board.countPiece("King", "player2") > 0) {
+			team2King = true;
+		}
+		
+		if (board.countPiece("Queen", "player2") > 0) {
+			team2Queen = true;
+		}
+		
+		System.out.println("team1King = " + team1King + "   team1Queen = " + team1Queen + "   team2King = " + team2King + "   team2Queen = " + team2Queen);
+		
+		if (!((team1King && team2Queen) || (team1Queen && team2King))) {
+			JOptionPane.showMessageDialog(null, "There must be at least one King on one side and one Queen on the other.", "Alert", 3);
+			return;
+		}
+		
 		final JFileChooser fc = new JFileChooser(System.getProperty("user.dir")/* + "/layouts"*/);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Layout Files", "layout", "layout");
 		fc.setFileFilter(filter);
@@ -156,5 +186,10 @@ public class LayoutEditorController implements ButtonControllerInterface {
 			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, pc, uiFactory);
 		}
 		
+	}
+
+	@Override
+	public void undo() {
+		//Not needed
 	}
 }
