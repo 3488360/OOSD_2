@@ -16,6 +16,7 @@ public class AttackCommand implements Command {
 	int attack; 
 	int health; 
 	
+	private boolean undoAbleMove = false; 
 	private Board board;
 	private String currentPlayer; 
 	private Coordinate currentlySelected; 
@@ -35,10 +36,11 @@ public class AttackCommand implements Command {
 	
 	@Override
 	public void execute() {
+		
+		
 		if (board.getPiece(destinationSelected).getPlayerName().equals(currentPlayer)) {
 			gameController.message("You are trying to attack your own piece!");
 		} 
-		
 		else{
 			if(canAttackTo()){
 				pieceBeingAttacked = board.getPiece(destinationSelected);
@@ -54,14 +56,13 @@ public class AttackCommand implements Command {
 					gameController.updateBoard();
 					gameController.updatePoints();
 				}
-				gameController.getGame().setDone(true);
+				undoAbleMove = true;
+				gameController.getGame().setDone(true);	
 			}
 			else{
-//													IS THIS REDUNDANT?
 				gameController.message("This piece cannot be attacked");
 			}
 		}
-//		return false;
 	}
 
 	private boolean canAttackTo() {
@@ -89,11 +90,18 @@ public class AttackCommand implements Command {
 		{
 			board.getPiece(destinationSelected).takeDamage(-attack); 
 		}
-		
+		gameController.getGame().pause();
 		gameController.getGame().setDone(true);
-		
+		gameController.getGame().resume();
 
 		
+	}
+
+
+	@Override
+	public boolean CanUndo() {
+		// TODO Auto-generated method stub
+		return undoAbleMove;
 	}
 
 }

@@ -9,7 +9,7 @@ public class MoveCommand implements Command {
 //	We need the gameController to send messages back to the gui client
 //  For example if the move they performed has failed 	
 	private GameController gameController; 
-	
+	private boolean undoAbleMove = false;
 	
 	
 	private String player; 
@@ -35,6 +35,7 @@ public class MoveCommand implements Command {
 //				gameController.updateBoard(); maybe put this after exiting the move function? 
 //				return true;
 				gameController.getGame().setDone(true);
+				undoAbleMove = true;
 			}
 			else{
 //				THIS IS REDUNDNT PLEASE ANSWER ASAP 
@@ -63,7 +64,16 @@ public class MoveCommand implements Command {
 		board.setPiece(currentlySelected, board.getPiece(destinationSelected));
 //		remove the piece that the piece just moved into 
 		board.setPiece(destinationSelected, null);
+		gameController.getGame().pause();
 		gameController.getGame().setDone(true);
+		gameController.getGame().resume();
+	}
+
+
+	@Override
+	public boolean CanUndo() {
+		// TODO Auto-generated method stub
+		return undoAbleMove;
 	}
 
 }

@@ -6,6 +6,7 @@ import model.pieces.PieceInterface;
 public class AddPieceCommand implements Command  {
 	
 	private Coordinate desiredCoordinate; 
+	private boolean undoAbleMove = false; 
 	private Game game; 
 	private GameController gc; 
 	private String pieceName; 
@@ -37,6 +38,7 @@ public class AddPieceCommand implements Command  {
 			currentTurn.setPoints(currentTurn.getPoints() - p.getCost());
 			pieceCost = p.getCost(); 
 			gc.updatePoints();
+			undoAbleMove = true; 
 		} else {
 			gc.message("Not enough points to buy that piece.");
 		}
@@ -49,6 +51,14 @@ public class AddPieceCommand implements Command  {
 		game.getBoard().setPiece(desiredCoordinate, null);
 		currentTurn.setPoints(currentTurn.getPoints() + pieceCost);
 		gc.updatePoints();
+	}
+
+
+
+	@Override
+	public boolean CanUndo() {
+		// TODO Auto-generated method stub
+		return undoAbleMove;
 	}
 
 }

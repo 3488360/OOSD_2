@@ -20,7 +20,7 @@ public class CommandManager {
 	}
 	
 	public void addPlayer(Player player){
-//		Adding players so we can keep track and check how many times a player has peformed undo 
+//		Adding players so we can keep track and check how many times a player has performed undo 
 		this.player[playerIndex] = player; 
 		turnUsed[playerIndex] = false;
 		playerIndex++; 
@@ -28,31 +28,35 @@ public class CommandManager {
 	
 	public void executeCommand(Command command){
 		command.execute();
-//		Ensures the max size of the stack is equal to the STACKSIZE variable otherwise overwrite the last value 
-		if(previousCommand.size() >= STACKSIZE){
-			previousCommand.removeLast(); 
+		if(command.CanUndo()){
+//			Ensures the max size of the stack is equal to the STACKSIZE variable otherwise overwrite the last value 
+			if(previousCommand.size() >= STACKSIZE){
+				previousCommand.removeLast(); 
+			}
+			previousCommand.push(command);
+			commandPushedOnStack = true;			
 		}
-		previousCommand.push(command);
-		commandPushedOnStack = true; 
+ 
 	}
 
 	public void undo(){
-		if(commandPushedOnStack == false){
-			if(!previousCommand.isEmpty()){
+		if(!previousCommand.isEmpty()){
+			if(commandPushedOnStack == false){
+//				Ensures the player can perform multiple undo's in one turn
 				previousCommand.pop().undo();
-				
 			}
-		}
-		else if(canPlayerUndo()){
-			if(!previousCommand.isEmpty()){
+			else if(canPlayerUndo()){
+//				Ensures players can their undo option once only throughout the game 
 				previousCommand.pop().undo();
 				commandPushedOnStack = false; 
 			}
+			else{
+				gc.message("Player has already used their undo option");
+			}
 		}
 		else{
-			gc.message("Player has already used their undo option");
-		}
-		
+			gc.message("There are no more avaliable moves to undo at the moment");
+		}	
 	}
 	
 	private boolean canPlayerUndo(){

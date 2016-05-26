@@ -6,4 +6,6 @@ public interface Command {
 
 	void undo();
 
+	boolean CanUndo();
+
 }
