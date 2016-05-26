@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import controller.ButtonController;
 import controller.ButtonControllerInterface;
 import controller.LoadController;
 import controller.Main;
@@ -146,9 +145,11 @@ public class ViewStart extends JFrame {
 			for (int i = 0; i < layouts.length; i++) {
 				boardLayout.addItem(layouts[i].getName());
 			}
+			boardLayout.setSelectedIndex(0);
 		} else {
 			boardLayout.addItem("Default Layout");
 		}
+		
 		
 		boardLayoutGroup.add(boardLayoutLabel);
 		boardLayoutGroup.add(boardLayout);

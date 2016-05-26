@@ -33,6 +33,7 @@ public class ViewLayoutEditor extends JFrame {
 	private JButton player2Select;
 	private ViewPieceSelection pieceSelection;
 	private AbstractUIFactory uiFactory;
+	private final Color attackRange = new Color(255, 92, 92);
 	
 	public ViewLayoutEditor(BoardShape boardShape, LayoutEditorController layoutController, PlayerController playerController, AbstractUIFactory uiFactory) {
 		this.playerController = playerController;

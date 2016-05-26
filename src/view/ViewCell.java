@@ -3,7 +3,6 @@ package view;
 import model.State;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class ViewCell extends JButton {
 	private static final long serialVersionUID = -7155500879732378953L;

@@ -32,4 +32,6 @@ public interface ButtonControllerInterface {
 	public Game getGame();
 	
 	public void saveGame(String player1, String player2);
+
+	public void undo();
 }

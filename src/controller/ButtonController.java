@@ -7,7 +7,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Board;
 import model.Coordinate;
 import model.Game;
-import model.Move;
 import view.ViewMain;
 
 public class ButtonController implements ButtonControllerInterface {
@@ -17,58 +16,84 @@ public class ButtonController implements ButtonControllerInterface {
 	private String pieceName = null;
 	private boolean addPiece;
 	private GameController gameController;
-	private Move moveDecider;
 	private ViewMain userInterface;
 	private boolean isPaused = false;
 	private SaveController saveController;
+	private CommandManager cmg;
 	
-	public void setGameVariables(Board b, Game g, GameController gc, Move m, ViewMain userInterface, SaveController saveController) {
+	public void setGameVariables(Board b, Game g, GameController gc, ViewMain userInterface, SaveController saveController) {
 		this.board = b;
 		this.game = g;
 		this.gameController = gc;
-		this.moveDecider = m;
 		this.userInterface = userInterface;
 		this.saveController = saveController;
+		
+		cmg = new CommandManager(gc);
+		cmg.addPlayer(game.getPlayer1());
+		cmg.addPlayer(game.getPlayer2());
 	}
 	
 	public void passCoordinates(Coordinate co) {
 		if (addPiece) {
 			//Placing a new piece onto the board
 			if (board.getPiece(co) == null) {
-				game.addPiece(pieceName, co); //Call factory to create a new piece
+				cmg.executeCommand(new AddPieceCommand(game, gameController, pieceName, co));
 				addPiece = false;
 				gameController.updateBoard();
 			}
 		} else {
-			//Determine if the coordinates selected are valid or not
+			// Determine if the coordinates selected are valid or not
+				
 			if (currentlySelected == null) {
 				currentlySelected = co;
-				if (board.getPiece(currentlySelected) != null) {
-					//There is a piece
-					gameController.updateSelectedPiece(board.getPiece(co));
-					if (game.getTurn().equals(board.getPiece(currentlySelected).getPlayerName())) {
-						//If that piece belongs to the current player
-						gameController.updateMoves(board.getMovement(co, game.getTurn()));
-						gameController.updateAttackRange(board.getAttackRange(co, game.getTurn()));
-						moveDecider.setMoveableMoves(board.getPiece(currentlySelected).getMoves(currentlySelected));
-					}
-				} else {
-					currentlySelected = null;
-				}
-			} else if (sameCoordinates(currentlySelected, co)) {
-				currentlySelected = null;
-				gameController.hideSelected();
-				gameController.updateBoard();
-			} else {
-				moveDecider.setCoordinates(currentlySelected, co, game.getTurn());
-				
-				currentlySelected = null;
-				if(moveDecider.determineMove())
-					game.setDone(true);  
-				gameController.hideSelected();
-				gameController.updateBoard();
+				displayClickableLocations(currentlySelected); 
+			}	
+			else if(sameCoordinates(currentlySelected, co)) {
+				resetBoardDisplays();
+			}
+			else {
+				calculateMove(co);
+				resetBoardDisplays(); 
 			}
 		}
+	}
+	
+	private void resetBoardDisplays(){
+		currentlySelected = null;
+		gameController.hideSelected();
+		gameController.updateBoard();
+	}
+	
+	private void displayClickableLocations(Coordinate co) {
+		if (board.getPiece(currentlySelected) != null) {
+			// There is a piece
+			gameController.updateSelectedPiece(board.getPiece(co));
+			if (game.getTurn().equals(
+					board.getPiece(currentlySelected).getPlayerName())) {
+				// If that piece belongs to the current player
+				gameController.updateMoves(board.getMovement(co, game.getTurn()));
+				gameController.updateAttackRange(board.getAttackRange(co, game.getTurn()));
+			}
+		}
+		else {
+			currentlySelected = null;
+		}
+	}
+	
+	private void calculateMove(Coordinate co){
+		if (board.getPiece(currentlySelected) != null) {
+			if (board.getPiece(co) != null) {
+				cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
+			} else {
+				cmg.executeCommand(new MoveCommand(gameController, game
+						.getTurn(), board, currentlySelected, co));
+			}
+		}
+	}
+	
+	public void undo() {
+		cmg.undo();
+		gameController.updateBoard();
 	}
 	
 	private boolean sameCoordinates(Coordinate co, Coordinate dest){
@@ -130,6 +155,5 @@ public class ButtonController implements ButtonControllerInterface {
 		}
 
 		pause();
-		
 	}
 }

@@ -132,4 +132,24 @@ public class Board {
 	public BoardShape getBoardShape() {
 		return boardShape;
 	}
+	
+	public int countPiece(String piece, String player) {
+		int count = 0;
+		
+		if (piece.equals("") || player.equals("")) {
+			return -1;
+		}
+		
+		for (int a = 0; a < width; a++) {
+			for (int b = 0; b < height; b++) {
+				if (cells[a][b].getPiece() != null) {
+					if (cells[a][b].getPiece().getName().equals(piece) && cells[a][b].getPiece().getPlayerName().equals(player)) {
+						count++;
+					}
+				}
+			}
+		}
+		System.out.println("Count is " + count);
+		return count;
+	}
 }

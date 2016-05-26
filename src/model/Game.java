@@ -54,7 +54,6 @@ public class Game implements Observer {
 	public void startGame(PlayerController playerController, BoardLayout layout, int timerInt, ButtonController buttonController, AbstractUIFactory uiFactory) {
 		boolean gameRunning = true;
 		this.timerInt = timerInt;
-		Move moveDecider;
 		Player player1 = playerController.getPlayer1();
 		Player player2 = playerController.getPlayer2();
 		this.playerController = playerController;
@@ -67,8 +66,7 @@ public class Game implements Observer {
 			
 		timer.addObserver(this);
 		gameController = new GameController(this, playerController, buttonController, timer, uiFactory);
-		moveDecider = new Move(board, gameController);
-		buttonController.setGameVariables(board, this, gameController, moveDecider, gameController.getInterface(), new SaveController(this, playerController));
+		buttonController.setGameVariables(board, this, gameController, gameController.getInterface(), new SaveController(this, playerController));
 		
 		setupBoard(layout);
 		
@@ -157,7 +155,11 @@ public class Game implements Observer {
 	}
 
 	private boolean checkWinning() {
-		// TODO Implement this to check for winning conditions
+		if (board.countPiece("King", "player1") < 1 && board.countPiece("Queen", "player2") < 1) {
+			return true;
+		} else if (board.countPiece("King", "player2") < 1 && board.countPiece("Queen", "player2") < 1) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -173,15 +175,8 @@ public class Game implements Observer {
 		return board;
 	}
 
-	public void addPiece(String pieceName, Coordinate co) {
-		PieceInterface p = getPiece(pieceName, turn.getName());
-		if (turn.getPoints() >= p.getCost()) {
-			board.setPiece(co, p);
-			turn.setPoints(turn.getPoints() - p.getCost());
-			gameController.updatePoints();
-		} else {
-			gameController.message("Not enough points to buy that piece.");
-		}
+	public PieceInterface addPiece(String pieceName, Coordinate co) {
+		return getPiece(pieceName, turn.getName());
 	}
 
 	@Override

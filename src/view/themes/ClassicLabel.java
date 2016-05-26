@@ -5,8 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ClassicLabel extends JLabel {
+	private static final long serialVersionUID = -8983864566492127253L;
 
-    public ClassicLabel() {
+	public ClassicLabel() {
         super();
         init();
     }

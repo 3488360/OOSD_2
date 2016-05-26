@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -11,16 +12,9 @@ import javax.swing.ImageIcon;
 /**
  * Stores and returns the icons for each piece. It only needs to draw the icons when they are called upon.
  */
+//Flyweight Pattern
 public class ViewPiece {
-	private Icon archer;
-	private Icon god;
-	private Icon healer;
-	private Icon king;
-	private Icon queen;
-	private Icon soldier;
-	private Icon tank;
-	private Icon test;
-	private Icon wizard;
+	private HashMap<String, Icon> icons = new HashMap<String, Icon>();
 	
     /**
      * Resizes the icons stored in the files to the correct size needed to display on the board.
@@ -49,64 +43,12 @@ public class ViewPiece {
 	public Icon getIcon(String name, String loc) {
 		Icon icon = null;
 		
-		//Makes sure that it stores the image for each piece only once
-		switch (name) {
-			case "Archer":
-				if (archer == null) {
-					archer = resizeIcon(new ImageIcon(loc));
-				}
-				icon = archer;
-				break;
-			case "Healer":
-				if (healer == null) {
-					healer = resizeIcon(new ImageIcon(loc));
-				}
-				icon = healer;
-				break;
-			case "God":
-				if (god == null) {
-					god = resizeIcon(new ImageIcon(loc));
-				}
-				icon = god;
-				break;
-			case "King":
-				if (king == null) {
-					king = resizeIcon(new ImageIcon(loc));
-				}
-				icon = king;
-				break;
-			case "Queen":
-				if (queen == null) {
-					queen = resizeIcon(new ImageIcon(loc));
-				}
-				icon = queen;
-				break;
-			case "Soldier":
-				if (soldier == null) {
-					soldier = resizeIcon(new ImageIcon(loc));
-				}
-				icon = soldier;
-				break;
-			case "Tank":
-				if (tank == null) {
-					tank = resizeIcon(new ImageIcon(loc));
-				}
-				icon = tank;
-				break;
-			case "Test":
-				if (test == null) {
-					test = resizeIcon(new ImageIcon(loc));
-				}
-				icon = test;
-				break;
-			case "Wizard":
-				if (wizard == null) {
-					wizard = resizeIcon(new ImageIcon(loc));
-				}
-				icon = wizard;
-				break;
+		if (icons.containsKey(name)) {
+			return icons.get(name);
 		}
 		
+		icon = resizeIcon(new ImageIcon(loc));
+		icons.put(name, icon);
 		return icon;
 	}
 }
