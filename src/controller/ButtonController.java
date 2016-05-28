@@ -99,6 +99,7 @@ public class ButtonController {
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(co) != null) {
 				cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
+				
 			} else {
 				cmg.executeCommand(new MoveCommand(gameController, game
 						.getTurn(), board, currentlySelected, co));

@@ -6,16 +6,7 @@ import java.util.Observer;
 import controller.ButtonController;
 import controller.GameController;
 import controller.PlayerController;
-import model.pieces.ArcherPiece;
-import model.pieces.GodPiece;
-import model.pieces.HealerPiece;
-import model.pieces.KingPiece;
-import model.pieces.PieceInterface;
-import model.pieces.QueenPiece;
-import model.pieces.SoldierPiece;
-import model.pieces.TankPiece;
-import model.pieces.TestPiece;
-import model.pieces.WizardPiece;
+import model.pieces.*;
 
 public class Game implements Observer {
 	private static Game instance = null;
@@ -27,6 +18,8 @@ public class Game implements Observer {
 	private int timerInt;
 	private PlayerController playerController;
 	private GameTimer timer;
+	
+	
 	
 	//Singleton pattern. Makes sure there is only one game object
 	public static Game getInstance() {
@@ -81,7 +74,7 @@ public class Game implements Observer {
 		
 		gameController.updateBoard();
 		
-		while (gameRunning) {
+		while(gameRunning) {
 			gameController.updateTurn(turn);
 			timer.start();
 			
@@ -104,11 +97,7 @@ public class Game implements Observer {
 				gameController.message("Timer ran out!\n" + turn.getPlayerName() + "'s turn.");
 			}
 			
-			if (turn.equals(player1)) {
-				turn = player2;
-			} else {
-				turn = player1;
-			}
+			
 			
 			timer.stop();
 			
@@ -116,11 +105,19 @@ public class Game implements Observer {
 			
 			done = false;
 			
-			if (checkWinning()) {
+			if (checkWinning()){
 				gameRunning = false;
 			}
+			else{
+				if (turn.equals(player1))				
+					turn = player2;
+				else
+					turn = player1;
+			}	
+				
 		}
 		timer.deleteObserver(this);
+		gameController.message("Game Over ... Winner is: " + turn.getName());
 	}
 	
 	private void setupGame(BoardLayout layout, Player player1, Player player2) {
@@ -156,6 +153,27 @@ public class Game implements Observer {
 
 	private boolean checkWinning() {
 		// TODO Implement this to check for winning conditions
+		boolean playerOneContainsKing = false;
+		boolean playerTwoContainsKing = false; 
+	
+		for(int i = 0; i < board.getWidth(); i++){
+			for(int j = 0; j < board.getHeight(); j++){
+				PieceInterface currentPiece = board.getPiece(new Coordinate(i, j)); 
+				if(currentPiece != null){
+					if(currentPiece.getName().equals("King")||currentPiece.getName().equals("Queen")){
+						if(currentPiece.getPlayerName().equals(playerController.getPlayer1().getName())){
+							playerOneContainsKing = true; 
+						}
+						else if(currentPiece.getPlayerName().equals(playerController.getPlayer2().getName())){
+							playerTwoContainsKing = true; 
+						}
+					}
+				}
+			}
+		}
+		if(!playerOneContainsKing || !playerTwoContainsKing){
+			return true;
+		}		
 		return false;
 	}
 	
