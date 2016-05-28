@@ -12,6 +12,7 @@ public interface PieceInterface {
 	public int takeDamage(int amount);
 	public int getMaxHealth();
 	public int getStrength();
+	public int getDefense();
 	public int getCost();
 	public String getName();
 	public String getPlayerName();
