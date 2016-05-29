@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 
-import controller.GameController;
 import model.pieces.PieceInterface;
 
 public class Move {
@@ -65,7 +64,7 @@ public class Move {
 	
 	private boolean attackMove(){
 		if (board.getPiece(destinationSelected).getPlayerName().equals(player)) {
-			gameController.message("You are trying to attack your own piece!");
+			//gameController.message("You are trying to attack your own piece!");
 			return false;
 		} else {
 			if(canAttack()){

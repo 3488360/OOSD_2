@@ -174,7 +174,4 @@ public class ViewMain extends JFrame {
 		board.setVisible(true);
 	}
 
-	public void updateSelectedPiece(PieceInterface piece) {
-		timer.addSelectedPiece(piece.getName(), Integer.toString(piece.getCurrentHealth()), Integer.toString(piece.getStrength()));
-	}
 }
