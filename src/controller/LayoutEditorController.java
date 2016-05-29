@@ -7,7 +7,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Board;
 import model.BoardShape;
 import model.Coordinate;
-import model.GameController;
 import model.pieces.ArcherPiece;
 import model.pieces.GodPiece;
 import model.pieces.HealerPiece;
@@ -31,11 +30,9 @@ public class LayoutEditorController implements ButtonControllerInterface {
 	private ViewLayoutEditor userInterface;
 	private ViewBoardEditor boardEditor;
 	private SaveController saveController;
-	private PlayerController pc;
 	private AbstractUIFactory uiFactory;
 	
 	public LayoutEditorController(AbstractUIFactory uiFactory) {
-		pc = PlayerController.getInstance();
 		this.uiFactory = uiFactory;
 		this.saveController = SaveController.getInstance();
 		boardEditor = new ViewBoardEditor(this, uiFactory);
@@ -181,9 +178,9 @@ public class LayoutEditorController implements ButtonControllerInterface {
 		boardEditor = null;
 		
 		if (shape.equals("Circle")) {
-			userInterface = new ViewLayoutEditor(new BoardShape("Circle", x), this, pc, uiFactory);
+			userInterface = new ViewLayoutEditor(new BoardShape("Circle", x), this, uiFactory);
 		} else {
-			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, pc, uiFactory);
+			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, uiFactory);
 		}
 	}
 

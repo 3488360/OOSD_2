@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import model.Board;
 import model.BoardLayout;
 import model.Coordinate;
-import model.GameController;
 
 public class SaveController {
 	private static SaveController instance = null;

@@ -15,6 +15,7 @@ public class ArcherPiece extends AbstractPiece {
         icon = "images/Archer2.png";
         maxHealth = 300;
         strength = 100;
+        defense = 50;
         cost = 60;
         currentHealth = maxHealth;
     }

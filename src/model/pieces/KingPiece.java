@@ -15,6 +15,7 @@ public class KingPiece extends AbstractPiece {
 		icon = "images/King.png";
 		maxHealth = 500;
 		strength = 80;
+		defense = 200;
 		currentHealth = maxHealth;
 	}
 

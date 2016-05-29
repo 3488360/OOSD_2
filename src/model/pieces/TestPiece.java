@@ -17,6 +17,7 @@ public class TestPiece extends AbstractPiece {
 		icon = "images/K.png";
 		maxHealth = 10000;
 		strength = 10000;
+		defense = 10000;
 		currentHealth = maxHealth;
 	}
 

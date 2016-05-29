@@ -1,7 +1,6 @@
 package controller;
 
 import model.Coordinate;
-import model.GameController;
 
 public interface ButtonControllerInterface {	
 	/**

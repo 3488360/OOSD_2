@@ -39,8 +39,8 @@ public class ViewLayoutEditor extends JFrame {
 	private JTextField player2PointsInput;
 	private JFrame setPoints;
 	
-	public ViewLayoutEditor(BoardShape boardShape, LayoutEditorController layoutController, PlayerController playerController, AbstractUIFactory uiFactory) {
-		this.playerController = playerController;
+	public ViewLayoutEditor(BoardShape boardShape, LayoutEditorController layoutController, AbstractUIFactory uiFactory) {
+		playerController = PlayerController.getInstance();
 		this.layoutController = layoutController;
 		this.uiFactory = uiFactory;
 		board = new Board(boardShape);

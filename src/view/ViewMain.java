@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import controller.ButtonController;
 import controller.ButtonControllerInterface;
 import controller.PlayerController;
 import model.Board;
@@ -127,8 +128,8 @@ public class ViewMain extends JFrame {
 		board.updateBoard();
 	}
 
-	public void updateSelectedPiece(String name, String currentHealth, String currentStrength) {
-		timer.addSelectedPiece(name, currentHealth, currentStrength);
+	public void updateSelectedPiece(ButtonController buttonController, PieceInterface piece) {
+		timer.addSelectedPiece(buttonController, piece);
 	}
 	
 	public void updateMoves(List<Coordinate> list) {
@@ -171,9 +172,5 @@ public class ViewMain extends JFrame {
 	
 	public void resume() {
 		board.setVisible(true);
-	}
-
-	public void updateSelectedPiece(PieceInterface piece) {
-		timer.addSelectedPiece(piece.getName(), Integer.toString(piece.getCurrentHealth()), Integer.toString(piece.getStrength()));
 	}
 }

@@ -1,6 +1,7 @@
 package controller.commands;
 
 import controller.CommonCode;
+import controller.GameController;
 import model.*;
 import model.pieces.*;
 

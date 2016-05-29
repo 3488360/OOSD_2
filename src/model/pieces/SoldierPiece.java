@@ -15,6 +15,7 @@ public class SoldierPiece extends AbstractPiece {
         icon = "images/Soldier2.png";
         maxHealth = 350;
         strength = 100;
+        defense = 100;
         cost = 40;
         currentHealth = maxHealth;
     }

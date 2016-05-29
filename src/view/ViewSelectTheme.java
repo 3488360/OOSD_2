@@ -14,7 +14,6 @@ public class ViewSelectTheme extends JFrame {
     private static final String[] availableFactories = {"classic", "dark"};
 
     public ViewSelectTheme() {
-
         initialise();
     }
 
@@ -37,7 +36,6 @@ public class ViewSelectTheme extends JFrame {
             }
         });
         add(button, BorderLayout.SOUTH);
-
     }
 
 }

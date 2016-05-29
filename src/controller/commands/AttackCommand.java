@@ -3,6 +3,7 @@ package controller.commands;
 import java.util.List;
 
 import controller.CommonCode;
+import controller.GameController;
 import model.*;
 import model.pieces.PieceInterface;
 

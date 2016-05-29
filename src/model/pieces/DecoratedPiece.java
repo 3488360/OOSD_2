@@ -60,4 +60,13 @@ public abstract class DecoratedPiece implements PieceInterface {
     public String getIcon() {
         return piece.getIcon();
     }
+
+    @Override
+    public int getDefense() {
+        return piece.getDefense();
+    }
+
+    public PieceInterface undecorate() {
+        return piece;
+    }
 }

@@ -40,8 +40,10 @@ public class ViewStart extends JFrame {
 	
 	/**
 	 * Creates and displays the settings screen for the game.
-	 * 
+	 *
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
+	 * @param buttonController - The controller that deals with input received from this interface.
+	 * @param uiFactory - The factory to draw all the components from.
 	 */
 	public ViewStart (BoardLayout[] layouts, ButtonControllerInterface buttonController, AbstractUIFactory uiFactory) {
 		this.layouts = layouts;
@@ -218,6 +220,9 @@ public class ViewStart extends JFrame {
 		return buttons;
 	}
 	
+	/**
+	 * Starts the layout editor and hides this JFrame
+	 */
 	private void startLayoutEditor() {
 		this.setVisible(false);
 		Main.startLayoutEditor();
@@ -244,6 +249,9 @@ public class ViewStart extends JFrame {
 		initTimer.setText("60");
 	}
 	
+	/**
+	 * Opens a JFileChooser so the user can select a save file and load it
+	 */
 	private void load() {
 		List<Object> list = null;
 		
@@ -266,6 +274,11 @@ public class ViewStart extends JFrame {
 		}
 	}
 
+	/**
+	 * Resets the drop-down list of all layouts with the given BoardLayout array
+	 * 
+	 * @param boardLayouts - Array of boardLayout objects
+	 */
 	public void setLayouts(BoardLayout[] boardLayouts) {
 		boardLayout.removeAllItems();
 		

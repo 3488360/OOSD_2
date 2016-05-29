@@ -3,7 +3,6 @@ package controller;
 import java.util.LinkedList;
 
 import controller.commands.Command;
-import model.GameController;
 
 public class CommandManager {
 	private LinkedList<Command> previousCommand = new LinkedList<Command>(); 
