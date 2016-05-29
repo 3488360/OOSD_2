@@ -98,8 +98,12 @@ public class ButtonController {
 	private void calculateMove(Coordinate co){
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(co) != null) {
-				cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
-				
+				if (board.getPiece(currentlySelected).getName().equals("Healer")){
+					cmg.executeCommand(new HealerCommand(currentlySelected, co, gameController, board));
+				}
+				else{
+					cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
+				}
 			} else {
 				cmg.executeCommand(new MoveCommand(gameController, game
 						.getTurn(), board, currentlySelected, co));

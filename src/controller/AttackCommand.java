@@ -9,12 +9,10 @@ public class AttackCommand implements Command {
 //	We need a game controller to notify the user client that an attack has failed
 	private GameController gameController; 
 	
-//	A list that contains coordinates of all the possible places the piece can attack to 
-	private List<Coordinate> attackingMoves; 
 	
 // Required for the undo function ... adding health back to piece, adding point back to the player
-	int attack; 
-	int health; 
+	private int attack; 
+	private int health; 
 	
 	private boolean undoAbleMove = false; 
 	private Board board;
@@ -100,7 +98,6 @@ public class AttackCommand implements Command {
 
 	@Override
 	public boolean CanUndo() {
-		// TODO Auto-generated method stub
 		return undoAbleMove;
 	}
 
