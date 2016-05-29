@@ -21,8 +21,7 @@ import javax.swing.border.EmptyBorder;
  *
  */
 public class ViewTimer extends JPanel implements Observer {
-    private static final long serialVersionUID = -2178376943831400894L;
-    
+    private static final long serialVersionUID = -2178376943831400894L; 
     private JLabel timer;
     private JLabel selectedPieceName;
     private JLabel health;

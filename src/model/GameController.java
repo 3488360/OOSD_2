@@ -9,10 +9,9 @@ import controller.PlayerController;
 import view.AbstractUIFactory;
 import view.ViewMain;
 
-public class Game implements Observer {
+public class GameController implements Observer {
 	private Board board;
 	private boolean done = false;
-	private String turn;
 	private int timerTime = 60;
 	private int timerInt;
 	private GameTimer timer;
@@ -20,7 +19,7 @@ public class Game implements Observer {
 	private ViewMain userInterface;
 	private Turn turnTracker;
 	
-	public Game() {
+	public GameController() {
 		playerController = PlayerController.getInstance();
 	}
 
@@ -55,7 +54,7 @@ public class Game implements Observer {
 		userInterface.updateBoard();
 		
 		while (gameRunning) {
-			userInterface.updateTurn(turn);
+			userInterface.updateTurn(turnTracker.getTurn());
 			timer.start();
 			
 			while(!done) {

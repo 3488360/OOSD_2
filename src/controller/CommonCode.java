@@ -19,6 +19,7 @@ public class CommonCode {
 	 * 
 	 * @param message - The message to be displayed.
 	 */
+	//Keeps the code consistent and if the message box layout was to change, it only has to be changed here
 	public static void message(String message) {
 		JOptionPane.showMessageDialog(null, message);
 	}
@@ -45,5 +46,18 @@ public class CommonCode {
 		}
 	
 		return null;
+	}
+	
+	public static boolean isPositiveInteger(String s) {
+		if (s.isEmpty()) {
+			return true;
+		}
+		
+		for (int i = 0; i < s.length(); i++) {
+			if (Character.digit(s.charAt(i), 10) < 0)
+					return false;
+		}
+		
+		return true;
 	}
 }

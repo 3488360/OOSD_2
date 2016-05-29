@@ -3,7 +3,7 @@ package controller;
 import java.util.LinkedList;
 
 import controller.commands.Command;
-import model.Game;
+import model.GameController;
 
 public class CommandManager {
 	private LinkedList<Command> previousCommand = new LinkedList<Command>(); 
@@ -12,10 +12,10 @@ public class CommandManager {
 	private boolean turnUsed[];
 	private String player[]; 
 	private boolean commandPushedOnStack  = false;
-	private Game game;
+	private GameController gameController;
 	
-	public CommandManager(Game game){
-		this.game = game; 
+	public CommandManager(GameController gameController){
+		this.gameController = gameController; 
 		turnUsed = new boolean[2];
 		player = new String[2];
 	}
@@ -61,7 +61,7 @@ public class CommandManager {
 	
 	private boolean canPlayerUndo(){
 		for(int i = 0; i < playerIndex; i++){
-			if(player[i].equals(game.getTurn())){
+			if(player[i].equals(gameController.getTurn())){
 				if(turnUsed[i] == false){
 					turnUsed[i] = true; 
 					return true; 

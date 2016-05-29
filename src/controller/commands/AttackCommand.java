@@ -16,10 +16,10 @@ public class AttackCommand implements Command {
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
 	private PieceInterface pieceBeingAttacked; 
-	private Game game;
+	private GameController gameController;
 	
-	public AttackCommand(Game game, Board board, Coordinate currentSelected, Coordinate destinationSelected, String currentPlayer){
-		this.game = game; 
+	public AttackCommand(GameController gameController, Board board, Coordinate currentSelected, Coordinate destinationSelected, String currentPlayer){
+		this.gameController = gameController; 
 		this.board = board; 
 		this.currentlySelected = currentSelected;
 		this.destinationSelected = destinationSelected;
@@ -43,11 +43,11 @@ public class AttackCommand implements Command {
 //					player.setPoints(player.getPoints() + (board.getPiece(destinationSelected).getCost() / 4) * 3);
 					board.setPiece(destinationSelected,	board.getPiece(currentlySelected));
 					board.setPiece(currentlySelected, null);
-					game.updateBoard();
-					game.updatePoints();
+					gameController.updateBoard();
+					gameController.updatePoints();
 				}
 				undoAbleMove = true;
-				game.setDone(true);	
+				gameController.setDone(true);	
 			}
 			else{
 				CommonCode.message("This piece cannot be attacked");
@@ -80,9 +80,9 @@ public class AttackCommand implements Command {
 			board.getPiece(destinationSelected).takeDamage(-attack); 
 		}
 		
-		game.pause();
-		game.setDone(true);
-		game.resume();
+		gameController.pause();
+		gameController.setDone(true);
+		gameController.resume();
 	}
 
 	@Override

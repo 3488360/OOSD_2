@@ -13,14 +13,14 @@ public class MoveCommand implements Command {
 	private Board board; 
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
-	private Game game;
+	private GameController gameController;
 	
-	public MoveCommand(Game game, String player, Board board, Coordinate currentlySelected, Coordinate destinationSelected){
+	public MoveCommand(GameController gameController, String player, Board board, Coordinate currentlySelected, Coordinate destinationSelected){
 		this.player = player;
 		this.board = board;
 		this.currentlySelected = currentlySelected;
 		this.destinationSelected = destinationSelected;
-		this.game = game;
+		this.gameController = gameController;
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class MoveCommand implements Command {
 				board.setPiece(currentlySelected, null);
 //				gameController.updateBoard(); maybe put this after exiting the move function? 
 //				return true;
-				game.setDone(true);
+				gameController.setDone(true);
 				undoAbleMove = true;
 			}
 			else{
@@ -61,9 +61,9 @@ public class MoveCommand implements Command {
 		board.setPiece(currentlySelected, board.getPiece(destinationSelected));
 //		remove the piece that the piece just moved into 
 		board.setPiece(destinationSelected, null);
-		game.pause();
-		game.setDone(true);
-		game.resume();
+		gameController.pause();
+		gameController.setDone(true);
+		gameController.resume();
 	}
 
 	@Override

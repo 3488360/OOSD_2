@@ -19,7 +19,6 @@ public class ViewButtons extends JPanel {
 	private String player1;
 	private String player2;
 	private JButton pause;
-	private JButton load;
 	private JButton undo;
 	
 	/**
@@ -32,7 +31,6 @@ public class ViewButtons extends JPanel {
 		pause = uiFactory.createButton("Pause");
 		JButton exit = uiFactory.createButton("Exit");
 		JButton save = uiFactory.createButton ("Save");
-		load = uiFactory.createButton("Load");
 		undo = uiFactory.createButton("Undo");
 		
 		exit.addActionListener(new ActionListener () {
@@ -53,21 +51,13 @@ public class ViewButtons extends JPanel {
 			}
 		});
 		
-		load.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
 		undo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonController.undo();
 			}
 		});
 		
-		if (buttonController.getClass().getName().equals("controller.LayoutEditorController")) {
-			add(load);
-		} else {
+		if (!buttonController.getClass().getName().equals("controller.LayoutEditorController")) {
 			add(pause);
 			add(undo);
 		}

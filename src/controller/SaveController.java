@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import model.Board;
 import model.BoardLayout;
 import model.Coordinate;
-import model.Game;
+import model.GameController;
 
 public class SaveController {
 	private static SaveController instance = null;
@@ -25,9 +25,9 @@ public class SaveController {
 	
 	private SaveController () {}
 	
-	public boolean saveGame(File saveFile, String player1, String player2, Game game) {
+	public boolean saveGame(File saveFile, String player1, String player2, GameController gameController) {
 		PlayerController pc = PlayerController.getInstance();
-		Board board = game.getBoard();
+		Board board = gameController.getBoard();
 		BoardLayout save = new BoardLayout(saveFile.getName().replace(".save", ""));;
 		Coordinate co;
 		FileOutputStream out = null;
@@ -59,9 +59,9 @@ public class SaveController {
 		save.setPlayers(player1, player2);
 		save.setPlayer1Points(pc.getPlayerPoints("player1"));
 		save.setPlayer2Points(pc.getPlayerPoints("player2"));
-		save.setCurrentTime(game.getTime());
-		save.setTurn(game.getTurn());
-		save.setTime(game.getInitTime());
+		save.setCurrentTime(gameController.getTime());
+		save.setTurn(gameController.getTurn());
+		save.setTime(gameController.getInitTime());
 		save.setBoardShape(board.getBoardShape());
 		
 		try {

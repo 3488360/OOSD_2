@@ -11,10 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.CommonCode;
 import controller.LayoutEditorController;
 
 public class ViewBoardEditor extends JFrame {
@@ -141,50 +141,37 @@ public class ViewBoardEditor extends JFrame {
 		int y = 0;
 		
 		if (boardX.getText().equals("") || boardY.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Please enter width and height of the board.");
+			CommonCode.message("Please enter width and height of the board.");
 			return;
 		}
 		
-		if (isPositiveInteger(boardX.getText())) {
+		if (CommonCode.isPositiveInteger(boardX.getText())) {
 			x = Integer.parseInt(boardX.getText());
 		} else {
-			JOptionPane.showMessageDialog(null, "X is not a digit.");
+			CommonCode.message("X is not a digit.");
 			return;
 		}
 		
-		if (isPositiveInteger(boardY.getText())) {
+		if (CommonCode.isPositiveInteger(boardY.getText())) {
 			y = Integer.parseInt(boardY.getText());
 		} else {
-			JOptionPane.showMessageDialog(null, "Y is not a digit.");
+			CommonCode.message("Y is not a digit.");
 			return;
 		}
 		
 		if (xLabel.getText().equals("Circle: ")) {
 			if (x > 8 || x < 3 ) {
-				JOptionPane.showMessageDialog(null, "Please keep radius between 3 and 8.");
+				CommonCode.message("Please keep radius between 3 and 8.");
 				return;
 			}
 		} else {
 			if (x > 18 || y > 18 || x < 8 || y < 8) {
-				JOptionPane.showMessageDialog(null, "Please keep board coordinates between 8 and 18.");
+				CommonCode.message("Please keep board coordinates between 8 and 18.");
 				return;
 			}
 		}
 		
 		editorController.next(shape, x, y);
-	}
-	
-	private boolean isPositiveInteger(String s) {
-		if (s.isEmpty()) {
-			return true;
-		}
-		
-		for (int i = 0; i < s.length(); i++) {
-			if (Character.digit(s.charAt(i), 10) < 0)
-					return false;
-		}
-		
-		return true;
 	}
 	
 	private void shapeChanged() {
