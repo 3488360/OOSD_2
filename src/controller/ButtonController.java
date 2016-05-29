@@ -20,7 +20,7 @@ public class ButtonController implements ButtonControllerInterface {
 	private boolean isPaused = false;
 	private CommandManager cmg;
 //	private PlayerController playerController = PlayerController.getInstance();
-	
+
 	public void setGameVariables(Board b, GameController g, ViewMain userInterface) {
 		this.board = b;
 		this.gameController = g;
