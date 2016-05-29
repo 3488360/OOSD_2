@@ -8,16 +8,16 @@ public class HealerCommand implements Command {
 	private Coordinate currentlySelected;
 	private Coordinate destinationSelected;
 	private Board board; 
-	private Game game;
+	private GameController gameController;
 	private boolean undoAbleMove = true;  
 	private PieceInterface piece; 
 	private int damageTaken; 
 	
-	public HealerCommand(Coordinate current, Coordinate destination, Game game, Board board){
+	public HealerCommand(Coordinate current, Coordinate destination, GameController gameController, Board board){
 		currentlySelected = current; 
 		destinationSelected = destination; 
 		this.board = board; 
-		this.game = game;
+		this.gameController = gameController;
 	}
 	
 	
@@ -28,7 +28,7 @@ public class HealerCommand implements Command {
 			if((piece.getCurrentHealth() - board.getPiece(currentlySelected).getStrength()) <= piece.getMaxHealth()){
 				damageTaken = board.getPiece(currentlySelected).getStrength();
 				piece.takeDamage(damageTaken);
-				game.setDone(true);
+				gameController.setDone(true);
 			}	
 			else if (piece.getCurrentHealth() == piece.getMaxHealth()) {
 				CommonCode.message("Unable to heal - The Piece is at full health already");
@@ -36,7 +36,7 @@ public class HealerCommand implements Command {
 			} else {
 				damageTaken = piece.getMaxHealth() - piece.getCurrentHealth(); 	
 				piece.takeDamage(damageTaken);
-				game.setDone(true);
+				gameController.setDone(true);
 			}
 		}else{
 			undoAbleMove = false; 

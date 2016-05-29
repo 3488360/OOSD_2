@@ -12,10 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import controller.CommonCode;
 import controller.LayoutEditorController;
 import controller.PlayerController;
 import model.Board;
@@ -33,7 +35,9 @@ public class ViewLayoutEditor extends JFrame {
 	private JButton player2Select;
 	private ViewPieceSelection pieceSelection;
 	private AbstractUIFactory uiFactory;
-	private final Color attackRange = new Color(255, 92, 92);
+	private JTextField player1PointsInput;
+	private JTextField player2PointsInput;
+	private JFrame setPoints;
 	
 	public ViewLayoutEditor(BoardShape boardShape, LayoutEditorController layoutController, PlayerController playerController, AbstractUIFactory uiFactory) {
 		this.playerController = playerController;
@@ -84,9 +88,11 @@ public class ViewLayoutEditor extends JFrame {
 		EmptyBorder playerBorder = new EmptyBorder(3, 3, 0, 50);
 		EmptyBorder pointsBorder = new EmptyBorder(0, 3, 3, 10);
 		Box playerButtons = Box.createVerticalBox();
+		JButton setPoints = uiFactory.createButton("Set Starting Points");
 		player1Select = uiFactory.createButton("Player 1");
 		player2Select = uiFactory.createButton("Player 2");
 		JLabel playerSelect = uiFactory.createLabel("Select a player:");
+		JPanel setPointsPanel = uiFactory.createPanel();
 		
 		ActionListener playerSelectListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,6 +112,12 @@ public class ViewLayoutEditor extends JFrame {
 		player2Points = uiFactory.createLabel("Points: " + Integer.toString(playerController.getPoints("player1")));
 		player2Points.setFont(points);
 		player2Points.setBorder(pointsBorder);
+		
+		setPoints.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setPoints();
+			}
+		});
 		
 		player1Select.addActionListener(playerSelectListener);
 		player2Select.addActionListener(playerSelectListener);
@@ -128,6 +140,8 @@ public class ViewLayoutEditor extends JFrame {
 		box.add(Box.createVerticalStrut(50));
 		box.add(pieceSelection);
 		box.add(playerButtons);
+		setPointsPanel.add(setPoints);
+		box.add(setPointsPanel);
 		
 		players.add(box);
 		
@@ -153,7 +167,85 @@ public class ViewLayoutEditor extends JFrame {
 		}
 	}
 	
+	private void setPoints() {
+		setPoints = new JFrame();
+		player1PointsInput = new JTextField("100");
+		player2PointsInput = new JTextField("100");
+		JButton set = uiFactory.createButton("Set");
+		JButton cancel = uiFactory.createButton("Cancel");
+		JLabel player1 = uiFactory.createLabel("Player 1 Points:");
+		JLabel player2 = uiFactory.createLabel("Player 2 Points:");
+		JPanel player1Panel = uiFactory.createPanel();
+		JPanel player2Panel = uiFactory.createPanel();
+		Box box = Box.createVerticalBox();
+		JPanel buttons = uiFactory.createPanel();
+		
+		setPoints.setTitle("Set Starting Points");
+		setPoints.setSize(200, 120);
+		setPoints.setResizable(false);
+		setPoints.setLocationRelativeTo(this);
+		setPoints.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		set.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				set();
+			}
+		});
+		
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancel();
+			}
+		});
+		
+		player1Panel.add(player1);
+		player1Panel.add(player1PointsInput);
+		player2Panel.add(player2);
+		player2Panel.add(player2PointsInput);
+		box.add(player1Panel);
+		box.add(player2Panel);
+		buttons.add(set);
+		buttons.add(cancel);
+		
+		setPoints.add(box, BorderLayout.CENTER);
+		setPoints.add(buttons, BorderLayout.SOUTH);
+		
+		setPoints.setVisible(true);
+	}
+	
 	public void pieceSelected(String pieceName) {
 		pieceSelection.setJButton(pieceName);
+	}
+	
+	private void set() {
+		String input = player1PointsInput.getText();
+		String input2 = player2PointsInput.getText();
+		
+		if (input.equals("") || input2.equals("")) {
+			CommonCode.message("Please enter points for both Player 1 and Player2");
+			return;
+		}
+		
+		if (CommonCode.isPositiveInteger(input)) {
+			player1Points.setText("Points: " + input);
+			playerController.setPoints("player1", Integer.parseInt(input));
+		} else {
+			CommonCode.message("Player 1's points are not a positive number.");
+			return;
+		}
+		
+		if (CommonCode.isPositiveInteger(input2)) {
+			player2Points.setText("Points: " + input2);
+			playerController.setPoints("player2", Integer.parseInt(input));
+		} else {
+			CommonCode.message("Player 2's points are not a positive number.");
+			return;
+		}
+		
+		setPoints.dispose();
+	}
+	
+	private void cancel() {
+		setPoints.dispose();
 	}
 }

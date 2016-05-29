@@ -46,9 +46,9 @@ public class Main {
 			}
 		}
 
-		Game game = new Game();
+		GameController gameController = new GameController();
 
-		game.startGame(boardLayout, timer, buttonController, uiFactory);
+		gameController.startGame(boardLayout, timer, buttonController, uiFactory);
 	}
 
 	public static void start(String factory) {

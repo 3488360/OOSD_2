@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Board;
 import model.BoardShape;
 import model.Coordinate;
-import model.Game;
+import model.GameController;
 import model.pieces.ArcherPiece;
 import model.pieces.GodPiece;
 import model.pieces.HealerPiece;
@@ -112,7 +112,7 @@ public class LayoutEditorController implements ButtonControllerInterface {
 		Main.showStart();
 	}
 
-	public Game getGame() {
+	public GameController getGame() {
 		return null;
 	}
 

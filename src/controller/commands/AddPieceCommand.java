@@ -8,39 +8,41 @@ import model.pieces.PieceInterface;
 public class AddPieceCommand implements Command  {
 	private Coordinate desiredCoordinate; 
 	private boolean undoAbleMove = false; 
-	private Game game; 
+	private GameController gameController; 
 	private String pieceName; 
 	private String currentTurn;
 	private int pieceCost = 0;
 	private PlayerController playerController = PlayerController.getInstance();
 	
-	public AddPieceCommand(Game game, String pieceName, Coordinate desiredCoordinate){
-		this.game = game;  
+	public AddPieceCommand(GameController gameController, String pieceName, Coordinate desiredCoordinate){
+		this.gameController = gameController;  
 		this.pieceName = pieceName;
-		this.desiredCoordinate = desiredCoordinate; 
+		this.desiredCoordinate = desiredCoordinate;
 	}
 	
 	@Override
 	public void execute() {
-		PieceInterface p = CommonCode.getPiece(pieceName, game.getTurn());
-		 
+		PieceInterface p = CommonCode.getPiece(pieceName, gameController.getTurn());
+		currentTurn = gameController.getTurn();
+		
 		if(playerController.getPlayerPoints(currentTurn) >= p.getCost()) {
-			game.getBoard().setPiece(desiredCoordinate, p);
+			gameController.getBoard().setPiece(desiredCoordinate, p);
 			playerController.setPoints(currentTurn, playerController.getPoints(currentTurn) - p.getCost());
 			pieceCost = p.getCost(); 
-			game.updatePoints();
+			gameController.updatePoints();
 			undoAbleMove = true; 
+			gameController.setDone(true);
 		} else {
 			CommonCode.message("Not enough points to buy that piece.");
 		}
-		game.updateBoard();
+		gameController.updateBoard();
 	}
 
 	@Override
 	public void undo(){ 
-		game.getBoard().setPiece(desiredCoordinate, null);
+		gameController.getBoard().setPiece(desiredCoordinate, null);
 		playerController.setPoints(currentTurn, playerController.getPoints(currentTurn) + pieceCost);
-		game.updatePoints();
+		gameController.updatePoints();
 	}
 
 	@Override

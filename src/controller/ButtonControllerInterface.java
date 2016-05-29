@@ -1,7 +1,7 @@
 package controller;
 
 import model.Coordinate;
-import model.Game;
+import model.GameController;
 
 public interface ButtonControllerInterface {	
 	/**
@@ -29,7 +29,7 @@ public interface ButtonControllerInterface {
 	/**
 	 * @return The main game object
 	 */
-	public Game getGame();
+	public GameController getGame();
 	
 	public void saveGame(String player1, String player2);
 
