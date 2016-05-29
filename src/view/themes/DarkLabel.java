@@ -5,8 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DarkLabel extends JLabel {
+	private static final long serialVersionUID = 8440022433026408226L;
 
-    public DarkLabel() {
+	public DarkLabel() {
         super();
         init();
     }

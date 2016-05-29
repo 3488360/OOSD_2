@@ -8,11 +8,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import controller.ButtonControllerInterface;
-import controller.GameController;
 import controller.PlayerController;
 import model.Board;
 import model.Coordinate;
 import model.GameTimer;
+import model.pieces.PieceInterface;
 
 /**
  * The main user interface JFrame for the game. Contains a title, 
@@ -36,7 +36,7 @@ public class ViewMain extends JFrame {
 	 * @param boardController - The controller that controls communication between this interface and the board object.
 	 * @param playerController - The controller that controls communication with this interface and the player objects.
 	 */
-	public ViewMain(GameController gameController, Board board, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer gameTimer, AbstractUIFactory uiFactory) {
+	public ViewMain(Board board, PlayerController playerController, ButtonControllerInterface buttonController, GameTimer gameTimer, AbstractUIFactory uiFactory) {
 		this.playerController = playerController;
 		this.buttonController = buttonController;
 		this.uiFactory = uiFactory;
@@ -164,15 +164,6 @@ public class ViewMain extends JFrame {
 	public void updateTurn(String name) {
 		turn.setText(name + "'s turn!");
 	}
-	
-	/**
-	 * A function to output a simple message dialog box to the user.
-	 * 
-	 * @param message - The message to be displayed.
-	 */
-	public void message(String message) {
-		JOptionPane.showMessageDialog(null, message);
-	}
 
 	public void pause() {
 		board.setVisible(false);
@@ -180,5 +171,9 @@ public class ViewMain extends JFrame {
 	
 	public void resume() {
 		board.setVisible(true);
+	}
+
+	public void updateSelectedPiece(PieceInterface piece) {
+		timer.addSelectedPiece(piece.getName(), Integer.toString(piece.getCurrentHealth()), Integer.toString(piece.getStrength()));
 	}
 }

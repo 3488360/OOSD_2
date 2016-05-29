@@ -11,15 +11,22 @@ import model.Coordinate;
 import model.Game;
 
 public class SaveController {
-	private Game game;
-	private PlayerController playerController;
+	private static SaveController instance = null;
+	//private Game game;
+	//private PlayerController playerController;
 	
-	public SaveController (Game game, PlayerController playerController) {
-		this.game = game;
-		this.playerController = playerController;
+	public static SaveController getInstance() {
+		if (instance == null) {
+			instance = new SaveController();
+		}
+		
+		return instance;
 	}
 	
-	public boolean saveGame(File saveFile, String player1, String player2) {
+	private SaveController () {}
+	
+	public boolean saveGame(File saveFile, String player1, String player2, Game game) {
+		PlayerController pc = PlayerController.getInstance();
 		Board board = game.getBoard();
 		BoardLayout save = new BoardLayout(saveFile.getName().replace(".save", ""));;
 		Coordinate co;
@@ -50,8 +57,8 @@ public class SaveController {
 		}
 		
 		save.setPlayers(player1, player2);
-		save.setPlayer1Points(playerController.getPlayerPoints("player1"));
-		save.setPlayer2Points(playerController.getPlayerPoints("player2"));
+		save.setPlayer1Points(pc.getPlayerPoints("player1"));
+		save.setPlayer2Points(pc.getPlayerPoints("player2"));
 		save.setCurrentTime(game.getTime());
 		save.setTurn(game.getTurn());
 		save.setTime(game.getInitTime());
@@ -74,8 +81,11 @@ public class SaveController {
 		return true;
 	}
 	
-	public boolean saveGame(File saveFile, String player1, String player2, Board board) {
-		BoardLayout save = new BoardLayout(saveFile.getName().replace(".save", ""));
+	public boolean saveLayout(File saveFile, Board board) {
+		PlayerController pc = PlayerController.getInstance();
+		String name = saveFile.getName().replace(".save", "");
+		name = name.replace(".layout", "");
+		BoardLayout save = new BoardLayout(name);
 		Coordinate co;
 		FileOutputStream out = null;
 		ObjectOutputStream out2 = null;
@@ -103,9 +113,8 @@ public class SaveController {
 			}
 		}
 		
-		save.setPlayers(player1, player2);
-		save.setPlayer1Points(playerController.getPlayerPoints("player1"));
-		save.setPlayer2Points(playerController.getPlayerPoints("player2"));
+		save.setPlayer1Points(pc.getPlayerPoints("player1"));
+		save.setPlayer2Points(pc.getPlayerPoints("player2"));
 		save.setBoardShape(board.getBoardShape());
 		
 		try {

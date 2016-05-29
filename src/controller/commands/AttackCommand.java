@@ -1,47 +1,37 @@
-package controller;
+package controller.commands;
 
 import java.util.List;
 
+import controller.CommonCode;
 import model.*;
 import model.pieces.PieceInterface;
 
-public class AttackCommand implements Command {
-//	We need a game controller to notify the user client that an attack has failed
-	private GameController gameController; 
-	
-//	A list that contains coordinates of all the possible places the piece can attack to 
-	private List<Coordinate> attackingMoves; 
-	
+public class AttackCommand implements Command {	
 // Required for the undo function ... adding health back to piece, adding point back to the player
-	int attack; 
-	int health; 
-	
+	private int attack; 
+	private int health; 
 	private boolean undoAbleMove = false; 
 	private Board board;
 	private String currentPlayer; 
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
 	private PieceInterface pieceBeingAttacked; 
+	private Game game;
 	
-	
-	
-	public AttackCommand(GameController gameController, Board board, Coordinate currentSelected, Coordinate destinationSelected, String currentPlayer){
-		this.gameController = gameController; 
+	public AttackCommand(Game game, Board board, Coordinate currentSelected, Coordinate destinationSelected, String currentPlayer){
+		this.game = game; 
 		this.board = board; 
 		this.currentlySelected = currentSelected;
 		this.destinationSelected = destinationSelected;
 		this.currentPlayer = currentPlayer;
 	}
 	
-	
 	@Override
 	public void execute() {
 		
-		
 		if (board.getPiece(destinationSelected).getPlayerName().equals(currentPlayer)) {
-			gameController.message("You are trying to attack your own piece!");
-		} 
-		else{
+			CommonCode.message("You are trying to attack your own piece!");
+		} else {
 			if(canAttackTo()){
 				pieceBeingAttacked = board.getPiece(destinationSelected);
 				attack = board.getPiece(currentlySelected).getStrength();
@@ -53,14 +43,14 @@ public class AttackCommand implements Command {
 //					player.setPoints(player.getPoints() + (board.getPiece(destinationSelected).getCost() / 4) * 3);
 					board.setPiece(destinationSelected,	board.getPiece(currentlySelected));
 					board.setPiece(currentlySelected, null);
-					gameController.updateBoard();
-					gameController.updatePoints();
+					game.updateBoard();
+					game.updatePoints();
 				}
 				undoAbleMove = true;
-				gameController.getGame().setDone(true);	
+				game.setDone(true);	
 			}
 			else{
-				gameController.message("This piece cannot be attacked");
+				CommonCode.message("This piece cannot be attacked");
 			}
 		}
 	}
@@ -82,25 +72,21 @@ public class AttackCommand implements Command {
 //		If the piece wasn't destroyed 	
 //		add the health lost back to the piece that was attacked 
 		
-		if(board.getPiece(currentlySelected) == null){
+		if (board.getPiece(currentlySelected) == null){
 //			if the piece was destroyed instead 
 			board.setPiece(currentlySelected, board.getPiece(destinationSelected));
 			board.setPiece(destinationSelected, pieceBeingAttacked);			
-		}else
-		{
+		} else {
 			board.getPiece(destinationSelected).takeDamage(-attack); 
 		}
-		gameController.getGame().pause();
-		gameController.getGame().setDone(true);
-		gameController.getGame().resume();
-
 		
+		game.pause();
+		game.setDone(true);
+		game.resume();
 	}
-
 
 	@Override
 	public boolean CanUndo() {
-		// TODO Auto-generated method stub
 		return undoAbleMove;
 	}
 

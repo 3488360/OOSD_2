@@ -23,8 +23,8 @@ public class TestPiece extends AbstractPiece {
 	@Override
 	public List<Coordinate> getMoves(Coordinate co) {
 		List<Coordinate> moves = new ArrayList<Coordinate>();
-		for (int i = 0; i < 15; i++) {
-			for (int a = 0; a < 15; a++) {
+		for (int i = 0; i < 20; i++) {
+			for (int a = 0; a < 20; a++) {
 				moves.add(new Coordinate(i, a));
 			}
 		}

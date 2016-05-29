@@ -7,7 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DarkViewCell extends ViewCell {
-    private static final Color ATTACK = Color.decode("#570000");
+	private static final long serialVersionUID = 4227260347083533113L;
+	private static final Color ATTACK = Color.decode("#570000");
     private static final Color PLAYER1 = Color.LIGHT_GRAY;
     private static final Color PLAYER2 = Color.DARK_GRAY;
     private static final Color MOVE = Color.decode("#005700");
