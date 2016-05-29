@@ -1,30 +1,27 @@
-package controller;
-
+package controller.commands;
 
 import java.util.List;
 
+import controller.CommonCode;
 import model.*; 
 
 public class MoveCommand implements Command {
 //	We need the gameController to send messages back to the gui client
 //  For example if the move they performed has failed 	
-	private GameController gameController; 
 	private boolean undoAbleMove = false;
-	
-	
 	private String player; 
 	private Board board; 
 	private Coordinate currentlySelected; 
 	private Coordinate destinationSelected; 
+	private Game game;
 	
-	public MoveCommand(GameController gameController, String player, Board board,Coordinate currentlySelected, Coordinate destinationSelected){
+	public MoveCommand(Game game, String player, Board board, Coordinate currentlySelected, Coordinate destinationSelected){
 		this.player = player;
-		this.board = board; 
-		this.currentlySelected = currentlySelected; 
+		this.board = board;
+		this.currentlySelected = currentlySelected;
 		this.destinationSelected = destinationSelected;
-		this.gameController = gameController; 
+		this.game = game;
 	}
-	
 	
 	@Override
 	public void execute(){
@@ -34,12 +31,12 @@ public class MoveCommand implements Command {
 				board.setPiece(currentlySelected, null);
 //				gameController.updateBoard(); maybe put this after exiting the move function? 
 //				return true;
-				gameController.getGame().setDone(true);
+				game.setDone(true);
 				undoAbleMove = true;
 			}
 			else{
 //				THIS IS REDUNDNT PLEASE ANSWER ASAP 
-				gameController.message("This piece cannot move there");
+				CommonCode.message("This piece cannot move there");
 			}
 		}
 //		return false;
@@ -64,15 +61,13 @@ public class MoveCommand implements Command {
 		board.setPiece(currentlySelected, board.getPiece(destinationSelected));
 //		remove the piece that the piece just moved into 
 		board.setPiece(destinationSelected, null);
-		gameController.getGame().pause();
-		gameController.getGame().setDone(true);
-		gameController.getGame().resume();
+		game.pause();
+		game.setDone(true);
+		game.resume();
 	}
-
 
 	@Override
 	public boolean CanUndo() {
-		// TODO Auto-generated method stub
 		return undoAbleMove;
 	}
 

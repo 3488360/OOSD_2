@@ -10,12 +10,11 @@ public class Main {
 	private static BoardLayout boardLayout;
 	private static int timer;
 	private static BoardLayout[] boardLayouts;
-	private static final PlayerController playerController = new PlayerController();
 	private static ViewStart start;
-	private static LoadController loadController = new LoadController();
 	private static String factory;
 	private static ButtonController buttonController;
 	private static AbstractUIFactory uiFactory;
+	private static final LoadController loadController = new LoadController();
 	
 	public static void main(String[] args) {
 		ViewSelectTheme selectTheme = new ViewSelectTheme();
@@ -35,7 +34,7 @@ public class Main {
 		uiFactory = AbstractUIFactory.getFactory(factory);
 		
 		boardLayouts = loadController.loadLayouts2();
-		start = new ViewStart(boardLayouts, buttonController, loadController, uiFactory);
+		start = new ViewStart(boardLayouts, buttonController, uiFactory);
 		waiting = true;
 
 		while (waiting) {
@@ -47,9 +46,9 @@ public class Main {
 			}
 		}
 
-		Game game = Game.getInstance(boardLayout);
+		Game game = new Game();
 
-		game.startGame(playerController, boardLayout, timer, buttonController, uiFactory);
+		game.startGame(boardLayout, timer, buttonController, uiFactory);
 	}
 
 	public static void start(String factory) {
@@ -59,14 +58,12 @@ public class Main {
 	}
 
 	public static void startGame(String player1Name, String player2Name, BoardLayout selectedBoardLayout, int timerNum) {
-		playerController.getPlayer1().setPlayerName(player1Name);
-		playerController.getPlayer2().setPlayerName(player2Name);
+		PlayerController pc = PlayerController.getInstance();
+		pc.setName("player1", player1Name);
+		pc.setName("player2", player2Name);
 		boardLayout = selectedBoardLayout;
 		timer = timerNum;
 		waiting = false;
-		
-		/*Game game = Game.getInstance(boardLayout);
-		game.startGame(playerController, boardLayout, timerNum, buttonController, uiFactory);*/
 	}
 
 	public static void startLayoutEditor() {

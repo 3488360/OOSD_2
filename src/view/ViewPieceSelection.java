@@ -94,6 +94,9 @@ public class ViewPieceSelection extends JPanel {
 		buttons.put("test", button);
 		
 		for(JButton button2 : buttons.values()) {
+			if (buttonController.getClass().getName().equals("controller.ButtonController") && (button2.getText().equals("Delete") || button2.getText().equals("Test"))) {
+				continue;
+			}
 			pieces.add(button2);
 		}
 		

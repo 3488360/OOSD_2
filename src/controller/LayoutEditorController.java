@@ -35,9 +35,9 @@ public class LayoutEditorController implements ButtonControllerInterface {
 	private AbstractUIFactory uiFactory;
 	
 	public LayoutEditorController(AbstractUIFactory uiFactory) {
-		pc = new PlayerController();
+		pc = PlayerController.getInstance();
 		this.uiFactory = uiFactory;
-		this.saveController = new SaveController(null, pc);
+		this.saveController = SaveController.getInstance();
 		boardEditor = new ViewBoardEditor(this, uiFactory);
 	}
 	
@@ -154,7 +154,7 @@ public class LayoutEditorController implements ButtonControllerInterface {
 			team2Queen = true;
 		}
 		
-		System.out.println("team1King = " + team1King + "   team1Queen = " + team1Queen + "   team2King = " + team2King + "   team2Queen = " + team2Queen);
+		//System.out.println("team1King = " + team1King + "   team1Queen = " + team1Queen + "   team2King = " + team2King + "   team2Queen = " + team2Queen);
 		
 		if (!((team1King && team2Queen) || (team1Queen && team2King))) {
 			JOptionPane.showMessageDialog(null, "There must be at least one King on one side and one Queen on the other.", "Alert", 3);
@@ -167,7 +167,7 @@ public class LayoutEditorController implements ButtonControllerInterface {
 		
 		int returnVal = fc.showSaveDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			if (!saveController.saveGame(fc.getSelectedFile(), player1, player2, board)) {
+			if (!saveController.saveLayout(fc.getSelectedFile(), board)) {
 				JOptionPane.showMessageDialog(null, "An error occured when trying to save the file. Please see console for details.", "Error", 0);
 				return;
 			} else {
@@ -185,7 +185,6 @@ public class LayoutEditorController implements ButtonControllerInterface {
 		} else {
 			userInterface = new ViewLayoutEditor(new BoardShape(shape, y, x), this, pc, uiFactory);
 		}
-		
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import model.BoardLayout;
  */
 public class ViewStart extends JFrame {
 	private static final long serialVersionUID = -7178518888261894209L;
-
 	private JTextField player1Name;
 	private JTextField player2Name;
 	private JComboBox<String> boardLayout;
@@ -36,7 +35,7 @@ public class ViewStart extends JFrame {
 	private BoardLayout selectedLayout = null;
 	private Font subtitle;
 	private ButtonControllerInterface buttonController;
-	private LoadController loadController;
+	private LoadController loadController = new LoadController();
 	private AbstractUIFactory uiFactory;
 	
 	/**
@@ -44,10 +43,9 @@ public class ViewStart extends JFrame {
 	 * 
 	 * @param layouts - An array of BoardLayouts so the drop-down menu can contain a list of all their names.
 	 */
-	public ViewStart (BoardLayout[] layouts, ButtonControllerInterface buttonController, LoadController loadController, AbstractUIFactory uiFactory) {
+	public ViewStart (BoardLayout[] layouts, ButtonControllerInterface buttonController, AbstractUIFactory uiFactory) {
 		this.layouts = layouts;
 		this.buttonController = buttonController;
-		this.loadController = loadController;
 		this.uiFactory = uiFactory;
 
 		JPanel mainPanel = uiFactory.createPanel();
@@ -147,7 +145,7 @@ public class ViewStart extends JFrame {
 			}
 			boardLayout.setSelectedIndex(0);
 		} else {
-			boardLayout.addItem("Default Layout");
+			boardLayout.addItem("No Layouts Detected");
 		}
 		
 		

@@ -2,24 +2,25 @@ package controller;
 
 import java.util.LinkedList;
 
-import model.Player;
+import controller.commands.Command;
+import model.Game;
 
 public class CommandManager {
 	private LinkedList<Command> previousCommand = new LinkedList<Command>(); 
 	private final static int STACKSIZE = 3; 
 	private int playerIndex = 0;
 	private boolean turnUsed[];
-	private Player player[]; 
-	private boolean commandPushedOnStack  = false; 
-	private GameController gc; 
+	private String player[]; 
+	private boolean commandPushedOnStack  = false;
+	private Game game;
 	
-	public CommandManager(GameController gc){
-		this.gc = gc; 
+	public CommandManager(Game game){
+		this.game = game; 
 		turnUsed = new boolean[2];
-		player = new Player[2];
+		player = new String[2];
 	}
 	
-	public void addPlayer(Player player){
+	public void addPlayer(String player){
 //		Adding players so we can keep track and check how many times a player has performed undo 
 		this.player[playerIndex] = player; 
 		turnUsed[playerIndex] = false;
@@ -36,7 +37,6 @@ public class CommandManager {
 			previousCommand.push(command);
 			commandPushedOnStack = true;			
 		}
- 
 	}
 
 	public void undo(){
@@ -51,17 +51,17 @@ public class CommandManager {
 				commandPushedOnStack = false; 
 			}
 			else{
-				gc.message("Player has already used their undo option");
+				CommonCode.message("Player has already used their undo option");
 			}
 		}
 		else{
-			gc.message("There are no more avaliable moves to undo at the moment");
+			CommonCode.message("There are no more avaliable moves to undo at the moment");
 		}	
 	}
 	
 	private boolean canPlayerUndo(){
 		for(int i = 0; i < playerIndex; i++){
-			if(player[i].getName().equals(gc.getGame().getTurn())){
+			if(player[i].equals(game.getTurn())){
 				if(turnUsed[i] == false){
 					turnUsed[i] = true; 
 					return true; 

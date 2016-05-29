@@ -4,10 +4,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import controller.commands.*;
 import model.Board;
 import model.Coordinate;
 import model.Game;
-import model.pieces.PieceInterface;
 import view.ViewMain;
 
 public class ButtonController implements ButtonControllerInterface {
@@ -16,31 +16,28 @@ public class ButtonController implements ButtonControllerInterface {
 	private Coordinate currentlySelected;
 	private String pieceName = null;
 	private boolean addPiece;
-	private GameController gameController;
 	private ViewMain userInterface;
 	private boolean isPaused = false;
-	private SaveController saveController;
 	private CommandManager cmg;
-	
-	public void setGameVariables(Board b, Game g, GameController gc, ViewMain userInterface, SaveController saveController) {
+//	private PlayerController playerController = PlayerController.getInstance();
+
+	public void setGameVariables(Board b, Game g, ViewMain userInterface) {
 		this.board = b;
 		this.game = g;
-		this.gameController = gc;
 		this.userInterface = userInterface;
-		this.saveController = saveController;
 		
-		cmg = new CommandManager(gc);
-		cmg.addPlayer(game.getPlayer1());
-		cmg.addPlayer(game.getPlayer2());
+		cmg = new CommandManager(game);
+		cmg.addPlayer("player1");
+		cmg.addPlayer("player2");
 	}
 	
 	public void passCoordinates(Coordinate co) {
 		if (addPiece) {
 			//Placing a new piece onto the board
 			if (board.getPiece(co) == null) {
-				cmg.executeCommand(new AddPieceCommand(game, gameController, pieceName, co));
+				cmg.executeCommand(new AddPieceCommand(game, pieceName, co));
 				addPiece = false;
-				gameController.updateBoard();
+				userInterface.updateBoard();
 			}
 		} else {
 			// Determine if the coordinates selected are valid or not
@@ -61,40 +58,43 @@ public class ButtonController implements ButtonControllerInterface {
 	
 	private void resetBoardDisplays(){
 		currentlySelected = null;
-		gameController.hideSelected();
-		gameController.updateBoard();
+		userInterface.hideSelected();
+		userInterface.updateBoard();
 	}
 	
 	private void displayClickableLocations(Coordinate co) {
 		if (board.getPiece(currentlySelected) != null) {
 			// There is a piece
-			gameController.updateSelectedPiece(this, board.getPiece(co));
-			if (game.getTurn().equals(
-					board.getPiece(currentlySelected).getPlayerName())) {
+			userInterface.updateSelectedPiece(board.getPiece(co));
+			if (game.getTurn().equals(board.getPiece(currentlySelected).getPlayerName())) {
 				// If that piece belongs to the current player
-				gameController.updateMoves(board.getMovement(co, game.getTurn()));
-				gameController.updateAttackRange(board.getAttackRange(co, game.getTurn()));
+				userInterface.updateMoves(board.getMovement(co, game.getTurn()));
+				userInterface.updateAttackRange(board.getAttackRange(co, game.getTurn()));
 			}
-		}
-		else {
+		} else {
 			currentlySelected = null;
 		}
 	}
 	
+
 	private void calculateMove(Coordinate co){
 		if (board.getPiece(currentlySelected) != null) {
 			if (board.getPiece(co) != null) {
-				cmg.executeCommand(new AttackCommand(gameController, board, currentlySelected, co, game.getTurn()));
+				if (board.getPiece(currentlySelected).getName().equals("Healer")){
+					cmg.executeCommand(new HealerCommand(currentlySelected, co, game, board));
+				}
+				else{
+					cmg.executeCommand(new AttackCommand(game, board, currentlySelected, co, game.getTurn()));
+				}
 			} else {
-				cmg.executeCommand(new MoveCommand(gameController, game
-						.getTurn(), board, currentlySelected, co));
+				cmg.executeCommand(new MoveCommand(game, game.getTurn(), board, currentlySelected, co));
 			}
 		}
 	}
 	
 	public void undo() {
 		cmg.undo();
-		gameController.updateBoard();
+		userInterface.updateBoard();
 	}
 	
 	private boolean sameCoordinates(Coordinate co, Coordinate dest){
@@ -131,7 +131,7 @@ public class ButtonController implements ButtonControllerInterface {
 	public void setStance(PieceInterface newPiece) {
 		cmg.executeCommand(new AdjustStanceCommand(board, currentlySelected, newPiece));
 	}
-	
+
 	public void exit() {
 		int result = JOptionPane.showConfirmDialog (null, "Are you sure you want to exit?", "Warning", 0);
 		
@@ -153,7 +153,7 @@ public class ButtonController implements ButtonControllerInterface {
 		
 		int returnVal = fc.showSaveDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			if (!saveController.saveGame(fc.getSelectedFile(), player1, player2)) {
+			if (!SaveController.getInstance().saveGame(fc.getSelectedFile(), player1, player2, game)) {
 				JOptionPane.showMessageDialog(null, "An error occured when trying to save the file. Please see console for details.", "Error", 0);
 				return;
 			}

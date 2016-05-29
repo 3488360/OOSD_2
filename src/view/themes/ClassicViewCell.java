@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ClassicViewCell extends ViewCell {
-    public ClassicViewCell(int row, int col, boolean isVisible) {
+	private static final long serialVersionUID = 2738875572918280069L;
+
+	public ClassicViewCell(int row, int col, boolean isVisible) {
         super(row, col, isVisible);
     }
 

@@ -5,8 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DarkButton extends JButton {
+	private static final long serialVersionUID = -1381009177581678466L;
 
-    public DarkButton(String text) {
+	public DarkButton(String text) {
         super(text);
         init();
     }
