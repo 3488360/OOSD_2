@@ -52,8 +52,8 @@ public class GameController {
 		userInterface.setVisible(false);
 	}
 
-	public void updateSelectedPiece(PieceInterface p) {
-		userInterface.updateSelectedPiece(p.getName(), Integer.toString(p.getCurrentHealth()), Integer.toString(p.getStrength()));
+	public void updateSelectedPiece(ButtonController buttonController, PieceInterface p) {
+		userInterface.updateSelectedPiece(buttonController, p);
 	}
 	
 	public void updateMoves(List<Coordinate> moves) {

@@ -15,6 +15,7 @@ public class GodPiece extends AbstractPiece {
         icon = "images/God.png";
         maxHealth = 200;
         strength = 200;
+		defense = 100;
         cost = 70;
         currentHealth = maxHealth;
     }

@@ -20,7 +20,7 @@ public abstract class AbstractPiece implements PieceInterface, Serializable {
     protected int cost;
     protected int maxHealth;
     protected int strength;
-    protected int defense = 0;
+    protected int defense;
     protected String icon;
     protected String playerName;
 

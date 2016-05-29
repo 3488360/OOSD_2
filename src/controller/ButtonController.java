@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Board;
 import model.Coordinate;
 import model.Game;
+import model.pieces.PieceInterface;
 import view.ViewMain;
 
 public class ButtonController implements ButtonControllerInterface {
@@ -67,7 +68,7 @@ public class ButtonController implements ButtonControllerInterface {
 	private void displayClickableLocations(Coordinate co) {
 		if (board.getPiece(currentlySelected) != null) {
 			// There is a piece
-			gameController.updateSelectedPiece(board.getPiece(co));
+			gameController.updateSelectedPiece(this, board.getPiece(co));
 			if (game.getTurn().equals(
 					board.getPiece(currentlySelected).getPlayerName())) {
 				// If that piece belongs to the current player
@@ -125,6 +126,10 @@ public class ButtonController implements ButtonControllerInterface {
 		
 		addPiece = true;
 		this.pieceName = pieceName;
+	}
+
+	public void setStance(PieceInterface newPiece) {
+		cmg.executeCommand(new AdjustStanceCommand(board, currentlySelected, newPiece));
 	}
 	
 	public void exit() {

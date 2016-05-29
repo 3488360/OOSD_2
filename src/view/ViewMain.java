@@ -7,12 +7,14 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import controller.ButtonController;
 import controller.ButtonControllerInterface;
 import controller.GameController;
 import controller.PlayerController;
 import model.Board;
 import model.Coordinate;
 import model.GameTimer;
+import model.pieces.PieceInterface;
 
 /**
  * The main user interface JFrame for the game. Contains a title, 
@@ -127,8 +129,8 @@ public class ViewMain extends JFrame {
 		board.updateBoard();
 	}
 
-	public void updateSelectedPiece(String name, String currentHealth, String currentStrength) {
-		timer.addSelectedPiece(name, currentHealth, currentStrength);
+	public void updateSelectedPiece(ButtonController buttonController, PieceInterface piece) {
+		timer.addSelectedPiece(buttonController, piece);
 	}
 	
 	public void updateMoves(List<Coordinate> list) {

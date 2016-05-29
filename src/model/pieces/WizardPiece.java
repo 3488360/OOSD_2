@@ -16,6 +16,7 @@ public class WizardPiece extends AbstractPiece{
         maxHealth = 200;
         strength = 150;
         cost = 60;
+		defense = 50;
         currentHealth = maxHealth;
     }
 

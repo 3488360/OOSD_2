@@ -15,6 +15,7 @@ public class QueenPiece extends AbstractPiece {
 		icon = "images/Queen.png";
 		maxHealth = 400;
 		strength = 100;
+		defense = 200;
 		currentHealth = maxHealth;
 	}
 
